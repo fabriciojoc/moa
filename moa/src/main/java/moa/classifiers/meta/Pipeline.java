@@ -1,5 +1,7 @@
 package moa.classifiers.meta;
 
+import com.github.javacliparser.ListOption;
+import com.github.javacliparser.Option;
 import com.yahoo.labs.samoa.instances.Instance;
 import moa.capabilities.CapabilitiesHandler;
 import moa.classifiers.AbstractClassifier;
@@ -7,7 +9,12 @@ import moa.classifiers.Classifier;
 import moa.classifiers.MultiClassClassifier;
 import moa.classifiers.core.driftdetection.ChangeDetector;
 import moa.core.Measurement;
+import moa.core.ObjectRepository;
 import moa.options.ClassOption;
+import moa.streams.filters.StreamFilter;
+import moa.tasks.TaskMonitor;
+
+import java.util.logging.Filter;
 
 public class Pipeline extends AbstractClassifier implements MultiClassClassifier,
         CapabilitiesHandler  {
@@ -18,10 +25,40 @@ public class Pipeline extends AbstractClassifier implements MultiClassClassifier
                 "the base classifier.";
     }
 
+    public ListOption basefiltersOption = new ListOption("baseFilters", 'f',
+            "The filters used by the pipeline before submitting an instance to the classifier.",
+            new ClassOption("filter", ' ', "", StreamFilter.class,
+                    "AddNoiseFilter"),
+            new Option[] {
+                    new ClassOption("", ' ', "", StreamFilter.class, "AddNoiseFilter"),
+                    new ClassOption("", ' ', "", StreamFilter.class, "AddNoiseFilter"),
+                    new ClassOption("", ' ', "", StreamFilter.class, "AddNoiseFilter")
+            },
+            ',');
+
     public ClassOption baseLearnerOption = new ClassOption("baseLearner", 'l',
             "Classifier to train.", Classifier.class, "bayes.NaiveBayes");
 
     protected Classifier classifier;
+
+    protected StreamFilter[] filters;
+
+    @Override
+    public void prepareForUseImpl(TaskMonitor monitor,
+                                  ObjectRepository repository) {
+        Option[] filterOptions = this.basefiltersOption.getList();
+        this.filters = new StreamFilter[filterOptions.length];
+        for (int i = 0; i < filterOptions.length; i++) {
+            monitor.setCurrentActivity("Materializing filter " + (i + 1) + "...",
+                    -1.0);
+            this.filters[i] = (StreamFilter) ((ClassOption) filterOptions[i]).materializeObject(monitor, repository);
+            System.out.println(this.filters[i].getClass().getSimpleName());
+            if (monitor.taskShouldAbort()) {
+                return;
+            }
+        }
+        super.prepareForUseImpl(monitor, repository);
+    }
 
     @Override
     public void resetLearningImpl() {
