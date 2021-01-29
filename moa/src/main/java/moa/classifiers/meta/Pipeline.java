@@ -70,8 +70,8 @@ public class Pipeline extends AbstractClassifier implements MultiClassClassifier
 
     @Override
     public void trainOnInstanceImpl(Instance inst) {
-        for (StreamFilter filter : this.filters) {
-            inst = filter.filterInstance(inst);
+        for (int i = 0; i < this.filters.length; i++) {
+            inst = this.filters[i].filterInstance(inst);
         }
         this.classifier.trainOnInstance(inst);
     }
