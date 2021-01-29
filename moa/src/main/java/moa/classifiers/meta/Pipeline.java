@@ -7,10 +7,10 @@ import moa.capabilities.CapabilitiesHandler;
 import moa.classifiers.AbstractClassifier;
 import moa.classifiers.Classifier;
 import moa.classifiers.MultiClassClassifier;
-import moa.classifiers.core.driftdetection.ChangeDetector;
 import moa.core.Measurement;
 import moa.core.ObjectRepository;
 import moa.options.ClassOption;
+import moa.options.OptionHandler;
 import moa.streams.filters.StreamFilter;
 import moa.tasks.TaskMonitor;
 
@@ -49,10 +49,12 @@ public class Pipeline extends AbstractClassifier implements MultiClassClassifier
         Option[] filterOptions = this.basefiltersOption.getList();
         this.filters = new StreamFilter[filterOptions.length];
         for (int i = 0; i < filterOptions.length; i++) {
+            System.out.println("filter " + filterOptions[i]);
             monitor.setCurrentActivity("Materializing filter " + (i + 1) + "...",
                     -1.0);
             this.filters[i] = (StreamFilter) ((ClassOption) filterOptions[i]).materializeObject(monitor, repository);
-            System.out.println(this.filters[i].getClass().getSimpleName());
+            ((OptionHandler) this.filters[i]).prepareForUse(monitor, repository);
+            System.out.println(this.filters[i].getClass());
             if (monitor.taskShouldAbort()) {
                 return;
             }
@@ -68,6 +70,9 @@ public class Pipeline extends AbstractClassifier implements MultiClassClassifier
 
     @Override
     public void trainOnInstanceImpl(Instance inst) {
+        for (StreamFilter filter : this.filters) {
+            inst = filter.filterInstance(inst);
+        }
         this.classifier.trainOnInstance(inst);
     }
 
@@ -88,7 +93,8 @@ public class Pipeline extends AbstractClassifier implements MultiClassClassifier
 
     @Override
     protected Measurement[] getModelMeasurementsImpl() {
-        return this.classifier.getModelMeasurements();
+        return null;
+        //return this.classifier.getModelMeasurements();
     }
 
 }
