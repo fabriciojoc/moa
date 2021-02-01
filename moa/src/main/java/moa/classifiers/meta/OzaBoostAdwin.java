@@ -86,7 +86,7 @@ public class OzaBoostAdwin extends AbstractClassifier implements MultiClassClass
     protected boolean initKm1 = false;
 
     @Override
-    public void resetLearningImpl() {
+    public void resetLearningImpl() throws Exception {
         this.ensemble = new Classifier[this.ensembleSizeOption.getValue()];
         Classifier baseLearner = (Classifier) getPreparedClassOption(this.baseLearnerOption);
         baseLearner.resetLearning();
@@ -110,7 +110,7 @@ public class OzaBoostAdwin extends AbstractClassifier implements MultiClassClass
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
         int numClasses = inst.numClasses();
         // Set log (k-1) and (k-1) for SAMME Method
         if (this.sammeOption.isSet()) {
@@ -207,7 +207,7 @@ public class OzaBoostAdwin extends AbstractClassifier implements MultiClassClass
     }
 
     @Override
-    public double[] getVotesForInstance(Instance inst) {
+    public double[] getVotesForInstance(Instance inst) throws Exception {
         if (this.outputCodesOption.isSet()) {
             return getVotesForInstanceBinary(inst);
         }
@@ -228,7 +228,7 @@ public class OzaBoostAdwin extends AbstractClassifier implements MultiClassClass
         return combinedVote.getArrayRef();
     }
 
-    public double[] getVotesForInstanceBinary(Instance inst) {
+    public double[] getVotesForInstanceBinary(Instance inst) throws Exception {
         double combinedVote[] = new double[(int) inst.numClasses()];
         Instance weightedInst = (Instance) inst.copy();
         if (this.initMatrixCodes == false) {

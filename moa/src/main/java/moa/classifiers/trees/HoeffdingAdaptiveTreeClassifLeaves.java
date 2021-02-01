@@ -51,19 +51,19 @@ public class HoeffdingAdaptiveTreeClassifLeaves extends HoeffdingAdaptiveTree {
     }
 
     @Override
-    protected LearningNode newLearningNode(double[] initialClassObservations) {
+    protected LearningNode newLearningNode(double[] initialClassObservations) throws Exception {
 	return new LearningNodeHATClassifier(initialClassObservations, null, this);
     }
 
     //@Override
-    protected LearningNode newLearningNode(double[] initialClassObservations, Classifier cl) {
+    protected LearningNode newLearningNode(double[] initialClassObservations, Classifier cl) throws Exception {
 	return new LearningNodeHATClassifier(initialClassObservations, cl, this);
     }
 
     @Override
     protected void attemptToSplit(ActiveLearningNode node,
 	    SplitNode parent,
-	    int parentIndex) {
+	    int parentIndex) throws Exception {
 	if (!node.observedClassDistributionIsPure()) {
 	    SplitCriterion splitCriterion = (SplitCriterion) getPreparedClassOption(this.splitCriterionOption);
 	    AttributeSplitSuggestion[] bestSplitSuggestions = node.getBestSplitSuggestions(splitCriterion, this);
@@ -152,7 +152,7 @@ public class HoeffdingAdaptiveTreeClassifLeaves extends HoeffdingAdaptiveTree {
 
 	public LearningNodeHATClassifier(double[] initialClassObservations,
 		Classifier cl,
-		HoeffdingAdaptiveTreeClassifLeaves ht) {
+		HoeffdingAdaptiveTreeClassifLeaves ht) throws Exception {
 	    super(initialClassObservations);
 
 	    if (cl == null) {
@@ -163,7 +163,7 @@ public class HoeffdingAdaptiveTreeClassifLeaves extends HoeffdingAdaptiveTree {
 	}
 
 	@Override
-	public double[] getClassVotes(Instance inst, HoeffdingTree ht) {
+	public double[] getClassVotes(Instance inst, HoeffdingTree ht) throws Exception {
 	    if (getWeightSeen() >= ((HoeffdingAdaptiveTreeClassifLeaves) ht).nbThresholdOption.getValue()) {
 		return this.classifier.getVotesForInstance(inst);
 	    }
@@ -176,7 +176,7 @@ public class HoeffdingAdaptiveTreeClassifLeaves extends HoeffdingAdaptiveTree {
 	}
 
 	@Override
-	public void learnFromInstance(Instance inst, HoeffdingTree ht) {
+	public void learnFromInstance(Instance inst, HoeffdingTree ht) throws Exception {
 	    this.classifier.trainOnInstance(inst);
 	    super.learnFromInstance(inst, ht);
 	}

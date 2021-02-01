@@ -53,5 +53,5 @@ public interface MOAObject extends Serializable {
      * @param sb	the stringbuilder to add the description
      * @param indent	the number of characters to indent
      */
-    public void getDescription(StringBuilder sb, int indent);
+    public void getDescription(StringBuilder sb, int indent) throws Exception;
 }

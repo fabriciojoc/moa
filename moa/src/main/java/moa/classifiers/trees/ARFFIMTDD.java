@@ -287,7 +287,7 @@ public class ARFFIMTDD extends AbstractClassifier implements Regressor {
          * and also prevents the class value from being truncated to an int when it is passed to the
          * attribute observer
          */
-        public void learnFromInstance(Instance inst, boolean growthAllowed, ARFFIMTDD arffimtdd) {
+        public void learnFromInstance(Instance inst, boolean growthAllowed, ARFFIMTDD arffimtdd) throws Exception {
             //The prediction must be calculated here -- it may be different from the tree's prediction due to alternate trees
 
             // Update the statistics for this node
@@ -395,7 +395,7 @@ public class ARFFIMTDD extends AbstractClassifier implements Regressor {
             return getPredictionTargetMean(inst);
         }
 
-        public void checkForSplit(ARFFIMTDD tree) {
+        public void checkForSplit(ARFFIMTDD tree) throws Exception {
             // If it has seen Nmin examples since it was last tested for splitting, attempt a split of this node
             if (examplesSeen - examplesSeenAtLastSplitEvaluation >= tree.gracePeriodOption.getValue()) {
                 int index = (parent != null) ? parent.getChildIndex(this) : 0;
@@ -770,7 +770,7 @@ public class ARFFIMTDD extends AbstractClassifier implements Regressor {
     /**
      * Method for updating (training) the model using a new instance
      */
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
         checkRoot();
 
         examplesSeen += inst.weight();
@@ -787,7 +787,7 @@ public class ARFFIMTDD extends AbstractClassifier implements Regressor {
         processInstance(inst, treeRoot, prediction, getNormalizedError(inst, prediction), true, false);
     }
 
-    public void processInstance(Instance inst, Node node, double prediction, double normalError, boolean growthAllowed, boolean inAlternate) {
+    public void processInstance(Instance inst, Node node, double prediction, double normalError, boolean growthAllowed, boolean inAlternate) throws Exception {
         Node currentNode = node;
         while (true) {
             if (currentNode instanceof LeafNode) {
@@ -900,7 +900,7 @@ public class ARFFIMTDD extends AbstractClassifier implements Regressor {
         return Math.sqrt(( (range * range) * Math.log(1 / confidence)) / (2.0 * n));
     }
 
-    protected void attemptToSplit(LeafNode node, Node parent, int parentIndex) {
+    protected void attemptToSplit(LeafNode node, Node parent, int parentIndex) throws Exception {
         // Set the split criterion to use to the SDR split criterion as described by Ikonomovska et al.
         SplitCriterion splitCriterion = (SplitCriterion) getPreparedClassOption(this.splitCriterionOption);
 

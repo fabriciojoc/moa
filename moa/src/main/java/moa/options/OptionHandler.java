@@ -51,7 +51,7 @@ public interface OptionHandler extends MOAObject, Configurable {
      * This method prepares this object for use.
      *
      */
-    public void prepareForUse();
+    public void prepareForUse() throws Exception;
 
     /**
      * This method prepares this object for use.
@@ -59,7 +59,7 @@ public interface OptionHandler extends MOAObject, Configurable {
      * @param monitor the TaskMonitor to use
      * @param repository  the ObjectRepository to use
      */
-    public void prepareForUse(TaskMonitor monitor, ObjectRepository repository);
+    public void prepareForUse(TaskMonitor monitor, ObjectRepository repository) throws Exception;
 
     /**
      * This method produces a copy of this object.

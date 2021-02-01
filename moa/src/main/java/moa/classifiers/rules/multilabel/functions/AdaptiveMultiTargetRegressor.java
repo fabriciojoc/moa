@@ -77,7 +77,7 @@ implements MultiTargetRegressor, AMRulesFunction {
 
 	}
 	@Override
-	public void trainOnInstanceImpl(MultiLabelInstance instance) {
+	public void trainOnInstanceImpl(MultiLabelInstance instance) throws Exception {
 		if (!this.hasStarted){	
 			baseLearner=new MultiTargetRegressor[NUM_LEARNERS];
 			errorMeasurer= new MultiTargetErrorMeasurer[NUM_LEARNERS];
@@ -104,7 +104,7 @@ implements MultiTargetRegressor, AMRulesFunction {
 	}
 
 	@Override
-	public Prediction getPredictionForInstance(MultiLabelInstance inst) {
+	public Prediction getPredictionForInstance(MultiLabelInstance inst) throws Exception {
 		Prediction prediction=null;
 		if(hasStarted){
 			int bestIndex=0;
@@ -128,7 +128,7 @@ implements MultiTargetRegressor, AMRulesFunction {
 	}
 
 	@Override
-	public void resetLearningImpl() {
+	public void resetLearningImpl() throws Exception {
 		this.hasStarted = false;
 		if(baseLearner!=null){
 			for (int i=0; i<baseLearner.length; i++){
@@ -155,7 +155,7 @@ implements MultiTargetRegressor, AMRulesFunction {
 	}
 
 	@Override
-	public void resetWithMemory() {
+	public void resetWithMemory() throws Exception {
 		if(errorMeasurer==null)
 			errorMeasurer=new MultiTargetErrorMeasurer[NUM_LEARNERS];
 		for (int i=0; i<NUM_LEARNERS; i++){

@@ -84,7 +84,7 @@ public class OddsRatioScore extends AbstractAnomalyDetector {
         }
 
 	@Override
-	public boolean updateAndCheckAnomalyDetection(MultiLabelInstance instance) {
+	public boolean updateAndCheckAnomalyDetection(MultiLabelInstance instance) throws Exception {
 		boolean isAnomaly=false;
 		if(probabilityFunction==null){
 			weightSeen=0.0;

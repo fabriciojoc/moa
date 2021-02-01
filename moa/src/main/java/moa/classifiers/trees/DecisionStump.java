@@ -95,7 +95,7 @@ public class DecisionStump extends AbstractClassifier implements MultiClassClass
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
         this.observedClassDistribution.addToValue((int) inst.classValue(), inst.weight());
         for (int i = 0; i < inst.numAttributes() - 1; i++) {
             int instAttIndex = modelAttIndexToInstanceAttIndex(i, inst);

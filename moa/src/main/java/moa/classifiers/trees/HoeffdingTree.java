@@ -217,7 +217,7 @@ public FlagOption binarySplitsOption = new FlagOption("binarySplits", 'b',
             return this.observedClassDistribution.getArrayCopy();
         }
 
-        public double[] getClassVotes(Instance inst, HoeffdingTree ht) {
+        public double[] getClassVotes(Instance inst, HoeffdingTree ht) throws Exception {
             return this.observedClassDistribution.getArrayCopy();
         }
 
@@ -394,7 +394,7 @@ public FlagOption binarySplitsOption = new FlagOption("binarySplits", 'b',
             super(initialClassObservations);
         }
 
-        public abstract void learnFromInstance(Instance inst, HoeffdingTree ht);
+        public abstract void learnFromInstance(Instance inst, HoeffdingTree ht) throws Exception;
     }
 
     public static class InactiveLearningNode extends LearningNode {
@@ -435,7 +435,7 @@ public FlagOption binarySplitsOption = new FlagOption("binarySplits", 'b',
         }
 
         @Override
-        public void learnFromInstance(Instance inst, HoeffdingTree ht) {
+        public void learnFromInstance(Instance inst, HoeffdingTree ht) throws Exception {
             if (this.isInitialized == false) {
                 this.attributeObservers = new AutoExpandVector<AttributeClassObserver>(inst.numAttributes());
                 this.isInitialized = true;
@@ -548,7 +548,7 @@ public FlagOption binarySplitsOption = new FlagOption("binarySplits", 'b',
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
         if (this.treeRoot == null) {
             this.treeRoot = newLearningNode();
             this.activeLeafNodeCount = 1;
@@ -582,7 +582,7 @@ public FlagOption binarySplitsOption = new FlagOption("binarySplits", 'b',
     }
 
     @Override
-    public double[] getVotesForInstance(Instance inst) {
+    public double[] getVotesForInstance(Instance inst) throws Exception {
         if (this.treeRoot != null) {
             FoundNode foundNode = this.treeRoot.filterInstanceToLeaf(inst,
                     null, -1);
@@ -650,18 +650,18 @@ public FlagOption binarySplitsOption = new FlagOption("binarySplits", 'b',
     }
     
 
-    protected AttributeClassObserver newNominalClassObserver() {
+    protected AttributeClassObserver newNominalClassObserver() throws Exception {
         AttributeClassObserver nominalClassObserver = (AttributeClassObserver) getPreparedClassOption(this.nominalEstimatorOption);
         return (AttributeClassObserver) nominalClassObserver.copy();
     }
 
-    protected AttributeClassObserver newNumericClassObserver() {
+    protected AttributeClassObserver newNumericClassObserver() throws Exception {
         AttributeClassObserver numericClassObserver = (AttributeClassObserver) getPreparedClassOption(this.numericEstimatorOption);
         return (AttributeClassObserver) numericClassObserver.copy();
     }
 
     protected void attemptToSplit(ActiveLearningNode node, SplitNode parent,
-            int parentIndex) {
+            int parentIndex) throws Exception {
         if (!node.observedClassDistributionIsPure()) {
             SplitCriterion splitCriterion = (SplitCriterion) getPreparedClassOption(this.splitCriterionOption);
             AttributeSplitSuggestion[] bestSplitSuggestions = node.getBestSplitSuggestions(splitCriterion, this);
@@ -738,7 +738,7 @@ public FlagOption binarySplitsOption = new FlagOption("binarySplits", 'b',
         }
     }
 
-    public void enforceTrackerLimit() {
+    public void enforceTrackerLimit() throws Exception {
         if ((this.inactiveLeafNodeCount > 0)
                 || ((this.activeLeafNodeCount * this.activeLeafByteSizeEstimate + this.inactiveLeafNodeCount
                 * this.inactiveLeafByteSizeEstimate)
@@ -785,7 +785,7 @@ public FlagOption binarySplitsOption = new FlagOption("binarySplits", 'b',
         }
     }
 
-    public void estimateModelByteSizes() {
+    public void estimateModelByteSizes() throws Exception {
         FoundNode[] learningNodes = findLearningNodes();
         long totalActiveSize = 0;
         long totalInactiveSize = 0;
@@ -839,7 +839,7 @@ public FlagOption binarySplitsOption = new FlagOption("binarySplits", 'b',
     }
 
     protected void activateLearningNode(InactiveLearningNode toActivate,
-            SplitNode parent, int parentBranch) {
+            SplitNode parent, int parentBranch) throws Exception {
         Node newLeaf = newLearningNode(toActivate.getObservedClassDistribution());
         if (parent == null) {
             this.treeRoot = newLeaf;
@@ -894,7 +894,7 @@ public FlagOption binarySplitsOption = new FlagOption("binarySplits", 'b',
         }
 
         @Override
-        public double[] getClassVotes(Instance inst, HoeffdingTree ht) {
+        public double[] getClassVotes(Instance inst, HoeffdingTree ht) throws Exception {
             if (getWeightSeen() >= ht.nbThresholdOption.getValue()) {
                 return NaiveBayes.doNaiveBayesPrediction(inst,
                         this.observedClassDistribution,
@@ -922,7 +922,7 @@ public FlagOption binarySplitsOption = new FlagOption("binarySplits", 'b',
         }
 
         @Override
-        public void learnFromInstance(Instance inst, HoeffdingTree ht) {
+        public void learnFromInstance(Instance inst, HoeffdingTree ht) throws Exception {
             int trueClass = (int) inst.classValue();
             if (this.observedClassDistribution.maxIndex() == trueClass) {
                 this.mcCorrectWeight += inst.weight();
@@ -935,7 +935,7 @@ public FlagOption binarySplitsOption = new FlagOption("binarySplits", 'b',
         }
 
         @Override
-        public double[] getClassVotes(Instance inst, HoeffdingTree ht) {
+        public double[] getClassVotes(Instance inst, HoeffdingTree ht) throws Exception {
             if (this.mcCorrectWeight > this.nbCorrectWeight) {
                 return this.observedClassDistribution.getArrayCopy();
             }
@@ -944,11 +944,11 @@ public FlagOption binarySplitsOption = new FlagOption("binarySplits", 'b',
         }
     }
 
-    protected LearningNode newLearningNode() {
+    protected LearningNode newLearningNode() throws Exception {
         return newLearningNode(new double[0]);
     }
 
-    protected LearningNode newLearningNode(double[] initialClassObservations) {
+    protected LearningNode newLearningNode(double[] initialClassObservations) throws Exception {
         LearningNode ret;
         int predictionOption = this.leafpredictionOption.getChosenIndex();
         if (predictionOption == 0) { //MC

@@ -36,7 +36,7 @@ public class SelectAttributesFilter extends AbstractMultiLabelStreamFilter imple
 	}
 
 	@Override
-	public InstanceExample nextInstance() {
+	public InstanceExample nextInstance() throws Exception {
 		Instance instance = (Instance) ((Instance) this.inputStream.nextInstance().getData());
 		if(dataset==null){
 			initialize(instance);

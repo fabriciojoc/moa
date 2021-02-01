@@ -68,7 +68,7 @@ public class RecurrentConceptDriftStream extends ConceptDriftStream {
 
     @Override
     public void prepareForUseImpl(TaskMonitor monitor,
-            ObjectRepository repository) {
+            ObjectRepository repository) throws Exception {
 
         this.inputStream = (InstanceStream) getPreparedClassOption(this.streamOption);
         this.driftStream = (InstanceStream) getPreparedClassOption(this.driftstreamOption);
@@ -80,7 +80,7 @@ public class RecurrentConceptDriftStream extends ConceptDriftStream {
     }
 
     @Override
-    public Example nextInstance() {
+    public Example nextInstance() throws Exception {
 
         numberInstanceStream++;
         double x = numberInstanceStream;

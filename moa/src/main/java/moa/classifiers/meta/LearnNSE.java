@@ -106,7 +106,7 @@ public class LearnNSE extends AbstractClassifier implements MultiClassClassifier
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
         this.index++;
         // Store instance in the buffer
         if (this.buffer == null) {
@@ -244,7 +244,7 @@ public class LearnNSE extends AbstractClassifier implements MultiClassClassifier
     }
 
     @Override
-    public double[] getVotesForInstance(Instance inst) {
+    public double[] getVotesForInstance(Instance inst) throws Exception {
         DoubleVector combinedVote = new DoubleVector();
         if (this.trainingWeightSeenByModel > 0.0) {
             for (int i = 0; i < this.ensemble.size(); i++) {

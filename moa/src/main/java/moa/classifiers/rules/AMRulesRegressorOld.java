@@ -110,7 +110,7 @@ public class AMRulesRegressorOld extends AbstractAMRules implements Regressor{
 			"VRSplitCriterion");
 
 
-	protected Rule newRule(int ID, RuleActiveLearningNode node, double[] statistics) {
+	protected Rule newRule(int ID, RuleActiveLearningNode node, double[] statistics) throws Exception {
 		Rule r=newRule(ID);
 		
 		if (node!=null)
@@ -141,7 +141,7 @@ public class AMRulesRegressorOld extends AbstractAMRules implements Regressor{
 	}
 
 
-	public RuleActiveLearningNode newRuleActiveLearningNode(Builder builder) {
+	public RuleActiveLearningNode newRuleActiveLearningNode(Builder builder) throws Exception {
 			return new RuleActiveRegressionNode(builder);
 		}
 	    
@@ -160,14 +160,14 @@ public class AMRulesRegressorOld extends AbstractAMRules implements Regressor{
 	 * This method initializes and resets the algorithm.
 	 */
 	@Override
-	public void resetLearningImpl() {
+	public void resetLearningImpl() throws Exception {
 		this.statistics= new double[]{0.0,0,0};	
 		this.ruleNumberID=0;
 		this.defaultRule = newRule(++this.ruleNumberID);
 	}
  
 
-	private Rule newRule(int ID) {
+	private Rule newRule(int ID) throws Exception {
 		Rule r=new Rule.Builder().
 				threshold(this.pageHinckleyThresholdOption.getValue()).
 				alpha(this.pageHinckleyAlphaOption.getValue()).

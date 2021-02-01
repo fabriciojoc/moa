@@ -70,7 +70,7 @@ public class AnyOut extends MyBaseOutlierDetector {
 	}
 
 	@Override
-	protected void ProcessNewStreamObj(Instance i) {
+	protected void ProcessNewStreamObj(Instance i) throws Exception {
 		if (trainingSetSize >= trainingCount) {
 			if (trainingSet == null) {
 				trainingSet = new DataSet(i.numAttributes()-1);

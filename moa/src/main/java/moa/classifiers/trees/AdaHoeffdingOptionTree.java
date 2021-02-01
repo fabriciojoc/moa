@@ -65,7 +65,7 @@ public class AdaHoeffdingOptionTree extends HoeffdingOptionTree {
         }
 
         @Override
-        public void learnFromInstance(Instance inst, HoeffdingOptionTree hot) {
+        public void learnFromInstance(Instance inst, HoeffdingOptionTree hot) throws Exception {
             int trueClass = (int) inst.classValue();
             boolean blCorrect = false;
             if (this.observedClassDistribution.maxIndex() == trueClass) {

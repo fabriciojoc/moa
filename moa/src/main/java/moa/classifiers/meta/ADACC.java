@@ -110,7 +110,7 @@ public class ADACC extends DACC implements MultiClassClassifier {
 	
     
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
 	
     	if (recentChunk == null)
             recentChunk = new Instances(this.getModelContext());
@@ -131,7 +131,7 @@ public class ADACC extends DACC implements MultiClassClassifier {
      * (a copy) of the best adaptive classifier and keep it 
      * for future use, in case of concept recurrence 
      */
-    private void takeSnapshot(){
+    private void takeSnapshot() throws Exception {
 
     	this.index = computeStabilityIndex();
     	 
@@ -212,7 +212,7 @@ public class ADACC extends DACC implements MultiClassClassifier {
     * if its diversity level and error rates are low. 
     * @return the stability measure value
     */
-    private double computeStabilityIndex(){
+    private double computeStabilityIndex() throws Exception {
     	
     	int m = (int)Math.floor((this.ensemble.length-MAXPERMANENT)/2);
     	int[][] votes=new int[m][tau_size];

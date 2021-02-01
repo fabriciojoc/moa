@@ -99,7 +99,7 @@ public class AccuracyUpdatedEnsemble extends AbstractClassifier implements Multi
 	protected Instances currentChunk;
 
 	@Override
-	public void prepareForUseImpl(TaskMonitor monitor, ObjectRepository repository) {
+	public void prepareForUseImpl(TaskMonitor monitor, ObjectRepository repository) throws Exception {
 		this.candidate = (Classifier) getPreparedClassOption(this.learnerOption);
 		this.candidate.resetLearning();
 
@@ -107,7 +107,7 @@ public class AccuracyUpdatedEnsemble extends AbstractClassifier implements Multi
 	}
 
 	@Override
-	public void resetLearningImpl() {
+	public void resetLearningImpl() throws Exception {
 		this.currentChunk = null;
 		this.classDistributions = null;
 		this.processedInstances = 0;
@@ -118,7 +118,7 @@ public class AccuracyUpdatedEnsemble extends AbstractClassifier implements Multi
 	}
 
 	@Override
-	public void trainOnInstanceImpl(Instance inst) {
+	public void trainOnInstanceImpl(Instance inst) throws Exception {
 		this.initVariables();
 
 		this.classDistributions[(int) inst.classValue()]++;
@@ -140,7 +140,7 @@ public class AccuracyUpdatedEnsemble extends AbstractClassifier implements Multi
 	/**
 	 * Predicts a class for an example.
 	 */
-	public double[] getVotesForInstance(Instance inst) {
+	public double[] getVotesForInstance(Instance inst) throws Exception {
 		DoubleVector combinedVote = new DoubleVector();
 
 		if (this.trainingWeightSeenByModel > 0.0) {
@@ -175,7 +175,7 @@ public class AccuracyUpdatedEnsemble extends AbstractClassifier implements Multi
 	 * Processes a chunk of instances.
 	 * This method is called after collecting a chunk of examples.
 	 */
-	protected void processChunk() {
+	protected void processChunk() throws Exception {
 		Classifier addedClassifier = null;
 		double mse_r = this.computeMseR();
 
@@ -218,7 +218,7 @@ public class AccuracyUpdatedEnsemble extends AbstractClassifier implements Multi
 	/**
 	 * Checks if the memory limit is exceeded and if so prunes the classifiers in the ensemble.
 	 */
-	protected void enforceMemoryLimit() {
+	protected void enforceMemoryLimit() throws Exception {
 		double memoryLimit = this.maxByteSizeOption.getValue() / (double) (this.learners.length + 1);
 
 		for (int i = 0; i < this.learners.length; i++) {
@@ -370,7 +370,7 @@ public class AccuracyUpdatedEnsemble extends AbstractClassifier implements Multi
 	 * @param classifierToTrain
 	 *            Classifier being trained.
 	 */
-	private void trainOnChunk(Classifier classifierToTrain) {
+	private void trainOnChunk(Classifier classifierToTrain) throws Exception {
 		for (int num = 0; num < this.chunkSizeOption.getValue(); num++) {
 			classifierToTrain.trainOnInstance(this.currentChunk.instance(num));
 		}

@@ -73,7 +73,7 @@ public class AdaptiveNodePredictor extends AbstractClassifier implements
 	}
 
 	@Override
-	public void trainOnInstanceImpl(Instance inst) {
+	public void trainOnInstanceImpl(Instance inst) throws Exception {
 		if(!hasStarted){
 			p=new Perceptron();
 			tm=new TargetMean();

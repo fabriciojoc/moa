@@ -107,7 +107,7 @@ public class EvaluateClustering extends AuxiliarMainTask {
     }
     
     @Override
-    protected Object doMainTask(TaskMonitor monitor, ObjectRepository repository) {
+    protected Object doMainTask(TaskMonitor monitor, ObjectRepository repository) throws Exception {
 
     	// Create an array to summarize the selected measures
     	boolean[] measureCollection = new boolean[8];

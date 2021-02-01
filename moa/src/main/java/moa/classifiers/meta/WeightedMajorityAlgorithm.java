@@ -80,7 +80,7 @@ public class WeightedMajorityAlgorithm extends AbstractClassifier implements Mul
 
     @Override
     public void prepareForUseImpl(TaskMonitor monitor,
-            ObjectRepository repository) {
+            ObjectRepository repository) throws Exception {
         Option[] learnerOptions = this.learnerListOption.getList();
         this.ensemble = new Classifier[learnerOptions.length];
         for (int i = 0; i < learnerOptions.length; i++) {
@@ -101,7 +101,7 @@ public class WeightedMajorityAlgorithm extends AbstractClassifier implements Mul
     }
 
     @Override
-    public void resetLearningImpl() {
+    public void resetLearningImpl() throws Exception {
         this.ensembleWeights = new double[this.ensemble.length];
         for (int i = 0; i < this.ensemble.length; i++) {
             this.ensemble[i].resetLearning();
@@ -110,7 +110,7 @@ public class WeightedMajorityAlgorithm extends AbstractClassifier implements Mul
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
         double totalWeight = 0.0;
         for (int i = 0; i < this.ensemble.length; i++) {
             boolean prune = false;
@@ -136,7 +136,7 @@ public class WeightedMajorityAlgorithm extends AbstractClassifier implements Mul
         }
     }
 
-    public double[] getVotesForInstance(Instance inst) {
+    public double[] getVotesForInstance(Instance inst) throws Exception {
         DoubleVector combinedVote = new DoubleVector();
         if (this.trainingWeightSeenByModel > 0.0) {
             for (int i = 0; i < this.ensemble.length; i++) {

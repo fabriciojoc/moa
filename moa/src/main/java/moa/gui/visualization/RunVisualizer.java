@@ -133,7 +133,7 @@ public class RunVisualizer implements Runnable, ActionListener, ClusterEventList
     /* reference to the log panel */
     private final TextViewerPanel m_logPanel;
 
-    public RunVisualizer(ClusteringVisualTab visualPanel, ClusteringSetupTab clusteringSetupTab){
+    public RunVisualizer(ClusteringVisualTab visualPanel, ClusteringSetupTab clusteringSetupTab) throws Exception {
         m_visualPanel = visualPanel;
         m_streampanel0 = visualPanel.getLeftStreamPanel();
         m_streampanel1 = visualPanel.getRightStreamPanel();
@@ -185,11 +185,15 @@ public class RunVisualizer implements Runnable, ActionListener, ClusterEventList
 
 
     public void run() {
+        try {
             runVisual();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
-    public void runVisual() {
+    public void runVisual() throws Exception {
         int processCounter = 0;
         int speedCounter = 0;
         LinkedList<DataPoint> pointBuffer0 = new LinkedList<DataPoint>();

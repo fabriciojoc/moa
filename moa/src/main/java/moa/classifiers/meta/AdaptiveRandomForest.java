@@ -166,7 +166,7 @@ public class AdaptiveRandomForest extends AbstractClassifier implements MultiCla
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance instance) {
+    public void trainOnInstanceImpl(Instance instance) throws Exception {
         ++this.instancesSeen;
         if(this.ensemble == null) 
             initEnsemble(instance);
@@ -198,7 +198,7 @@ public class AdaptiveRandomForest extends AbstractClassifier implements MultiCla
     }
 
     @Override
-    public double[] getVotesForInstance(Instance instance) {
+    public double[] getVotesForInstance(Instance instance) throws Exception {
         Instance testInstance = instance.copy();
         if(this.ensemble == null) 
             initEnsemble(testInstance);
@@ -234,7 +234,7 @@ public class AdaptiveRandomForest extends AbstractClassifier implements MultiCla
         return null;
     }
 
-    protected void initEnsemble(Instance instance) {
+    protected void initEnsemble(Instance instance) throws Exception {
         // Init the ensemble.
         int ensembleSize = this.ensembleSizeOption.getValue();
         this.ensemble = new ARFBaseLearner[ensembleSize];
@@ -347,7 +347,7 @@ public class AdaptiveRandomForest extends AbstractClassifier implements MultiCla
         protected int numberOfWarningsDetected;
 
         private void init(int indexOriginal, ARFHoeffdingTree instantiatedClassifier, BasicClassificationPerformanceEvaluator evaluatorInstantiated, 
-            long instancesSeen, boolean useBkgLearner, boolean useDriftDetector, ClassOption driftOption, ClassOption warningOption, boolean isBackgroundLearner) {
+            long instancesSeen, boolean useBkgLearner, boolean useDriftDetector, ClassOption driftOption, ClassOption warningOption, boolean isBackgroundLearner) throws Exception {
             this.indexOriginal = indexOriginal;
             this.createdOn = instancesSeen;
             this.lastDriftOn = 0;
@@ -375,11 +375,11 @@ public class AdaptiveRandomForest extends AbstractClassifier implements MultiCla
         }
 
         public ARFBaseLearner(int indexOriginal, ARFHoeffdingTree instantiatedClassifier, BasicClassificationPerformanceEvaluator evaluatorInstantiated, 
-                    long instancesSeen, boolean useBkgLearner, boolean useDriftDetector, ClassOption driftOption, ClassOption warningOption, boolean isBackgroundLearner) {
+                    long instancesSeen, boolean useBkgLearner, boolean useDriftDetector, ClassOption driftOption, ClassOption warningOption, boolean isBackgroundLearner) throws Exception {
             init(indexOriginal, instantiatedClassifier, evaluatorInstantiated, instancesSeen, useBkgLearner, useDriftDetector, driftOption, warningOption, isBackgroundLearner);
         }
 
-        public void reset() {
+        public void reset() throws Exception {
             if(this.useBkgLearner && this.bkgLearner != null) {
                 this.classifier = this.bkgLearner.classifier;
                 
@@ -398,7 +398,7 @@ public class AdaptiveRandomForest extends AbstractClassifier implements MultiCla
             this.evaluator.reset();
         }
 
-        public void trainOnInstance(Instance instance, double weight, long instancesSeen) {
+        public void trainOnInstance(Instance instance, double weight, long instancesSeen) throws Exception {
             Instance weightedInstance = instance.copy();
             weightedInstance.setWeight(instance.weight() * weight);
             this.classifier.trainOnInstance(weightedInstance);
@@ -447,7 +447,7 @@ public class AdaptiveRandomForest extends AbstractClassifier implements MultiCla
             }
         }
 
-        public double[] getVotesForInstance(Instance instance) {
+        public double[] getVotesForInstance(Instance instance) throws Exception {
             DoubleVector vote = new DoubleVector(this.classifier.getVotesForInstance(instance));
             return vote.getArrayRef();
         }
@@ -476,7 +476,11 @@ public class AdaptiveRandomForest extends AbstractClassifier implements MultiCla
 
         @Override
         public void run() {
-            learner.trainOnInstance(this.instance, this.weight, this.instancesSeen);
+            try {
+                learner.trainOnInstance(this.instance, this.weight, this.instancesSeen);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         @Override

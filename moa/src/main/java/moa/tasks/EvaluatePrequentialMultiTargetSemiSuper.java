@@ -125,7 +125,7 @@ public class EvaluatePrequentialMultiTargetSemiSuper extends MultiTargetMainTask
     }
 
     @Override
-    protected Object doMainTask(TaskMonitor monitor, ObjectRepository repository) {
+    protected Object doMainTask(TaskMonitor monitor, ObjectRepository repository) throws Exception {
         
         MultiTargetLearnerSemiSupervised learner = (MultiTargetLearnerSemiSupervised) getPreparedClassOption(this.learnerOption);
         ExampleStream stream = (ExampleStream) getPreparedClassOption(this.streamOption);

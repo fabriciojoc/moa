@@ -72,7 +72,7 @@ public class BasicMultiLabelLearner extends AbstractMultiLabelLearner{
 	protected boolean hasStarted = false;
 
 	@Override
-	public void resetLearningImpl() {
+	public void resetLearningImpl() throws Exception {
 		this.hasStarted = false;
 		if(ensemble!=null){
 			for (int i=0; i<ensemble.length; i++){
@@ -82,7 +82,7 @@ public class BasicMultiLabelLearner extends AbstractMultiLabelLearner{
 	}
 
 	@Override
-	public void trainOnInstanceImpl(MultiLabelInstance instance) {
+	public void trainOnInstanceImpl(MultiLabelInstance instance) throws Exception {
 		if (this.hasStarted == false){		
 			this.ensemble = new Classifier[instance.numberOutputTargets()];
 			Classifier baseLearner = (Classifier) getPreparedClassOption(this.baseLearnerOption);
@@ -143,7 +143,7 @@ public class BasicMultiLabelLearner extends AbstractMultiLabelLearner{
 
 
 	@Override
-	protected Measurement[] getModelMeasurementsImpl() {
+	protected Measurement[] getModelMeasurementsImpl() throws Exception {
 		Measurement [] baseLearnerMeasurements=((Classifier) getPreparedClassOption(this.baseLearnerOption)).getModelMeasurements();
 		int nMeasurements=baseLearnerMeasurements.length;
 		Measurement [] m=new Measurement[nMeasurements];
@@ -179,7 +179,7 @@ public class BasicMultiLabelLearner extends AbstractMultiLabelLearner{
 
 
 	@Override
-	public Prediction getPredictionForInstance(MultiLabelInstance instance) {
+	public Prediction getPredictionForInstance(MultiLabelInstance instance) throws Exception {
 		Prediction prediction=null;
 		
 		if (this.hasStarted){ 

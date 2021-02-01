@@ -115,7 +115,7 @@ public abstract class EnsembleClustererAbstract extends AbstractClusterer {
 	}
 
 	@Override
-	public void resetLearningImpl() {
+	public void resetLearningImpl() throws Exception {
 
 		this.instancesSeen = 0;
 		this.bestModel = 0;
@@ -142,7 +142,7 @@ public abstract class EnsembleClustererAbstract extends AbstractClusterer {
 	}
 
 	@Override
-	public void trainOnInstanceImpl(Instance inst) {
+	public void trainOnInstanceImpl(Instance inst) throws Exception {
 
 		// it appears to use numAttributes as the index when no class exists
 		if (inst.classIndex() < inst.numAttributes()) {
@@ -196,7 +196,7 @@ public abstract class EnsembleClustererAbstract extends AbstractClusterer {
 
 	}
 
-	protected void updateConfiguration() {
+	protected void updateConfiguration() throws Exception {
 		// init evaluation measure
 		if (this.verbose >= 2) {
 			System.out.println(" ");
@@ -220,7 +220,7 @@ public abstract class EnsembleClustererAbstract extends AbstractClusterer {
 		this.iter++;
 	}
 
-	protected void evaluatePerformance() {
+	protected void evaluatePerformance() throws Exception {
 
 		HashMap<String, Double> bestPerformanceValMap = new HashMap<String, Double>();
 		HashMap<String, Integer> bestPerformanceIdxMap = new HashMap<String, Integer>();
@@ -259,7 +259,7 @@ public abstract class EnsembleClustererAbstract extends AbstractClusterer {
 		updateRemovalFlags(bestPerformanceValMap, bestPerformanceIdxMap, algorithmCount);
 	}
 
-	protected double computePerformanceMeasure(Algorithm algorithm) {
+	protected double computePerformanceMeasure(Algorithm algorithm) throws Exception {
 
 		ClassOption opt = new ClassOption("", ' ', "", MeasureCollection.class, this.settings.performanceMeasure);
 		MeasureCollection performanceMeasure = (MeasureCollection) opt.materializeObject(null, null);
@@ -304,7 +304,7 @@ public abstract class EnsembleClustererAbstract extends AbstractClusterer {
 		return performance;
 	}
 
-	protected void promoteCandidatesIntoEnsemble() {
+	protected void promoteCandidatesIntoEnsemble() throws Exception {
 
 		for (int i = 0; i < this.candidateEnsemble.size(); i++) {
 
@@ -369,7 +369,11 @@ public abstract class EnsembleClustererAbstract extends AbstractClusterer {
 		inst.setDataset(dataset);
 
 		// train adaptive random forest regressor based on performance of model
-		this.ARFregs.get(algortihm.algorithm).trainOnInstanceImpl(inst);
+		try {
+			this.ARFregs.get(algortihm.algorithm).trainOnInstanceImpl(inst);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	protected void updateRemovalFlags(HashMap<String, Double> bestPerformanceValMap,
@@ -412,7 +416,7 @@ public abstract class EnsembleClustererAbstract extends AbstractClusterer {
 	}
 
 	// predict performance of new configuration
-	protected void generateNewConfigurations() {
+	protected void generateNewConfigurations() throws Exception {
 
 		// get performance values
 		if (this.settings.useTestEnsemble) {
@@ -500,7 +504,7 @@ public abstract class EnsembleClustererAbstract extends AbstractClusterer {
 		return parentIdx;
 	}
 
-	protected Algorithm sampleNewConfiguration(ArrayList<Double> silhs, int parentIdx) {
+	protected Algorithm sampleNewConfiguration(ArrayList<Double> silhs, int parentIdx) throws Exception {
 
 		if (this.verbose >= 2) {
 			System.out.println("Selected Configuration " + parentIdx + " as parent: "
@@ -513,7 +517,7 @@ public abstract class EnsembleClustererAbstract extends AbstractClusterer {
 		return newAlgorithm;
 	}
 
-	protected double predictPerformance(Algorithm newAlgorithm) {
+	protected double predictPerformance(Algorithm newAlgorithm) throws Exception {
 		// create a data point from new configuration
 		double[] params = newAlgorithm.getParamVector(0);
 		Instance newInst = new DenseInstance(1.0, params);
@@ -626,7 +630,7 @@ public abstract class EnsembleClustererAbstract extends AbstractClusterer {
 		// TODO Auto-generated method stub
 	}
 
-	public void prepareForUseImpl(TaskMonitor monitor, ObjectRepository repository) {
+	public void prepareForUseImpl(TaskMonitor monitor, ObjectRepository repository) throws Exception {
 
 		try {
 			// read settings from json
@@ -660,6 +664,8 @@ public abstract class EnsembleClustererAbstract extends AbstractClusterer {
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		super.prepareForUseImpl(monitor, repository);
@@ -680,7 +686,11 @@ public abstract class EnsembleClustererAbstract extends AbstractClusterer {
 
 		@Override
 		public void run() {
-			clusterer.trainOnInstance(this.instance);
+			try {
+				clusterer.trainOnInstance(this.instance);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		@Override

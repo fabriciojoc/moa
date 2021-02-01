@@ -110,7 +110,7 @@ public abstract class RuleActiveLearningNode extends ActiveLearningNode {
     /* (non-Javadoc)
 	 * @see moa.classifiers.rules.RuleActiveLearningNodeInterface#updateStatistics(weka.core.Instance)
 	 */
-	public void updateStatistics(Instance instance) {
+	public void updateStatistics(Instance instance) throws Exception {
         learnFromInstance(instance);
     }
 

@@ -156,7 +156,7 @@ public class RebalanceStream extends AbstractClassifier implements MultiClassCla
 	
     
     @Override
-    public void resetLearningImpl() {     	    	
+    public void resetLearningImpl() throws Exception {
         this.learner = (Classifier) getPreparedClassOption(this.baseLearnerOption);
         this.learnerResetBal = (Classifier) getPreparedClassOption(this.baseLearnerOption);
         this.learnerReset = (Classifier) getPreparedClassOption(this.baseLearnerOption);
@@ -206,7 +206,7 @@ public class RebalanceStream extends AbstractClassifier implements MultiClassCla
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance instance) {   	
+    public void trainOnInstanceImpl(Instance instance) throws Exception {
     	if (this.nAttributes == -1) {
     		this.nAttributes = instance.numAttributes();
     		this.indexValues = new int[this.nAttributes];
@@ -656,7 +656,7 @@ public class RebalanceStream extends AbstractClassifier implements MultiClassCla
     } 
     
     //reset the structures after a drift occours
-    private void resetAfterDrift() {
+    private void resetAfterDrift() throws Exception {
     	this.learnerBal.resetLearning();
 		this.learnerReset.resetLearning();
 		this.learnerResetBal.resetLearning();   
@@ -749,13 +749,13 @@ public class RebalanceStream extends AbstractClassifier implements MultiClassCla
     }
 
     @Override
-    public double[] getVotesForInstance(Instance instance) {
+    public double[] getVotesForInstance(Instance instance) throws Exception {
     	double[] prediction = this.learner.getVotesForInstance(instance);
     	fillConfusionMatrix(instance, this.confusionMatrixLearner, this.learner);
         return prediction;
     }
     
-    private void fillConfusionMatrix(Instance instance, int[][] confusionMatrix, Classifier learner) {    	
+    private void fillConfusionMatrix(Instance instance, int[][] confusionMatrix, Classifier learner) throws Exception {
    	 /*					learner.correctlyClassifies(trainInst)
 					pred 0.0	pred 1.0
 		trainInst.classValue()

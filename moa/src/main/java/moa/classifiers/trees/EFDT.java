@@ -275,12 +275,12 @@ public class EFDT extends AbstractClassifier implements MultiClassClassifier {
       / (2.0 * n));
   }
 
-  protected AttributeClassObserver newNominalClassObserver() {
+  protected AttributeClassObserver newNominalClassObserver() throws Exception {
     AttributeClassObserver nominalClassObserver = (AttributeClassObserver) getPreparedClassOption(this.nominalEstimatorOption);
     return (AttributeClassObserver) nominalClassObserver.copy();
   }
 
-  protected AttributeClassObserver newNumericClassObserver() {
+  protected AttributeClassObserver newNumericClassObserver() throws Exception {
     AttributeClassObserver numericClassObserver = (AttributeClassObserver) getPreparedClassOption(this.numericEstimatorOption);
     return (AttributeClassObserver) numericClassObserver.copy();
   }
@@ -423,7 +423,7 @@ public class EFDT extends AbstractClassifier implements MultiClassClassifier {
   }
 
   protected void attemptToSplit(ActiveLearningNode node, SplitNode parent,
-				int parentIndex) {
+				int parentIndex) throws Exception {
 
     if (!node.observedClassDistributionIsPure()) {
       node.addToSplitAttempts(1); // even if we don't actually attempt to split, we've computed infogains
@@ -574,7 +574,7 @@ public class EFDT extends AbstractClassifier implements MultiClassClassifier {
   }
 
   @Override
-  public void trainOnInstanceImpl(Instance inst) {
+  public void trainOnInstanceImpl(Instance inst) throws Exception {
 
     if (this.treeRoot == null) {
       this.treeRoot = newLearningNode();
@@ -636,7 +636,7 @@ public class EFDT extends AbstractClassifier implements MultiClassClassifier {
 
     void setRoot(boolean isRoot);
 
-    void learnFromInstance(Instance inst, EFDT ht, EFDTSplitNode parent, int parentBranch);
+    void learnFromInstance(Instance inst, EFDT ht, EFDTSplitNode parent, int parentBranch) throws Exception;
 
     void setParent(EFDTSplitNode parent);
 
@@ -951,7 +951,7 @@ public class EFDT extends AbstractClassifier implements MultiClassClassifier {
 
 
     @Override
-    public void learnFromInstance(Instance inst, EFDT ht, EFDTSplitNode parent, int parentBranch) {
+    public void learnFromInstance(Instance inst, EFDT ht, EFDTSplitNode parent, int parentBranch) throws Exception {
 
       nodeTime++;
       //// Update node statistics and class distribution
@@ -983,7 +983,7 @@ public class EFDT extends AbstractClassifier implements MultiClassClassifier {
     }
 
     protected void reEvaluateBestSplit(EFDTSplitNode node, EFDTSplitNode parent,
-				       int parentIndex) {
+				       int parentIndex) throws Exception {
 
 
       node.addToSplitAttempts(1);
@@ -1161,7 +1161,7 @@ public class EFDT extends AbstractClassifier implements MultiClassClassifier {
       super(initialClassObservations);
     }
 
-    public abstract void learnFromInstance(Instance inst, EFDT ht);
+    public abstract void learnFromInstance(Instance inst, EFDT ht) throws Exception;
   }
 
 
@@ -1192,13 +1192,13 @@ public class EFDT extends AbstractClassifier implements MultiClassClassifier {
     }
 
     @Override
-    public void learnFromInstance(Instance inst, EFDT ht) {
+    public void learnFromInstance(Instance inst, EFDT ht) throws Exception {
       super.learnFromInstance(inst, ht);
 
     }
 
     @Override
-    public void learnFromInstance(Instance inst, EFDT ht, EFDTSplitNode parent, int parentBranch) {
+    public void learnFromInstance(Instance inst, EFDT ht, EFDTSplitNode parent, int parentBranch) throws Exception {
       learnFromInstance(inst, ht);
 
       if (ht.growthAllowed) {
@@ -1262,7 +1262,7 @@ public class EFDT extends AbstractClassifier implements MultiClassClassifier {
     }
 
     @Override
-    public void learnFromInstance(Instance inst, EFDT ht) {
+    public void learnFromInstance(Instance inst, EFDT ht) throws Exception {
       nodeTime++;
 
       if (this.isInitialized) {
@@ -1360,7 +1360,7 @@ public class EFDT extends AbstractClassifier implements MultiClassClassifier {
     }
 
     @Override
-    public void learnFromInstance(Instance inst, EFDT ht) {
+    public void learnFromInstance(Instance inst, EFDT ht) throws Exception {
       int trueClass = (int) inst.classValue();
       if (this.observedClassDistribution.maxIndex() == trueClass) {
 	this.mcCorrectWeight += inst.weight();
@@ -1386,7 +1386,7 @@ public class EFDT extends AbstractClassifier implements MultiClassClassifier {
 
     @Override
     protected void attemptToSplit(ActiveLearningNode node, SplitNode parent,
-				  int parentIndex) {
+				  int parentIndex) throws Exception {
       if (!node.observedClassDistributionIsPure()) {
 
 
@@ -1574,7 +1574,7 @@ public class EFDT extends AbstractClassifier implements MultiClassClassifier {
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
       //System.err.println(i++);
       if (this.treeRoot == null) {
 	this.treeRoot = newLearningNode();

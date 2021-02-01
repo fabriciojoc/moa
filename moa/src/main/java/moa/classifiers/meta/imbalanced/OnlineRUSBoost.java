@@ -116,7 +116,7 @@ public class OnlineRUSBoost extends AbstractClassifier implements MultiClassClas
     protected double nNegative;   
     
     @Override
-    public void resetLearningImpl() {
+    public void resetLearningImpl() throws Exception {
         // Reset attributes
     	this.baseLearner = (Classifier) getPreparedClassOption(this.baseLearnerOption);
     	this.baseLearner.resetLearning();
@@ -141,7 +141,7 @@ public class OnlineRUSBoost extends AbstractClassifier implements MultiClassClas
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance instance) {        
+    public void trainOnInstanceImpl(Instance instance) throws Exception {
         if(this.ensemble.isEmpty()) {
         	resetLearningImpl();
         }  
@@ -246,7 +246,7 @@ public class OnlineRUSBoost extends AbstractClassifier implements MultiClassClas
     }
 
     @Override
-    public double[] getVotesForInstance(Instance instance) {
+    public double[] getVotesForInstance(Instance instance) throws Exception {
         Instance testInstance = instance.copy();        
         DoubleVector combinedVote = new DoubleVector();
 

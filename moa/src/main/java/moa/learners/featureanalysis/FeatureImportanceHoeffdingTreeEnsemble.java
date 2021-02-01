@@ -114,7 +114,7 @@ public class FeatureImportanceHoeffdingTreeEnsemble extends AbstractClassifier i
     }
 
     @Override
-    public void resetLearningImpl() {
+    public void resetLearningImpl() throws Exception {
         this.ensemble = (Classifier) getPreparedClassOption(this.ensembleLearnerOption);
         this.ensemble.resetLearning();
 
@@ -127,7 +127,7 @@ public class FeatureImportanceHoeffdingTreeEnsemble extends AbstractClassifier i
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance instance) {
+    public void trainOnInstanceImpl(Instance instance) throws Exception {
         // Initialize the featureImportances array.
         if (this.featureImportances == null)
             this.featureImportances = new double[instance.numAttributes() - 1];
@@ -136,12 +136,12 @@ public class FeatureImportanceHoeffdingTreeEnsemble extends AbstractClassifier i
     }
 
     @Override
-    public double[] getVotesForInstance(Instance instance) {
+    public double[] getVotesForInstance(Instance instance) throws Exception {
         return this.ensemble.getVotesForInstance(instance);
     }
 
     @Override
-    protected Measurement[] getModelMeasurementsImpl() {
+    protected Measurement[] getModelMeasurementsImpl() throws Exception {
         return this.ensemble.getModelMeasurements();
     }
 

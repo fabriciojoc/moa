@@ -77,7 +77,7 @@ public class RuleActiveRegressionNode extends RuleActiveLearningNode{
 		this(new double[0]);
 	}
 
-	public RuleActiveRegressionNode(Rule.Builder builder) {
+	public RuleActiveRegressionNode(Rule.Builder builder) throws Exception {
 		super(builder);
 		this.perceptron = new Perceptron();
 		this.perceptron.prepareForUse();
@@ -99,7 +99,7 @@ public class RuleActiveRegressionNode extends RuleActiveLearningNode{
 	/* (non-Javadoc)
 	 * @see moa.classifiers.rules.RuleActiveLearningNodeInterface#updateStatistics(weka.core.Instance)
 	 */
-	public void updateStatistics(Instance instance) {
+	public void updateStatistics(Instance instance) throws Exception {
 		super.updateStatistics(instance);
 		this.perceptron.trainOnInstance(instance);
 		if (this.predictionFunction != 1) { //Train target mean if prediction function is not Perceptron

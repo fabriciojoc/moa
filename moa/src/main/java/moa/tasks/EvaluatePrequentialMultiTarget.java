@@ -116,7 +116,7 @@ public class EvaluatePrequentialMultiTarget extends MultiTargetMainTask {
     }
 
     @Override
-    protected Object doMainTask(TaskMonitor monitor, ObjectRepository repository) {
+    protected Object doMainTask(TaskMonitor monitor, ObjectRepository repository) throws Exception {
         Learner learner = (Learner) getPreparedClassOption(this.learnerOption);
         ExampleStream stream = (ExampleStream) getPreparedClassOption(this.streamOption);
         LearningPerformanceEvaluator evaluator = (LearningPerformanceEvaluator) getPreparedClassOption(this.evaluatorOption);

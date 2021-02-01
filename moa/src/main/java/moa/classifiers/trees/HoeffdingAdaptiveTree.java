@@ -82,7 +82,7 @@ public class HoeffdingAdaptiveTree extends HoeffdingTree {
 
         public void killTreeChilds(HoeffdingAdaptiveTree ht);
 
-        public void learnFromInstance(Instance inst, HoeffdingAdaptiveTree ht, SplitNode parent, int parentBranch);
+        public void learnFromInstance(Instance inst, HoeffdingAdaptiveTree ht, SplitNode parent, int parentBranch) throws Exception;
 
         public void filterInstanceToLeaves(Instance inst, SplitNode myparent, int parentBranch, List<FoundNode> foundNodes,
                 boolean updateSplitterCounts);
@@ -169,7 +169,7 @@ public class HoeffdingAdaptiveTree extends HoeffdingTree {
         // LearningNodes can split, but SplitNodes can't
         // Parent nodes are allways SplitNodes
         @Override
-        public void learnFromInstance(Instance inst, HoeffdingAdaptiveTree ht, SplitNode parent, int parentBranch) {
+        public void learnFromInstance(Instance inst, HoeffdingAdaptiveTree ht, SplitNode parent, int parentBranch) throws Exception {
             int trueClass = (int) inst.classValue();
             //New option vore
             int k = MiscUtils.poisson(1.0, this.classifierRandom);
@@ -356,7 +356,7 @@ public class HoeffdingAdaptiveTree extends HoeffdingTree {
         }
 
         @Override
-        public void learnFromInstance(Instance inst, HoeffdingAdaptiveTree ht, SplitNode parent, int parentBranch) {
+        public void learnFromInstance(Instance inst, HoeffdingAdaptiveTree ht, SplitNode parent, int parentBranch) throws Exception {
             int trueClass = (int) inst.classValue();
             //New option vore
             int k = MiscUtils.poisson(1.0, this.classifierRandom);
@@ -403,7 +403,7 @@ public class HoeffdingAdaptiveTree extends HoeffdingTree {
         }
 
         @Override
-        public double[] getClassVotes(Instance inst, HoeffdingTree ht) {
+        public double[] getClassVotes(Instance inst, HoeffdingTree ht) throws Exception {
             double[] dist;
             int predictionOption = ((HoeffdingAdaptiveTree) ht).leafpredictionOption.getChosenIndex();
             if (predictionOption == 0) { //MC
@@ -443,7 +443,7 @@ public class HoeffdingAdaptiveTree extends HoeffdingTree {
     protected int switchedAlternateTrees;
 
     @Override
-    protected LearningNode newLearningNode(double[] initialClassObservations) {
+    protected LearningNode newLearningNode(double[] initialClassObservations) throws Exception {
         // IDEA: to choose different learning nodes depending on predictionOption
         return new AdaLearningNode(initialClassObservations);
     }
@@ -461,7 +461,7 @@ public class HoeffdingAdaptiveTree extends HoeffdingTree {
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
         if (this.treeRoot == null) {
             this.treeRoot = newLearningNode();
             this.activeLeafNodeCount = 1;
@@ -479,7 +479,7 @@ public class HoeffdingAdaptiveTree extends HoeffdingTree {
     }
 
     @Override
-    public double[] getVotesForInstance(Instance inst) {
+    public double[] getVotesForInstance(Instance inst) throws Exception {
         if (this.treeRoot != null) {
             FoundNode[] foundNodes = filterInstanceToLeaves(inst,
                     null, -1, false);

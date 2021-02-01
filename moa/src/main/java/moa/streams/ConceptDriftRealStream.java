@@ -103,7 +103,7 @@ public class ConceptDriftRealStream extends AbstractOptionHandler implements
 
     @Override
     public void prepareForUseImpl(TaskMonitor monitor,
-            ObjectRepository repository) {
+            ObjectRepository repository) throws Exception {
 
         this.inputStream = (InstanceStream) getPreparedClassOption(this.streamOption);
         this.driftStream = (InstanceStream) getPreparedClassOption(this.driftstreamOption);
@@ -161,7 +161,7 @@ public class ConceptDriftRealStream extends AbstractOptionHandler implements
     }
 
     @Override
-    public InstanceExample nextInstance() {
+    public InstanceExample nextInstance() throws Exception {
         numberInstanceStream++;
         double numclass = 0.0;
         double x = -4.0 * (double) (numberInstanceStream - this.positionOption.getValue()) / (double) this.widthOption.getValue();
@@ -197,7 +197,7 @@ public class ConceptDriftRealStream extends AbstractOptionHandler implements
     }
 
     @Override
-    public void restart() {
+    public void restart() throws Exception {
         this.inputStream.restart();
         this.driftStream.restart();
         numberInstanceStream = 0;

@@ -38,7 +38,7 @@ public interface AnomalyDetector extends OptionHandler {
      *
      * @return true if anomaly is detected and false otherwise
      */
-    public boolean updateAndCheckAnomalyDetection(MultiLabelInstance instance);
+    public boolean updateAndCheckAnomalyDetection(MultiLabelInstance instance) throws Exception;
 
     public double getAnomalyScore();
     

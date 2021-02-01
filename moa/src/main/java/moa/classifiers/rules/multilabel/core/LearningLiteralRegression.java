@@ -73,7 +73,7 @@ public class LearningLiteralRegression extends LearningLiteral {
 	}
 
 	@Override
-	public boolean tryToExpand(double splitConfidence, double tieThreshold) {
+	public boolean tryToExpand(double splitConfidence, double tieThreshold) throws Exception {
 		boolean shouldSplit=false;
 		//find the best split per attribute and rank the results
 		AttributeExpansionSuggestion[] bestSplitSuggestions	= this.getBestSplitSuggestions(splitCriterion);
@@ -233,7 +233,7 @@ public class LearningLiteralRegression extends LearningLiteral {
 	}
 
 	@Override
-	public void trainOnInstance(MultiLabelInstance instance)  {
+	public void trainOnInstance(MultiLabelInstance instance) throws Exception {
 		int numInputs=0;
 		if (attributesMask==null)
 			numInputs=initializeAttibutesMask(instance);

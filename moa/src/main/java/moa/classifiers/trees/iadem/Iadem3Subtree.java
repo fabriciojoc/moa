@@ -39,7 +39,7 @@ public class Iadem3Subtree extends Iadem3 {
     public Iadem3Subtree(Node node,
             int treeLevel,
             Iadem3 mainTree,
-            Instance instance) {
+            Instance instance) throws Exception {
         // subtree configuration from main tree
         this.numericEstimatorOption.setValueViaCLIString(mainTree.numericEstimatorOption.getValueAsCLIString());
         this.gracePeriodOption.setValue(mainTree.gracePeriodOption.getValue());
@@ -63,12 +63,12 @@ public class Iadem3Subtree extends Iadem3 {
     }
     
     @Override
-    public AbstractChangeDetector getEstimatorCopy() {
+    public AbstractChangeDetector getEstimatorCopy() throws Exception {
         return this.mainTree.getEstimatorCopy();
     }
     
     @Override
-    protected IademNumericAttributeObserver newNumericClassObserver() {
+    protected IademNumericAttributeObserver newNumericClassObserver() throws Exception {
         return this.mainTree.newNumericClassObserver();
     }
 

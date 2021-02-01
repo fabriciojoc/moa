@@ -56,7 +56,7 @@ public class CacheShuffledStream extends AbstractTask {
             "Seed for random shuffling of instances.", 1);
 
     @Override
-    protected Object doTaskImpl(TaskMonitor monitor, ObjectRepository repository) {
+    protected Object doTaskImpl(TaskMonitor monitor, ObjectRepository repository) throws Exception {
         InstanceStream stream = (InstanceStream) getPreparedClassOption(this.streamOption);
         Instances cache = new Instances(stream.getHeader(), 0);
         monitor.setCurrentActivity("Caching instances...", -1.0);

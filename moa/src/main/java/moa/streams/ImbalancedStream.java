@@ -79,7 +79,7 @@ public class ImbalancedStream extends AbstractOptionHandler implements
     protected int           numClasses        = 0;
 
     @Override
-    protected void prepareForUseImpl(TaskMonitor monitor, ObjectRepository repository) {
+    protected void prepareForUseImpl(TaskMonitor monitor, ObjectRepository repository) throws Exception {
         originalStream = (ExampleStream) getPreparedClassOption(streamOption);
         numClasses = originalStream.getHeader().numClasses();
         probPerClass = new double[numClasses];
@@ -131,7 +131,7 @@ public class ImbalancedStream extends AbstractOptionHandler implements
     }
 
     @Override
-    public Example<Instance> nextInstance() {
+    public Example<Instance> nextInstance() throws Exception {
         // a value between 0.0 and 1.0 uniformly distributed
         double p   = random.nextDouble();
         int iClass = -1;
@@ -161,7 +161,7 @@ public class ImbalancedStream extends AbstractOptionHandler implements
     }
 
     @Override
-    public void restart() {
+    public void restart() throws Exception {
         this.random = new Random(instanceRandomSeedOption.getValue());
         this.originalStream.restart();
         // initializes the buffers using the original header

@@ -56,7 +56,7 @@ public class FilteredStream extends AbstractOptionHandler implements
 
     @Override
     public void prepareForUseImpl(TaskMonitor monitor,
-            ObjectRepository repository) {
+            ObjectRepository repository) throws Exception {
         StreamFilter filters; 
             monitor.setCurrentActivity("Materializing filter " //+ (i + 1)
                     + "...", -1.0);
@@ -99,12 +99,12 @@ public class FilteredStream extends AbstractOptionHandler implements
     }
 
     @Override
-    public Example nextInstance() {
+    public Example nextInstance() throws Exception {
         return this.filterChain.nextInstance();
     }
 
     @Override
-    public void restart() {
+    public void restart() throws Exception {
         this.filterChain.restart();
     }
 

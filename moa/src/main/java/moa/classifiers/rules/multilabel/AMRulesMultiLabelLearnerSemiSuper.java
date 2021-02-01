@@ -175,7 +175,7 @@ public abstract class AMRulesMultiLabelLearnerSemiSuper extends AbstractMultiLab
 
 
     @Override
-    public Prediction getPredictionForInstance(MultiLabelInstance inst) {
+    public Prediction getPredictionForInstance(MultiLabelInstance inst) throws Exception {
         ErrorWeightedVoteMultiLabel vote=getVotes(inst);
         if(vote!=null)	
             return vote.getPrediction();
@@ -188,7 +188,7 @@ public abstract class AMRulesMultiLabelLearnerSemiSuper extends AbstractMultiLab
     * in moa.classifier.java
     * returns the prediction of the instance.
     */
-    public ErrorWeightedVoteMultiLabel getVotes(MultiLabelInstance instance) {
+    public ErrorWeightedVoteMultiLabel getVotes(MultiLabelInstance instance) throws Exception {
 
         ErrorWeightedVoteMultiLabel errorWeightedVote=newErrorWeightedVote(); 
         //int numberOfRulesCovering = 0;
@@ -294,7 +294,7 @@ public abstract class AMRulesMultiLabelLearnerSemiSuper extends AbstractMultiLab
     
 
     @Override
-    public void trainOnInstanceImpl(MultiLabelInstance instance) {
+    public void trainOnInstanceImpl(MultiLabelInstance instance) throws Exception {
  
         if(nAttributes==0)
             nAttributes=instance.numInputAttributes();
@@ -558,7 +558,7 @@ public abstract class AMRulesMultiLabelLearnerSemiSuper extends AbstractMultiLab
 
 
 	@Override
-	public void resetLearningImpl() {
+	public void resetLearningImpl() throws Exception {
             
 		defaultRule=newDefaultRule();
 		this.classifierRandom.setSeed(this.randomSeed);
@@ -579,7 +579,7 @@ public abstract class AMRulesMultiLabelLearnerSemiSuper extends AbstractMultiLab
 	}
 
 
-	protected void setRuleOptions(MultiLabelRule rule){
+	protected void setRuleOptions(MultiLabelRule rule) throws Exception {
 		rule.setSplitCriterion((MultiLabelSplitCriterion)((MultiLabelSplitCriterion)getPreparedClassOption(splitCriterionOption)).copy());
 		rule.setChangeDetector((ChangeDetector)((ChangeDetector)getPreparedClassOption(changeDetector)).copy());
 		rule.setAnomalyDetector((AnomalyDetector)((AnomalyDetector)getPreparedClassOption(anomalyDetector)).copy());
@@ -594,7 +594,7 @@ public abstract class AMRulesMultiLabelLearnerSemiSuper extends AbstractMultiLab
 
 	abstract protected MultiLabelRule newDefaultRule();
 
-	public ErrorWeightedVoteMultiLabel newErrorWeightedVote(){
+	public ErrorWeightedVoteMultiLabel newErrorWeightedVote() throws Exception {
 		return (ErrorWeightedVoteMultiLabel)((ErrorWeightedVoteMultiLabel) getPreparedClassOption(weightedVoteOption)).copy();
 	}
 

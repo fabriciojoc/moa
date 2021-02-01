@@ -122,7 +122,7 @@ public abstract class HeterogeneousEnsembleAbstract extends AbstractClassifier i
 	}
 
 	@Override
-	public double[] getVotesForInstance(Instance inst) {
+	public double[] getVotesForInstance(Instance inst) throws Exception {
 		double[] votes = new double[inst.classAttribute().numValues()];
 
 		for (int i = 0; i < topK.size(); ++i) {
@@ -169,7 +169,7 @@ public abstract class HeterogeneousEnsembleAbstract extends AbstractClassifier i
 
 	@Override
 	public void prepareForUseImpl(TaskMonitor monitor,
-			ObjectRepository repository) {
+			ObjectRepository repository) throws Exception {
 
 		Option[] learnerOptions = this.baselearnersOption.getList();
 		this.ensemble = new Classifier[learnerOptions.length];

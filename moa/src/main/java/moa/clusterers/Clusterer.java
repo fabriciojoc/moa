@@ -41,9 +41,9 @@ public interface Clusterer extends MOAObject, OptionHandler, AWTRenderable {
 
 	public double trainingWeightSeenByModel();
 
-	public void resetLearning();
+	public void resetLearning() throws Exception;
 
-	public void trainOnInstance(Instance inst);
+	public void trainOnInstance(Instance inst) throws Exception;
 
 	public double[] getVotesForInstance(Instance inst);
 

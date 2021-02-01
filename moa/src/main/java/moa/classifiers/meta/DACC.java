@@ -114,7 +114,7 @@ public class DACC extends AbstractClassifier implements MultiClassClassifier {
     }
     
     @Override
-    public void resetLearningImpl() {
+    public void resetLearningImpl() throws Exception {
     
         Classifier learner = (Classifier) getPreparedClassOption(this.learnerOption);
         learner.resetLearning();
@@ -133,12 +133,12 @@ public class DACC extends AbstractClassifier implements MultiClassClassifier {
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
     	trainAndClassify(inst);
     }
 
     @Override 
-    public double[] getVotesForInstance(Instance inst) {
+    public double[] getVotesForInstance(Instance inst) throws Exception {
 
         DoubleVector combinedVote = new DoubleVector();
         ArrayList<Integer> arr;
@@ -175,7 +175,7 @@ public class DACC extends AbstractClassifier implements MultiClassClassifier {
      * updates the adaptive classifiers accordingly
      * @param inst the instance from the stream
      */
-    protected void trainAndClassify(Instance inst){
+    protected void trainAndClassify(Instance inst) throws Exception {
     	
         nbInstances++;
     	
@@ -228,7 +228,7 @@ public class DACC extends AbstractClassifier implements MultiClassClassifier {
      * Resets a classifier in the ensemble
      * @param index the index of the classifier in the ensemble
      */
-    public void discardModel(int index) {
+    public void discardModel(int index) throws Exception {
     	this.ensemble[index].resetLearning();
         this.ensembleWeights[index].val = 0;
         this.ensembleAges[index] = 0;

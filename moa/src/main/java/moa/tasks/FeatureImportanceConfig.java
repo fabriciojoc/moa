@@ -106,7 +106,7 @@ public class FeatureImportanceConfig extends ClassificationMainTask implements C
      * @return scores of features' importance
      */
     @Override
-    protected Object doMainTask(TaskMonitor monitor, ObjectRepository repository) {
+    protected Object doMainTask(TaskMonitor monitor, ObjectRepository repository) throws Exception {
         ClassifierWithFeatureImportance cwfi = (ClassifierWithFeatureImportance) getPreparedClassOption(learnerOption);
         cwfi.resetLearningImpl();
 

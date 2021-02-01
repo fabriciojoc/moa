@@ -43,13 +43,15 @@ import meka.core.A;
 public class OzaBagAdwinML extends OzaBagAdwin implements MultiLabelLearner, MultiTargetRegressor {
 
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
 		// train
 		try {
 			super.trainOnInstanceImpl(inst);
 		} catch(NullPointerException e) {
 			System.err.println("[Warning] NullPointer on train.");
 			//e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		for (int i = 0; i < this.ensemble.length; i++) {
@@ -84,24 +86,24 @@ public class OzaBagAdwinML extends OzaBagAdwin implements MultiLabelLearner, Mul
 	}
 
 	@Override
-	public void trainOnInstanceImpl(MultiLabelInstance instance) {
+	public void trainOnInstanceImpl(MultiLabelInstance instance) throws Exception {
 		trainOnInstanceImpl((Instance) instance);
 	}
 
 	@Override
-    public Prediction getPredictionForInstance(Example<Instance> example) {
+    public Prediction getPredictionForInstance(Example<Instance> example) throws Exception {
         return OzaBagML.compilePredictions(this.ensemble, example);
     }
 
 
 	//Legacy code: not used now, only Predictions are used
 	@Override
-	public double[] getVotesForInstance(Instance inst) {
+	public double[] getVotesForInstance(Instance inst) throws Exception {
 		return OzaBagML.compileVotes(this.ensemble, inst);
 	}
 
 	@Override
-	public Prediction getPredictionForInstance(MultiLabelInstance instance) {
+	public Prediction getPredictionForInstance(MultiLabelInstance instance) throws Exception {
 		return getPredictionForInstance((new InstanceExample(instance)));
 	}
 

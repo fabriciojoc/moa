@@ -72,7 +72,7 @@ public class OzaBag extends AbstractClassifier implements MultiClassClassifier,
     protected Classifier[] ensemble;
 
     @Override
-    public void resetLearningImpl() {
+    public void resetLearningImpl() throws Exception {
         this.ensemble = new Classifier[this.ensembleSizeOption.getValue()];
         Classifier baseLearner = (Classifier) getPreparedClassOption(this.baseLearnerOption);
         baseLearner.resetLearning();
@@ -82,7 +82,7 @@ public class OzaBag extends AbstractClassifier implements MultiClassClassifier,
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
         for (int i = 0; i < this.ensemble.length; i++) {
             int k = MiscUtils.poisson(1.0, this.classifierRandom);
             if (k > 0) {
@@ -94,7 +94,7 @@ public class OzaBag extends AbstractClassifier implements MultiClassClassifier,
     }
 
     @Override
-    public double[] getVotesForInstance(Instance inst) {
+    public double[] getVotesForInstance(Instance inst) throws Exception {
         DoubleVector combinedVote = new DoubleVector();
         for (int i = 0; i < this.ensemble.length; i++) {
             DoubleVector vote = new DoubleVector(this.ensemble[i].getVotesForInstance(inst));

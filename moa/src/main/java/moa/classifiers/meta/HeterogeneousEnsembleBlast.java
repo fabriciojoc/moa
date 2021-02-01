@@ -63,7 +63,7 @@ public class HeterogeneousEnsembleBlast extends HeterogeneousEnsembleAbstract im
 			1, Integer.MAX_VALUE);
 
 	@Override
-	public void resetLearningImpl() {
+	public void resetLearningImpl() throws Exception {
 		this.historyTotal = new double[this.ensemble.length];
 		this.onlineHistory = new boolean[this.ensemble.length][windowSizeOption
 				.getValue()];
@@ -75,7 +75,7 @@ public class HeterogeneousEnsembleBlast extends HeterogeneousEnsembleAbstract im
 	}
 
 	@Override
-	public void trainOnInstanceImpl(Instance inst) {
+	public void trainOnInstanceImpl(Instance inst) throws Exception {
 		int wValue = windowSizeOption.getValue();
 
 		for (int i = 0; i < this.ensemble.length; i++) {

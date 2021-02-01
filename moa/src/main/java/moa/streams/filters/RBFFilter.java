@@ -39,7 +39,7 @@ public class RBFFilter extends AbstractStreamFilter {
 	}
 
 	@Override
-	public InstanceExample nextInstance() {
+	public InstanceExample nextInstance() throws Exception {
 
 		Instance x = (Instance) ((Instance) this.inputStream.nextInstance().getData());
 

@@ -104,8 +104,7 @@ public class EvaluateMultipleClusterings extends AuxiliarMainTask {
 	}
 
 	@Override
-	protected Object doMainTask(TaskMonitor monitor, ObjectRepository repository)
-	{
+	protected Object doMainTask(TaskMonitor monitor, ObjectRepository repository) throws Exception {
 		Object result = null;
 		String arffFile, outputFile;
 		FileStream fStream;

@@ -158,7 +158,7 @@ public abstract class AbstractAMRules extends AbstractClassifier {
 	 * it can be beneficial to define an object that represents all of the parameters.
 	 * @return
 	 */
-	abstract protected Rule newRule(int ID, RuleActiveLearningNode learningNode, double [] statistics); //Learning node and statistics can be null
+	abstract protected Rule newRule(int ID, RuleActiveLearningNode learningNode, double [] statistics) throws Exception; //Learning node and statistics can be null
 
 	/**
 	 * AMRules Algorithm.
@@ -170,7 +170,7 @@ public abstract class AbstractAMRules extends AbstractClassifier {
 	private double numInstances; ////Just for statistics
 
 	@Override
-	public void trainOnInstanceImpl(Instance instance) {
+	public void trainOnInstanceImpl(Instance instance) throws Exception {
 		/**
 		 * AMRules Algorithm
 		 * 
@@ -363,7 +363,7 @@ public abstract class AbstractAMRules extends AbstractClassifier {
 		debug(this.defaultRule.printRule(),2);
 	}
 
-	abstract public RuleActiveLearningNode newRuleActiveLearningNode(Builder builder);
+	abstract public RuleActiveLearningNode newRuleActiveLearningNode(Builder builder) throws Exception;
 
 	abstract public RuleActiveLearningNode newRuleActiveLearningNode(double[] initialClassObservations);
 
@@ -372,7 +372,7 @@ public abstract class AbstractAMRules extends AbstractClassifier {
 	}
 
 	@Override
-	public void resetLearningImpl() {
+	public void resetLearningImpl() throws Exception {
 		
 
 	}

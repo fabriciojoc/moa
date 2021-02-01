@@ -31,7 +31,7 @@ BasicMultiLabelLearner implements AMRulesFunction {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	abstract public void resetWithMemory();
+	abstract public void resetWithMemory() throws Exception;
 
 	@Override
 	public void selectOutputsToLearn(int[] outputsToLearn) {

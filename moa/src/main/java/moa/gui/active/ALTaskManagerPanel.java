@@ -356,7 +356,11 @@ public class ALTaskManagerPanel extends JPanel{
 
             @Override
             public void actionPerformed(ActionEvent arg0) {
-            	runTask((ALMainTask) ALTaskManagerPanel.this.currentTask.copy());
+                try {
+                    runTask((ALMainTask) ALTaskManagerPanel.this.currentTask.copy());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         this.pauseTaskButton.addActionListener(new ActionListener() {
@@ -424,7 +428,7 @@ public class ALTaskManagerPanel extends JPanel{
         }
     }
 
-    public void runTask(ALMainTask task) {
+    public void runTask(ALMainTask task) throws Exception {
 
         task.prepareForUse();
     	ALTaskThread thread = new ALTaskThread(task);

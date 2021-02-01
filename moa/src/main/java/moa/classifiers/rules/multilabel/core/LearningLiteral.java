@@ -97,9 +97,9 @@ public abstract class LearningLiteral extends AbstractOptionHandler {
 		this.outputsToLearn=outputsToLearn.clone();
 	}
 
-	abstract public void trainOnInstance(MultiLabelInstance instance);
+	abstract public void trainOnInstance(MultiLabelInstance instance) throws Exception;
 
-	public Prediction getPredictionForInstance(MultiLabelInstance instance) {
+	public Prediction getPredictionForInstance(MultiLabelInstance instance) throws Exception {
 		Prediction prediction=null;
 		if (learner!=null){ 
 			Instance transfInstance=this.instanceTransformer.sourceInstanceToTarget(instance);
@@ -110,9 +110,9 @@ public abstract class LearningLiteral extends AbstractOptionHandler {
 	}
 
 
-	public abstract boolean tryToExpand(double splitConfidence, double tieThresholdOption);
+	public abstract boolean tryToExpand(double splitConfidence, double tieThresholdOption) throws Exception;
 
-	public boolean updateAndCheckChange(MultiLabelInstance instance) {
+	public boolean updateAndCheckChange(MultiLabelInstance instance) throws Exception {
 
 
 		boolean hasChanged=false;
@@ -140,7 +140,7 @@ public abstract class LearningLiteral extends AbstractOptionHandler {
 	protected abstract double[] getNormalizedErrors(Prediction prediction,
 			Instance inst);
 
-	public boolean updateAndCheckAnomalyDetection(MultiLabelInstance instance) {
+	public boolean updateAndCheckAnomalyDetection(MultiLabelInstance instance) throws Exception {
 		if(hasStarted)
 			return anomalyDetector.updateAndCheckAnomalyDetection(instance);
 		else

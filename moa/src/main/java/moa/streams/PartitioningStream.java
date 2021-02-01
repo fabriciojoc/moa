@@ -93,7 +93,7 @@ public class PartitioningStream extends AbstractOptionHandler  implements Exampl
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Example<Instance> nextInstance() {
+	public Example<Instance> nextInstance() throws Exception {
 		// take the first instance from the stream which is guaranteed to be valid
 		Example<Instance> result = baseStream.nextInstance();
 		
@@ -118,7 +118,7 @@ public class PartitioningStream extends AbstractOptionHandler  implements Exampl
 	}
 
 	@Override
-	protected void prepareForUseImpl(TaskMonitor monitor, ObjectRepository repository) {
+	protected void prepareForUseImpl(TaskMonitor monitor, ObjectRepository repository) throws Exception {
 		// get parameter from options
 		baseStream = (ExampleStream) getPreparedClassOption(streamOption);
 		partitionIndex = partitionIndexOption.getValue();
@@ -152,8 +152,7 @@ public class PartitioningStream extends AbstractOptionHandler  implements Exampl
 	 * discarding all instances which are exluded until an instance which can be seen by this
 	 * stream or the stream is empty
 	 */
-	protected void discardNexInstancesNotFromPartition()
-	{
+	protected void discardNexInstancesNotFromPartition() throws Exception {
 		while(!isNextInstanceFromPartition() && baseStream.hasMoreInstances() && numPartitions > 1)
 		{
 			baseStream.nextInstance();

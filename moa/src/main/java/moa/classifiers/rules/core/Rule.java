@@ -98,7 +98,7 @@ public class Rule extends AbstractMOAObject {
 		this.nodeList = nodeList;
 	}
 
-	public Rule(Builder builder) {
+	public Rule(Builder builder) throws Exception {
 		builder.setOwner(this);
 		this.setBuilder(builder);
 		this.amRules = builder.getAMRules();
@@ -110,7 +110,7 @@ public class Rule extends AbstractMOAObject {
 
 	protected AbstractAMRules amRules;
 
-	private RuleActiveLearningNode newRuleActiveLearningNode(Builder builder) {
+	private RuleActiveLearningNode newRuleActiveLearningNode(Builder builder) throws Exception {
 		return amRules.newRuleActiveLearningNode(builder);
 	}
 
@@ -202,7 +202,7 @@ public class Rule extends AbstractMOAObject {
 			this.id = id;
 			return this;
 		}
-		public Rule build() {
+		public Rule build() throws Exception {
 			return new Rule(this);
 		}
 
@@ -216,7 +216,7 @@ public class Rule extends AbstractMOAObject {
 
 	}
 
-	public void updateStatistics(Instance instance) {
+	public void updateStatistics(Instance instance) throws Exception {
 		this.learningNode.updateStatistics(instance);
 	}
 
@@ -233,8 +233,7 @@ public class Rule extends AbstractMOAObject {
 
 	}
 	//JD: Only call after tryToExpand returning true
-	public void split()
-	{
+	public void split() throws Exception {
 
 		//this.statisticsOtherBranchSplit  = this.learningNode.getStatisticsOtherBranchSplit(); 
 		//create a split node,

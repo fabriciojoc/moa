@@ -250,7 +250,7 @@ public class LimAttClassifier extends AbstractClassifier implements MultiClassCl
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
         int numClasses = inst.numClasses();
         //Init Ensemble
         if (this.initClassifiers == true) {
@@ -374,7 +374,7 @@ public class LimAttClassifier extends AbstractClassifier implements MultiClassCl
     }
 
     @Override
-    public double[] getVotesForInstance(Instance inst) {
+    public double[] getVotesForInstance(Instance inst) throws Exception {
         if (this.initClassifiers == true) {
             return new double[0];
         }

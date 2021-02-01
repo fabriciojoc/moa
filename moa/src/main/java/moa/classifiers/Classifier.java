@@ -58,14 +58,14 @@ public interface Classifier extends Learner<Example<Instance>> {
      * @param inst the instance to be classified
      * @return true if the instance is correctly classified
      */
-    public boolean correctlyClassifies(Instance inst);
+    public boolean correctlyClassifies(Instance inst) throws Exception;
 
     /**
      * Trains this learner incrementally using the given example.
      *
      * @param inst the instance to be used for training
      */
-    public void trainOnInstance(Instance inst);
+    public void trainOnInstance(Instance inst) throws Exception;
 
     /**
      * Predicts the class memberships for a given instance. If an instance is
@@ -75,7 +75,7 @@ public interface Classifier extends Learner<Example<Instance>> {
      * @return an array containing the estimated membership probabilities of the
      * test instance in each class
      */
-    public double[] getVotesForInstance(Instance inst);
+    public double[] getVotesForInstance(Instance inst) throws Exception;
     
     /**
      * Sets the reference to the header of the data stream. The header of the
@@ -97,5 +97,5 @@ public interface Classifier extends Learner<Example<Instance>> {
      */
     //public InstancesHeader getModelContext();
     
-    public Prediction getPredictionForInstance(Instance inst);
+    public Prediction getPredictionForInstance(Instance inst) throws Exception;
 }

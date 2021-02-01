@@ -83,7 +83,7 @@ public class LearnModel extends ClassificationMainTask implements CapabilitiesHa
     }
 
     @Override
-    public Object doMainTask(TaskMonitor monitor, ObjectRepository repository) {
+    public Object doMainTask(TaskMonitor monitor, ObjectRepository repository) throws Exception {
         Learner learner = (Learner) getPreparedClassOption(this.learnerOption);
         ExampleStream stream = (ExampleStream) getPreparedClassOption(this.streamOption);
         learner.setModelContext(stream.getHeader());

@@ -196,7 +196,7 @@ public class RunOutlierVisualizer implements Runnable, ActionListener, ClusterEv
         }
     }
     
-    public RunOutlierVisualizer(OutlierVisualTab visualPanel, OutlierSetupTab outlierSetupTab){
+    public RunOutlierVisualizer(OutlierVisualTab visualPanel, OutlierSetupTab outlierSetupTab) throws Exception {
         m_outlier[ALGORITHM_1] = outlierSetupTab.getOutlierer0();        
         m_outlier[ALGORITHM_1].prepareForUse();        
         // show algorithm output to log-panel
@@ -298,12 +298,16 @@ public class RunOutlierVisualizer implements Runnable, ActionListener, ClusterEv
             }            
             
             synchronized(this) {
-                processData();
+                try {
+                    processData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
     
-    private void MeasuredProcessStreamObj(int idxAlgorithm, Instance newInst) {        
+    private void MeasuredProcessStreamObj(int idxAlgorithm, Instance newInst) throws Exception {
         m_outlier[idxAlgorithm].processNewInstanceImpl(newInst);
         
         if (nProcessed % m_timePreObjInterval == 0) {           
@@ -311,7 +315,7 @@ public class RunOutlierVisualizer implements Runnable, ActionListener, ClusterEv
         }
     }
     
-    private void processData() {            
+    private void processData() throws Exception {
         if (m_stream0.hasMoreInstances()) {
             timestamp++;
             nProcessed++;

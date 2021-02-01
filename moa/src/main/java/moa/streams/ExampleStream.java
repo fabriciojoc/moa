@@ -65,7 +65,7 @@ public interface ExampleStream<E extends Example> extends MOAObject,
      *
      * @return the next example of this stream
      */
-    public E nextInstance();
+    public E nextInstance() throws Exception;
 
     /**
      * Gets whether this stream can restart.
@@ -79,7 +79,7 @@ public interface ExampleStream<E extends Example> extends MOAObject,
      * starting a new stream from scratch.
      *
      */
-    public void restart();
+    public void restart() throws Exception;
 
     default ImmutableCapabilities defineImmutableCapabilities() {
         // We are restricting streams based on view mode

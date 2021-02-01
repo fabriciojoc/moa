@@ -46,7 +46,7 @@ public class ChangeDetectorLearner extends AbstractClassifier {
     protected ChangeDetector driftDetectionMethod;
 
     @Override
-    public void resetLearningImpl() {
+    public void resetLearningImpl() throws Exception {
         this.driftDetectionMethod = ((ChangeDetector) getPreparedClassOption(this.driftDetectionMethodOption)).copy();
     }
 

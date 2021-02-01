@@ -41,7 +41,7 @@ public abstract class AbstractMultiLabelStreamFilter extends AbstractOptionHandl
     protected ExampleStream<Example<Instance>> inputStream;
 
     @Override
-    public void setInputStream(ExampleStream<Example<Instance>> stream) {
+    public void setInputStream(ExampleStream<Example<Instance>> stream) throws Exception {
         this.inputStream = stream;
         prepareForUse();
     }
@@ -68,7 +68,7 @@ public abstract class AbstractMultiLabelStreamFilter extends AbstractOptionHandl
     }
 
     @Override
-    public void restart() {
+    public void restart() throws Exception {
         this.inputStream.restart();
         restartImpl();
     }

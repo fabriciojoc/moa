@@ -137,7 +137,7 @@ public class StreamingRandomPatches extends AbstractClassifier implements MultiC
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance instance) {
+    public void trainOnInstanceImpl(Instance instance) throws Exception {
         ++this.instancesSeen;
         if(this.ensemble == null)
             initEnsemble(instance);
@@ -164,7 +164,7 @@ public class StreamingRandomPatches extends AbstractClassifier implements MultiC
     }
 
     @Override
-    public double[] getVotesForInstance(Instance instance) {
+    public double[] getVotesForInstance(Instance instance) throws Exception {
         Instance testInstance = instance.copy();
         testInstance.setMissing(instance.classAttribute());
         testInstance.setClassValue(0.0);
@@ -202,7 +202,7 @@ public class StreamingRandomPatches extends AbstractClassifier implements MultiC
         return null;
     }
 
-    protected void initEnsemble(Instance instance) {
+    protected void initEnsemble(Instance instance) throws Exception {
         // Init the ensemble.
         int ensembleSize = this.ensembleSizeOption.getValue();
         this.ensemble = new StreamingRandomPatchesClassifier[ensembleSize];
@@ -398,7 +398,7 @@ public class StreamingRandomPatches extends AbstractClassifier implements MultiC
         private void init(int indexOriginal, Classifier instantiatedClassifier,
                           BasicClassificationPerformanceEvaluator evaluatorInstantiated,
                           long instancesSeen, boolean disableBkgLearner, boolean disableDriftDetector,
-                          ClassOption driftOption, ClassOption warningOption, boolean isBackgroundLearner) {
+                          ClassOption driftOption, ClassOption warningOption, boolean isBackgroundLearner) throws Exception {
             this.indexOriginal = indexOriginal;
             this.createdOn = instancesSeen;
 
@@ -428,7 +428,7 @@ public class StreamingRandomPatches extends AbstractClassifier implements MultiC
                                                 BasicClassificationPerformanceEvaluator evaluatorInstantiated,
                                                 long instancesSeen, boolean disableBkgLearner, boolean disableDriftDetector,
                                                 ClassOption driftOption, ClassOption warningOption,
-                                                boolean isBackgroundLearner) {
+                                                boolean isBackgroundLearner) throws Exception {
             init(indexOriginal, instantiatedClassifier, evaluatorInstantiated, instancesSeen, disableBkgLearner,
                     disableDriftDetector, driftOption,
                     warningOption,
@@ -444,7 +444,7 @@ public class StreamingRandomPatches extends AbstractClassifier implements MultiC
                                                 long instancesSeen, boolean disableBkgLearner, boolean disableDriftDetector,
                                                 ClassOption driftOption, ClassOption warningOption,
                                                 ArrayList<Integer> featuresIndexes, Instance instance,
-                                                boolean isBackgroundLearner) {
+                                                boolean isBackgroundLearner) throws Exception {
             init(indexOriginal, instantiatedClassifier, evaluatorInstantiated, instancesSeen, disableBkgLearner,
                     disableDriftDetector, driftOption, warningOption, isBackgroundLearner);
 
@@ -496,7 +496,7 @@ public class StreamingRandomPatches extends AbstractClassifier implements MultiC
             return null;
         }
 
-        public void reset(Instance instance, long instancesSeen, Random random) {
+        public void reset(Instance instance, long instancesSeen, Random random) throws Exception {
 
             if(!this.disableBkgLearner && this.bkgLearner != null) {
                 this.classifier = this.bkgLearner.classifier;
@@ -530,7 +530,7 @@ public class StreamingRandomPatches extends AbstractClassifier implements MultiC
             }
         }
 
-        public void trainOnInstance(Instance instance, double weight, long instancesSeen, Random random) {
+        public void trainOnInstance(Instance instance, double weight, long instancesSeen, Random random) throws Exception {
             boolean correctlyClassifies;
             // The subset object will be null if we are training with all features
             if(this.subset != null) {
@@ -577,7 +577,7 @@ public class StreamingRandomPatches extends AbstractClassifier implements MultiC
             }
         }
 
-        public void triggerWarning(Instance instance, long instancesSeen, Random random) {
+        public void triggerWarning(Instance instance, long instancesSeen, Random random) throws Exception {
             Classifier bkgClassifier = this.classifier.copy();
             bkgClassifier.resetLearning();
 
@@ -601,7 +601,7 @@ public class StreamingRandomPatches extends AbstractClassifier implements MultiC
          * @param instance
          * @return votes for the given instance
          */
-        public double[] getVotesForInstance(Instance instance) {
+        public double[] getVotesForInstance(Instance instance) throws Exception {
             if(this.subset != null) {
                 prepareRandomSubspaceInstance(instance, 1);
                 // subset.get(0) returns the instance transformed to the correct subspace (i.e. current model subspace).

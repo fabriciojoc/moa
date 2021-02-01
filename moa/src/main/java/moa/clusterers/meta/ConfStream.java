@@ -18,7 +18,7 @@ public class ConfStream extends EnsembleClustererAbstract {
 		return result;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
 		ConfStream algorithm = new ConfStream();
 		RandomRBFGeneratorEvents stream = new RandomRBFGeneratorEvents();

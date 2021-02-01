@@ -75,7 +75,7 @@ public class OnlineSmoothBoost extends AbstractClassifier implements MultiClassC
     protected double theta;
 
     @Override
-    public void resetLearningImpl() {
+    public void resetLearningImpl() throws Exception {
         this.ensemble = new Classifier[this.ensembleSizeOption.getValue()];
         Classifier baseLearner = (Classifier) getPreparedClassOption(this.baseLearnerOption);
         baseLearner.resetLearning();
@@ -89,7 +89,7 @@ public class OnlineSmoothBoost extends AbstractClassifier implements MultiClassC
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
         double zt = 0.0;
         double weight = 1.0;
         for (int i = 0; i < this.ensemble.length; i++) {
@@ -107,7 +107,7 @@ public class OnlineSmoothBoost extends AbstractClassifier implements MultiClassC
         return this.alpha[i];
     }
 
-    public double[] getVotesForInstance(Instance inst) {
+    public double[] getVotesForInstance(Instance inst) throws Exception {
                
         DoubleVector combinedVote = new DoubleVector();
         for (int i = 0; i < this.ensemble.length; i++) {

@@ -55,7 +55,7 @@ public class HoeffdingTreeClassifLeaves extends HoeffdingTree {
             super(initialClassObservations);
         }
 
-        public LearningNodeClassifier(double[] initialClassObservations, Classifier cl, HoeffdingTreeClassifLeaves ht) {
+        public LearningNodeClassifier(double[] initialClassObservations, Classifier cl, HoeffdingTreeClassifLeaves ht) throws Exception {
             super(initialClassObservations);
             //public void LearningNodeClassifier1(double[] initialClassObservations, Classifier cl, HoeffdingTreeClassifLeaves ht ) {
 
@@ -67,7 +67,7 @@ public class HoeffdingTreeClassifLeaves extends HoeffdingTree {
         }
 	
         @Override
-        public double[] getClassVotes(Instance inst, HoeffdingTree ht) {
+        public double[] getClassVotes(Instance inst, HoeffdingTree ht) throws Exception {
             if (getWeightSeen() >= ((HoeffdingTreeClassifLeaves) ht).nbThresholdOption.getValue()) {
                 return this.classifier.getVotesForInstance(inst);
             }
@@ -80,7 +80,7 @@ public class HoeffdingTreeClassifLeaves extends HoeffdingTree {
         }
 
         @Override
-        public void learnFromInstance(Instance inst, HoeffdingTree ht) {
+        public void learnFromInstance(Instance inst, HoeffdingTree ht) throws Exception {
             this.classifier.trainOnInstance(inst);
             super.learnFromInstance(inst, ht);
         }
@@ -95,18 +95,18 @@ public class HoeffdingTreeClassifLeaves extends HoeffdingTree {
     }
 
     @Override
-    protected LearningNode newLearningNode(double[] initialClassObservations) {
+    protected LearningNode newLearningNode(double[] initialClassObservations) throws Exception {
         return new LearningNodeClassifier(initialClassObservations, null, this);
     }
 
     //@Override
-    protected LearningNode newLearningNode(double[] initialClassObservations, Classifier cl) {
+    protected LearningNode newLearningNode(double[] initialClassObservations, Classifier cl) throws Exception {
         return new LearningNodeClassifier(initialClassObservations, cl, this);
     }
 
     @Override
     protected void attemptToSplit(ActiveLearningNode node, SplitNode parent,
-            int parentIndex) {
+            int parentIndex) throws Exception {
         //ßSystem.out.println("Attempt to Split");
         if (!node.observedClassDistributionIsPure()) {
             SplitCriterion splitCriterion = (SplitCriterion) getPreparedClassOption(this.splitCriterionOption);

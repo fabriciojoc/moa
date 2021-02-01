@@ -87,7 +87,7 @@ public class OCBoost extends AbstractClassifier implements MultiClassClassifier 
     protected double[][] wneg;
 
     @Override
-    public void resetLearningImpl() {
+    public void resetLearningImpl() throws Exception {
         this.ensemble = new Classifier[this.ensembleSizeOption.getValue()];
         this.alpha = new double[this.ensemble.length];
         this.alphainc = new double[this.ensemble.length];
@@ -110,7 +110,7 @@ public class OCBoost extends AbstractClassifier implements MultiClassClassifier 
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
         double d = 1.0;
         int[] m = new int[this.ensemble.length];
         for (int j = 0; j < this.ensemble.length; j++) {
@@ -150,7 +150,7 @@ public class OCBoost extends AbstractClassifier implements MultiClassClassifier 
     }
 
     @Override
-    public double[] getVotesForInstance(Instance inst) {
+    public double[] getVotesForInstance(Instance inst) throws Exception {
         double[] output = new double[2];
         int vote;
         double combinedVote = 0.0;

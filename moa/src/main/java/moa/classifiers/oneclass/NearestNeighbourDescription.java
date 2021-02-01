@@ -240,8 +240,7 @@ public class NearestNeighbourDescription extends AbstractClassifier implements C
 	 * @param trainingPoints the Collection of instances on which to initialize the NN-d classifier.
 	 */
 	@Override
-	public void initialize(Collection<Instance> trainingPoints)
-	{
+	public void initialize(Collection<Instance> trainingPoints) throws Exception {
 		Iterator<Instance> trgPtsIterator = trainingPoints.iterator();
 		
 		if(trgPtsIterator.hasNext())

@@ -73,7 +73,7 @@ public abstract class AbstractClusterer extends AbstractOptionHandler
 
 	@Override
 	public void prepareForUseImpl(TaskMonitor monitor,
-			ObjectRepository repository) {
+			ObjectRepository repository) throws Exception {
 		if (this.randomSeedOption != null) {
 			this.randomSeed = this.randomSeedOption.getValue();
 		}
@@ -117,7 +117,7 @@ public abstract class AbstractClusterer extends AbstractOptionHandler
 		return this.trainingWeightSeenByModel;
 	}
 
-	public void resetLearning() {
+	public void resetLearning() throws Exception {
 		this.trainingWeightSeenByModel = 0.0;
 		if (isRandomizable()) {
 			this.clustererRandom = new Random(this.randomSeed);
@@ -125,7 +125,7 @@ public abstract class AbstractClusterer extends AbstractOptionHandler
 		resetLearningImpl();
 	}
 
-	public void trainOnInstance(Instance inst) {
+	public void trainOnInstance(Instance inst) throws Exception {
 		if (inst.weight() > 0.0) {
 			this.trainingWeightSeenByModel += inst.weight();
 			trainOnInstanceImpl(inst);
@@ -272,9 +272,9 @@ public abstract class AbstractClusterer extends AbstractOptionHandler
 	// ease programmer burden by not requiring them to remember calls to super
 	// in overridden methods & will produce compiler errors if not overridden
 
-	public abstract void resetLearningImpl();
+	public abstract void resetLearningImpl() throws Exception;
 
-	public abstract void trainOnInstanceImpl(Instance inst);
+	public abstract void trainOnInstanceImpl(Instance inst) throws Exception;
 
 	protected abstract Measurement[] getModelMeasurementsImpl();
 

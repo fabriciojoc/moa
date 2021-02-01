@@ -70,7 +70,7 @@ public class ARFHoeffdingTree extends HoeffdingTree {
         }
 
         @Override
-        public void learnFromInstance(Instance inst, HoeffdingTree ht) {            
+        public void learnFromInstance(Instance inst, HoeffdingTree ht) throws Exception {
             this.observedClassDistribution.addToValue((int) inst.classValue(),
                     inst.weight());
             if (this.listAttributes == null) {
@@ -112,7 +112,7 @@ public class ARFHoeffdingTree extends HoeffdingTree {
         }
 
         @Override
-        public double[] getClassVotes(Instance inst, HoeffdingTree ht) {
+        public double[] getClassVotes(Instance inst, HoeffdingTree ht) throws Exception {
             if (getWeightSeen() >= ht.nbThresholdOption.getValue()) {
                 return NaiveBayes.doNaiveBayesPrediction(inst,
                         this.observedClassDistribution,
@@ -140,7 +140,7 @@ public class ARFHoeffdingTree extends HoeffdingTree {
         }
 
         @Override
-        public void learnFromInstance(Instance inst, HoeffdingTree ht) {
+        public void learnFromInstance(Instance inst, HoeffdingTree ht) throws Exception {
             int trueClass = (int) inst.classValue();
             if (this.observedClassDistribution.maxIndex() == trueClass) {
                 this.mcCorrectWeight += inst.weight();

@@ -40,7 +40,7 @@ public class BaselinePredictor extends AbstractOptionHandler implements moa.reco
             "Data", moa.recommender.data.RecommenderData.class, "moa.recommender.data.MemRecommenderData");
 
     @Override
-    protected void prepareForUseImpl(TaskMonitor monitor, ObjectRepository repository) {
+    protected void prepareForUseImpl(TaskMonitor monitor, ObjectRepository repository) throws Exception {
         moa.recommender.data.RecommenderData data = (moa.recommender.data.RecommenderData) getPreparedClassOption(this.dataOption);
         rp = new moa.recommender.rc.predictor.impl.BaselinePredictor(data.getData());
     }

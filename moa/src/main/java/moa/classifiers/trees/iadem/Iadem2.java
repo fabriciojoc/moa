@@ -97,7 +97,7 @@ public class Iadem2 extends AbstractClassifier implements MultiClassClassifier {
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
         if (this.treeRoot == null) {
             IademCommonProcedures.setConfidence(this.splitConfidenceOption.getValue());
             this.estimator = (AbstractChangeDetector) ((AbstractChangeDetector) getPreparedClassOption(this.driftDetectionMethodOption)).copy();
@@ -110,7 +110,7 @@ public class Iadem2 extends AbstractClassifier implements MultiClassClassifier {
         }
     }
 
-    protected IademNumericAttributeObserver newNumericClassObserver() {
+    protected IademNumericAttributeObserver newNumericClassObserver() throws Exception {
         IademNumericAttributeObserver numericClassObserver = (IademNumericAttributeObserver) getPreparedClassOption(this.numericEstimatorOption);
         return (IademNumericAttributeObserver) numericClassObserver.copy();
     }
@@ -155,18 +155,18 @@ public class Iadem2 extends AbstractClassifier implements MultiClassClassifier {
         return (AbstractChangeDetector) this.estimator.copy();
     }
 
-    public void createRoot(Instance instance) {
+    public void createRoot(Instance instance) throws Exception {
         double[] arrayCounter = new double[instance.numClasses()];
         Arrays.fill(arrayCounter, 0);
 
         this.treeRoot = newLeafNode(null, 0, 0, arrayCounter, instance);
     }
 
-    public int getMaxNumberOfBins() {
+    public int getMaxNumberOfBins() throws Exception {
         return (int) this.newNumericClassObserver().getMaxOfValues();
     }
 
-    public IademNumericAttributeObserver getNumericAttObserver() {
+    public IademNumericAttributeObserver getNumericAttObserver() throws Exception {
         return newNumericClassObserver();
     }
 
@@ -178,7 +178,7 @@ public class Iadem2 extends AbstractClassifier implements MultiClassClassifier {
             long instTreeCountSinceVirtual,
             long instNodeCountSinceVirtual,
             double[] classDist,
-            Instance instance) {
+            Instance instance) throws Exception {
         switch (this.leafPredictionOption.getChosenIndex()) {
             case 0: {
                 return new LeafNode(this,
@@ -385,7 +385,7 @@ public class Iadem2 extends AbstractClassifier implements MultiClassClassifier {
                 IademNumericAttributeObserver numericAttClassObserver,
                 boolean onlyMultiwayTest,
                 boolean onlyBinaryTest,
-                Instance instance) {
+                Instance instance) throws Exception {
             super(tree, parent, initialClassCount);
             this.instNodeCountSinceVirtual = instNodeCountSinceVirtual;
             this.instTreeCountSinceReal = 0;
@@ -416,7 +416,7 @@ public class Iadem2 extends AbstractClassifier implements MultiClassClassifier {
         protected void createVirtualNodes(IademNumericAttributeObserver numericObserver,
                 boolean onlyMultiwayTest,
                 boolean onlyBinaryTest,
-                Instance instance) {
+                Instance instance) throws Exception {
             for (int i = 0; i < instance.numAttributes(); i++) {
                 if (instance.classIndex() != i
                         && instance.attribute(i).isNominal()) {
@@ -485,6 +485,8 @@ public class Iadem2 extends AbstractClassifier implements MultiClassClassifier {
                         }
                     } catch (IademException ex) {
                         Logger.getLogger(LeafNode.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             }
@@ -540,7 +542,7 @@ public class Iadem2 extends AbstractClassifier implements MultiClassClassifier {
             return getBestSplitSuggestionIADEM(instance);
         }
 
-        public LeafNode[] doSplit(IademAttributeSplitSuggestion bestSuggestion, Instance instance) {
+        public LeafNode[] doSplit(IademAttributeSplitSuggestion bestSuggestion, Instance instance) throws Exception {
             SplitNode splitNode = virtualChildren.get(bestSuggestion.splitTest.getAttsTestDependsOn()[0]).getNewSplitNode(
                     this.instTreeCountSinceReal,
                     this.parent,
@@ -768,7 +770,7 @@ public class Iadem2 extends AbstractClassifier implements MultiClassClassifier {
                 int naiveBayesLimit,
                 boolean onlyMultiwayTest,
                 boolean onlyBinaryTest,
-                Instance instance) {
+                Instance instance) throws Exception {
             super(tree,
                     parent,
                     instTreeCountSinceVirtual,
@@ -841,7 +843,7 @@ public class Iadem2 extends AbstractClassifier implements MultiClassClassifier {
                 boolean onlyMultiwayTest,
                 boolean onlyBinaryTest,
                 AbstractChangeDetector estimator,
-                Instance instance) {
+                Instance instance) throws Exception {
             super(tree,
                     parent,
                     instancesProcessedByTheTree,
@@ -896,7 +898,7 @@ public class Iadem2 extends AbstractClassifier implements MultiClassClassifier {
                 boolean onlyMultiwayTest,
                 boolean onlyBinaryTest,
                 AbstractChangeDetector estimator,
-                Instance instance) {
+                Instance instance) throws Exception {
             super(tree,
                     parent,
                     instancesProcessedByTheTree,
@@ -974,7 +976,7 @@ public class Iadem2 extends AbstractClassifier implements MultiClassClassifier {
         public abstract SplitNode getNewSplitNode(long newInstancesSeen,
                 Node parent,
                 IademAttributeSplitSuggestion bestSuggestion,
-                Instance instance);
+                Instance instance) throws Exception;
 
         public abstract void updateHeuristicMeasure(Instance instance) throws IademException;
 
@@ -1063,7 +1065,7 @@ public class Iadem2 extends AbstractClassifier implements MultiClassClassifier {
         public SplitNode getNewSplitNode(long newTotal,
                 Node parent,
                 IademAttributeSplitSuggestion bestSuggestion,
-                Instance instance) {
+                Instance instance) throws Exception {
             SplitNode splitNode = new SplitNode(this.tree,
                     parent,
                     null,
@@ -1600,7 +1602,7 @@ public class Iadem2 extends AbstractClassifier implements MultiClassClassifier {
         public NumericVirtualNode(Iadem2 tree,
                 Node parent,
                 int attIndex,
-                IademNumericAttributeObserver numericAttClassObs) {
+                IademNumericAttributeObserver numericAttClassObs) throws Exception {
             super(tree, parent, attIndex);
             int numIntervalos = this.tree.getMaxNumberOfBins();
             this.numericAttClassObserver = (IademNumericAttributeObserver) numericAttClassObs.copy();
@@ -1634,7 +1636,7 @@ public class Iadem2 extends AbstractClassifier implements MultiClassClassifier {
         public SplitNode getNewSplitNode(long newTotal,
                 Node parent,
                 IademAttributeSplitSuggestion bestSuggestion,
-                Instance instance) {
+                Instance instance) throws Exception {
             double[] cut = new double[]{this.bestCutPoint};
 
             Node[] children = new Node[2]; // a traditional binary split test for numeric attributes

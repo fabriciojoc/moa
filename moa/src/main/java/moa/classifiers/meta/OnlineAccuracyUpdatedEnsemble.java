@@ -120,7 +120,7 @@ public class OnlineAccuracyUpdatedEnsemble extends AbstractClassifier implements
 	protected int windowSize = 0;
 	
 	@Override
-	public void prepareForUseImpl(TaskMonitor monitor, ObjectRepository repository) {
+	public void prepareForUseImpl(TaskMonitor monitor, ObjectRepository repository) throws Exception {
 		this.windowSize = (int)this.windowSizeOption.getValue();
 		this.candidate = new ClassifierWithMemory(((Classifier) getPreparedClassOption(this.learnerOption)).copy(), this.windowSize);
 		this.candidate.classifier.resetLearning();
@@ -129,7 +129,7 @@ public class OnlineAccuracyUpdatedEnsemble extends AbstractClassifier implements
 	}
 
 	@Override
-	public void resetLearningImpl() {
+	public void resetLearningImpl() throws Exception {
 		this.currentWindow = null;
 		this.windowSize = (int)this.windowSizeOption.getValue();
 		this.classDistributions = null;
@@ -141,7 +141,7 @@ public class OnlineAccuracyUpdatedEnsemble extends AbstractClassifier implements
 	}
 
 	@Override
-	public void trainOnInstanceImpl(Instance inst) {
+	public void trainOnInstanceImpl(Instance inst) throws Exception {
 		this.initVariables();
     	
     	if(this.processedInstances < this.windowSize)
@@ -183,7 +183,7 @@ public class OnlineAccuracyUpdatedEnsemble extends AbstractClassifier implements
 	/**
 	 * Predicts a class for an example.
 	 */
-	public double[] getVotesForInstance(Instance inst) {
+	public double[] getVotesForInstance(Instance inst) throws Exception {
 		DoubleVector combinedVote = new DoubleVector();
 
 		if (this.trainingWeightSeenByModel > 0.0) {
@@ -225,7 +225,7 @@ public class OnlineAccuracyUpdatedEnsemble extends AbstractClassifier implements
      *
      * @param inst New example
      */
-    protected void createNewClassifier(Instance inst) {
+    protected void createNewClassifier(Instance inst) throws Exception {
         // Compute weights
     	double candidateClassifierWeight = 1.0 / (this.mse_r + Double.MIN_VALUE);
     	
@@ -265,7 +265,7 @@ public class OnlineAccuracyUpdatedEnsemble extends AbstractClassifier implements
 	/**
 	 * Checks if the memory limit is exceeded and if so prunes the classifiers in the ensemble.
 	 */
-	protected void enforceMemoryLimit() {
+	protected void enforceMemoryLimit() throws Exception {
 		double memoryLimit = this.maxByteSizeOption.getValue() / (double) (this.ensemble.length + 1);
 
 		for (int i = 0; i < this.ensemble.length; i++) {

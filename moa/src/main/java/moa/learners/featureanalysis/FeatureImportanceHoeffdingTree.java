@@ -182,12 +182,12 @@ public class FeatureImportanceHoeffdingTree extends AbstractClassifier implement
 
 
     @Override
-    public double[] getVotesForInstance(Instance instance) {
+    public double[] getVotesForInstance(Instance instance) throws Exception {
         return this.treeLearner.getVotesForInstance(instance);
     }
 
     @Override
-    public void resetLearningImpl() {
+    public void resetLearningImpl() throws Exception {
         this.featureImportances = null;
         this.nodeCountAtLastFeatureImportanceInquiry = 0;
         this.featureImportancesInquiries = 0;
@@ -196,7 +196,7 @@ public class FeatureImportanceHoeffdingTree extends AbstractClassifier implement
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance instance) {
+    public void trainOnInstanceImpl(Instance instance) throws Exception {
         // Initialize the featureImportances array.
         if (this.featureImportances == null)
             this.featureImportances = new double[instance.numAttributes() - 1];
@@ -205,7 +205,7 @@ public class FeatureImportanceHoeffdingTree extends AbstractClassifier implement
     }
 
     @Override
-    protected Measurement[] getModelMeasurementsImpl() {
+    protected Measurement[] getModelMeasurementsImpl() throws Exception {
         return this.treeLearner.getModelMeasurements();
     }
 

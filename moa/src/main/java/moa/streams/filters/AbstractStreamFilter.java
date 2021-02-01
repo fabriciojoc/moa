@@ -40,7 +40,7 @@ public abstract class AbstractStreamFilter extends AbstractOptionHandler
     protected ExampleStream inputStream;
 
     @Override
-    public void setInputStream(ExampleStream stream) {
+    public void setInputStream(ExampleStream stream) throws Exception {
         this.inputStream = stream;
         prepareForUse();
     }
@@ -67,7 +67,7 @@ public abstract class AbstractStreamFilter extends AbstractOptionHandler
     }
 
     @Override
-    public void restart() {
+    public void restart() throws Exception {
         this.inputStream.restart();
         restartImpl();
     }
@@ -80,13 +80,13 @@ public abstract class AbstractStreamFilter extends AbstractOptionHandler
     protected abstract void restartImpl();
     
     @Override
-    public InstanceExample nextInstance() {
+    public InstanceExample nextInstance() throws Exception {
          Instance inst = (Instance) ((Instance) this.inputStream.nextInstance().getData()).copy();
          return new InstanceExample(filterInstance(inst));
     }
     
     @Override
-    public Instance filterInstance(Instance inst) {
+    public Instance filterInstance(Instance inst) throws Exception {
         return inst;
     }
 }

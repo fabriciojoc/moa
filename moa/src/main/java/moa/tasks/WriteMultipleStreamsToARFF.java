@@ -95,8 +95,7 @@ public class WriteMultipleStreamsToARFF extends AuxiliarMainTask
 	
 	
 	@Override
-	protected Object doMainTask(TaskMonitor monitor, ObjectRepository repository)
-	{
+	protected Object doMainTask(TaskMonitor monitor, ObjectRepository repository) throws Exception {
 		// Store the original values of these two options, which may be altered during the remainder of this task.
 		String streamCLI = this.streamOption.getValueAsCLIString();
 		String fileCLI = this.arffFileOption.getValueAsCLIString();

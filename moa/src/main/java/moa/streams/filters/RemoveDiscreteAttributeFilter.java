@@ -59,7 +59,7 @@ public class RemoveDiscreteAttributeFilter extends AbstractStreamFilter {
     }
 
     @Override
-    public InstanceExample nextInstance() {
+    public InstanceExample nextInstance() throws Exception {
         Instance inst = (Instance) this.inputStream.nextInstance().getData();
 
         if (streamHeader == null) {

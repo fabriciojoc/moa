@@ -41,12 +41,12 @@ public abstract class AbstractTask extends AbstractOptionHandler implements
     }
 
     @Override
-    public Object doTask() {
+    public Object doTask() throws Exception {
         return doTask(new NullMonitor(), null);
     }
 
     @Override
-    public Object doTask(TaskMonitor monitor, ObjectRepository repository) {
+    public Object doTask(TaskMonitor monitor, ObjectRepository repository) throws Exception {
         monitor.setCurrentActivity("Preparing options to " + getTaskName()
                 + "...", -1.0);
         prepareClassOptions(monitor, repository);
@@ -70,11 +70,11 @@ public abstract class AbstractTask extends AbstractOptionHandler implements
      * @return an object with the result of this task
      */
     protected abstract Object doTaskImpl(TaskMonitor monitor,
-            ObjectRepository repository);
+            ObjectRepository repository) throws Exception;
 
     @Override
     protected void prepareForUseImpl(TaskMonitor monitor,
-            ObjectRepository repository) {
+            ObjectRepository repository) throws Exception {
         // tasks prepare themselves upon running
     }
 

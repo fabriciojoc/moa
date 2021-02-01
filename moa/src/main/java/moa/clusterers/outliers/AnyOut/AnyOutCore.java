@@ -87,7 +87,7 @@ public class AnyOutCore extends ClusTree {
 		super.resetLearningImpl();
 	}
 	
-	public void train(DataSet trainingSet) {
+	public void train(DataSet trainingSet) throws Exception {
 		// TODO fix not working builder!
 		// ClusTree private variables are not updated but are mandatory for the algorithm to function.
 //		if (UseBulkLoadingOption.isSet()) { 
@@ -130,7 +130,7 @@ public class AnyOutCore extends ClusTree {
 		updateConfidence(objectId);
 	}
 	
-	public void learnObject(double[] features){
+	public void learnObject(double[] features) throws Exception {
 		DenseInstance inst = new DenseInstance(features.length);
 		for(int i=0; i<features.length; i++){
 			inst.setValue(i, features[i]);

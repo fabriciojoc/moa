@@ -69,7 +69,7 @@ public class HeterogeneousEnsembleBlastFadingFactors
 			"The fading factor.", 0.999, 0, 1);
 
 	@Override
-	public void resetLearningImpl() {
+	public void resetLearningImpl() throws Exception {
 		this.historyTotal = new double[this.ensemble.length];
 		for (int i = 0; i < this.ensemble.length; ++i) {
 			this.historyTotal[i] = 1.0;
@@ -83,7 +83,7 @@ public class HeterogeneousEnsembleBlastFadingFactors
 	}
 
 	@Override
-	public void trainOnInstanceImpl(Instance inst) {
+	public void trainOnInstanceImpl(Instance inst) throws Exception {
 
 		for (int i = 0; i < this.ensemble.length; i++) {
 

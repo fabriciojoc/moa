@@ -36,7 +36,7 @@ public interface OneClassClassifier extends MultiClassClassifier
 	/**
 	 * Allows a one class classifier to be initialized with a starting set of training instances.
 	 */
-	public void initialize(Collection<Instance> trainingPoints);
+	public void initialize(Collection<Instance> trainingPoints) throws Exception;
 	
 	/**
 	 * For use when an anomaly score is needed instead of a vote.

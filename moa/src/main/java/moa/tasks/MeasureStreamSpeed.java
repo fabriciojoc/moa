@@ -51,7 +51,7 @@ public class MeasureStreamSpeed extends AuxiliarMainTask {
             "Number of examples.", 10000000, 0, Integer.MAX_VALUE);
 
     @Override
-    protected Object doMainTask(TaskMonitor monitor, ObjectRepository repository) {
+    protected Object doMainTask(TaskMonitor monitor, ObjectRepository repository) throws Exception {
         TimingUtils.enablePreciseTiming();
         int numInstances = 0;
         ExampleStream stream = (ExampleStream) getPreparedClassOption(this.streamOption);

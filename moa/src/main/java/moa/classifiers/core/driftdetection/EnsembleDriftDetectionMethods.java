@@ -117,7 +117,7 @@ public class EnsembleDriftDetectionMethods extends AbstractChangeDetector {
 
     @Override
     protected void prepareForUseImpl(TaskMonitor monitor,
-            ObjectRepository repository) {
+            ObjectRepository repository) throws Exception {
         // TODO Auto-generated method stub
         Option[] changeDetectorOptions = this.changeDetectorsOption.getList();
         cds = new ChangeDetector[changeDetectorOptions.length];

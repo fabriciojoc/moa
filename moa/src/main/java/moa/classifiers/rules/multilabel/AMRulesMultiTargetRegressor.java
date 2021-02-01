@@ -87,7 +87,7 @@ public class AMRulesMultiTargetRegressor extends AMRulesMultiLabelLearner implem
 	}
 	
 	@Override
-	public ErrorWeightedVoteMultiLabel newErrorWeightedVote(){
+	public ErrorWeightedVoteMultiLabel newErrorWeightedVote() throws Exception {
 		return (ErrorWeightedVoteMultiLabel)((ErrorWeightedVoteMultiLabel) getPreparedClassOption(weightedVoteOption)).copy();
 		
 	}

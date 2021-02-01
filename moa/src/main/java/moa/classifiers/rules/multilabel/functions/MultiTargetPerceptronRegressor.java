@@ -51,7 +51,7 @@ public class MultiTargetPerceptronRegressor extends AbstractAMRulesFunctionBasic
 	}
 
 	@Override
-	public void resetWithMemory() {
+	public void resetWithMemory() throws Exception {
 		for (int i = 0; i < this.ensemble.length; i++) {
 			Perceptron p=new Perceptron((Perceptron)this.ensemble[i]);
 			p.setLearningRatio(((Perceptron)getPreparedClassOption(baseLearnerOption)).learningRatioOption.getValue());

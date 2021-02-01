@@ -64,7 +64,7 @@ public class RunTasks extends AuxiliarMainTask {
     protected Task task;
 
     @Override
-    protected Object doMainTask(TaskMonitor monitor, ObjectRepository repository) {
+    protected Object doMainTask(TaskMonitor monitor, ObjectRepository repository) throws Exception {
         Object result = null;
 
         String commandString = this.taskOption.getValueAsCLIString();

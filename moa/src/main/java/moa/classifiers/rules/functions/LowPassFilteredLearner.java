@@ -63,7 +63,7 @@ public class LowPassFilteredLearner extends AbstractClassifier implements AMRule
 	}
 
 	@Override
-	public void resetLearningImpl() {
+	public void resetLearningImpl() throws Exception {
 		hasStarted=false;
 		if(learner!=null)
 			learner.resetLearning();
@@ -71,7 +71,7 @@ public class LowPassFilteredLearner extends AbstractClassifier implements AMRule
 	}
 
 	@Override
-	public void trainOnInstanceImpl(Instance inst) {
+	public void trainOnInstanceImpl(Instance inst) throws Exception {
 		if(!hasStarted){
 			learner=(AbstractClassifier) getPreparedClassOption(this.baseLearnerOption);
 			hasStarted=true;

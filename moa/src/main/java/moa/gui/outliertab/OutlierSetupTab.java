@@ -118,7 +118,11 @@ public class OutlierSetupTab extends javax.swing.JPanel {
         buttonStart.setPreferredSize(new java.awt.Dimension(80, iBtnHeight));
         buttonStart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonStartActionPerformed(evt);
+                try {
+                    buttonStartActionPerformed(evt);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -230,7 +234,7 @@ public class OutlierSetupTab extends javax.swing.JPanel {
         
     }//GEN-LAST:event_buttonExportSettingsActionPerformed
 
-    private void buttonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartActionPerformed
+    private void buttonStartActionPerformed(java.awt.event.ActionEvent evt) throws Exception {//GEN-FIRST:event_buttonStartActionPerformed
         toggle(true);
     }//GEN-LAST:event_buttonStartActionPerformed
 
@@ -273,7 +277,7 @@ public class OutlierSetupTab extends javax.swing.JPanel {
         this.outlierTab = outlierTab;
     }
 
-    public void toggleRunMode(){
+    public void toggleRunMode() throws Exception {
         toggle(false);
     }
 
@@ -281,7 +285,7 @@ public class OutlierSetupTab extends javax.swing.JPanel {
         stop(false);
     }
 
-    private void toggle(boolean internal) {
+    private void toggle(boolean internal) throws Exception {
         setStateConfigButtons(false);
         if(buttonStart.getText().equals("Pause")){
             buttonStart.setText("Resume");

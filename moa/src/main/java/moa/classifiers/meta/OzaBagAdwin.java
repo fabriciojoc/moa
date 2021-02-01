@@ -104,7 +104,7 @@ public class OzaBagAdwin extends AbstractClassifier implements MultiClassClassif
     protected ADWIN[] ADError;
 
     @Override
-    public void resetLearningImpl() {
+    public void resetLearningImpl() throws Exception {
         this.ensemble = new Classifier[this.ensembleSizeOption.getValue()];
         Classifier baseLearner = (Classifier) getPreparedClassOption(this.baseLearnerOption);
         baseLearner.resetLearning();
@@ -118,7 +118,7 @@ public class OzaBagAdwin extends AbstractClassifier implements MultiClassClassif
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
         boolean Change = false;
         for (int i = 0; i < this.ensemble.length; i++) {
             int k = MiscUtils.poisson(1.0, this.classifierRandom);
@@ -153,7 +153,7 @@ public class OzaBagAdwin extends AbstractClassifier implements MultiClassClassif
     }
 
     @Override
-    public double[] getVotesForInstance(Instance inst) {
+    public double[] getVotesForInstance(Instance inst) throws Exception {
         DoubleVector combinedVote = new DoubleVector();
         for (int i = 0; i < this.ensemble.length; i++) {
             DoubleVector vote = new DoubleVector(this.ensemble[i].getVotesForInstance(inst));

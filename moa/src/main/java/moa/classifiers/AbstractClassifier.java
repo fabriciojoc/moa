@@ -87,7 +87,7 @@ public abstract class AbstractClassifier extends AbstractOptionHandler
 
     @Override
     public void prepareForUseImpl(TaskMonitor monitor,
-            ObjectRepository repository) {
+            ObjectRepository repository) throws Exception {
         if (this.randomSeedOption != null) {
             this.randomSeed = this.randomSeedOption.getValue();
         }
@@ -98,20 +98,20 @@ public abstract class AbstractClassifier extends AbstractOptionHandler
 
 	
     @Override
-    public double[] getVotesForInstance(Example<Instance> example){
+    public double[] getVotesForInstance(Example<Instance> example) throws Exception {
 		return getVotesForInstance(example.getData());
 	}
 
     @Override
-    public abstract double[] getVotesForInstance(Instance inst);
+    public abstract double[] getVotesForInstance(Instance inst) throws Exception;
 
     @Override
-    public Prediction getPredictionForInstance(Example<Instance> example){
+    public Prediction getPredictionForInstance(Example<Instance> example) throws Exception {
 		return getPredictionForInstance(example.getData());
 	}
 
     @Override
-    public Prediction getPredictionForInstance(Instance inst){
+    public Prediction getPredictionForInstance(Instance inst) throws Exception {
     	Prediction prediction= new MultiLabelPrediction(1);
     	prediction.setVotes(getVotesForInstance(inst));
     	return prediction;
@@ -158,7 +158,7 @@ public abstract class AbstractClassifier extends AbstractOptionHandler
     }
 
     @Override
-    public void resetLearning() {
+    public void resetLearning() throws Exception {
         this.trainingWeightSeenByModel = 0.0;
         if (isRandomizable()) {
             this.classifierRandom = new Random(this.randomSeed);
@@ -167,7 +167,7 @@ public abstract class AbstractClassifier extends AbstractOptionHandler
     }
 
     @Override
-    public void trainOnInstance(Instance inst) {
+    public void trainOnInstance(Instance inst) throws Exception {
         boolean isTraining = (inst.weight() > 0.0);
         if (this instanceof SemiSupervisedLearner == false &&
                 inst.classIsMissing() == true){
@@ -180,7 +180,7 @@ public abstract class AbstractClassifier extends AbstractOptionHandler
     }
 
     @Override
-    public Measurement[] getModelMeasurements() {
+    public Measurement[] getModelMeasurements() throws Exception {
         List<Measurement> measurementList = new LinkedList<Measurement>();
         measurementList.add(new Measurement("model training instances",
                 trainingWeightSeenByModel()));
@@ -206,7 +206,7 @@ public abstract class AbstractClassifier extends AbstractOptionHandler
     }
 
     @Override
-    public void getDescription(StringBuilder out, int indent) {
+    public void getDescription(StringBuilder out, int indent) throws Exception {
         StringUtils.appendIndented(out, indent, "Model type: ");
         out.append(this.getClass().getName());
         StringUtils.appendNewline(out);
@@ -245,12 +245,12 @@ public abstract class AbstractClassifier extends AbstractOptionHandler
     };
     
     @Override
-    public void trainOnInstance(Example<Instance> example){
+    public void trainOnInstance(Example<Instance> example) throws Exception {
 		trainOnInstance(example.getData());
 	}
 
     @Override
-    public boolean correctlyClassifies(Instance inst) {
+    public boolean correctlyClassifies(Instance inst) throws Exception {
         return Utils.maxIndex(getVotesForInstance(inst)) == (int) inst.classValue();
     }
 
@@ -376,7 +376,7 @@ public abstract class AbstractClassifier extends AbstractOptionHandler
      * them to remember calls to super in overridden methods. 
      * Note that this will produce compiler errors if not overridden.
      */
-    public abstract void resetLearningImpl();
+    public abstract void resetLearningImpl() throws Exception;
 
     /**
      * Trains this classifier incrementally using the given instance.<br><br>
@@ -387,7 +387,7 @@ public abstract class AbstractClassifier extends AbstractOptionHandler
      *
      * @param inst the instance to be used for training
      */
-    public abstract void trainOnInstanceImpl(Instance inst);
+    public abstract void trainOnInstanceImpl(Instance inst) throws Exception;
 
     /**
      * Gets the current measurements of this classifier.<br><br>
@@ -398,7 +398,7 @@ public abstract class AbstractClassifier extends AbstractOptionHandler
      *
      * @return an array of measurements to be used in evaluation tasks
      */
-    protected abstract Measurement[] getModelMeasurementsImpl();
+    protected abstract Measurement[] getModelMeasurementsImpl() throws Exception;
 
     /**
      * Returns a string representation of the model.

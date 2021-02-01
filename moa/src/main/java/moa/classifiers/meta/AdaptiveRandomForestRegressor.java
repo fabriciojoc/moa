@@ -101,7 +101,7 @@ public class AdaptiveRandomForestRegressor extends AbstractClassifier implements
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance instance) {
+    public void trainOnInstanceImpl(Instance instance) throws Exception {
         ++this.instancesSeen;
         if(this.ensemble == null)
             initEnsemble(instance);
@@ -118,7 +118,7 @@ public class AdaptiveRandomForestRegressor extends AbstractClassifier implements
     }
 
     @Override
-    public double[] getVotesForInstance(Instance instance) {
+    public double[] getVotesForInstance(Instance instance) throws Exception {
         Instance testInstance = instance.copy();
         if(this.ensemble == null)
             initEnsemble(testInstance);
@@ -150,7 +150,7 @@ public class AdaptiveRandomForestRegressor extends AbstractClassifier implements
         return null;
     }
 
-    protected void initEnsemble(Instance instance) {
+    protected void initEnsemble(Instance instance) throws Exception {
         // Init the ensemble.
         int ensembleSize = this.ensembleSizeOption.getValue();
         this.ensemble = new ARFFIMTDDBaseLearner[ensembleSize];
@@ -250,7 +250,7 @@ public class AdaptiveRandomForestRegressor extends AbstractClassifier implements
         protected int numberOfWarningsDetected;
 
         private void init(int indexOriginal, ARFFIMTDD instantiatedClassifier, BasicRegressionPerformanceEvaluator evaluatorInstantiated,
-                          long instancesSeen, boolean useBkgLearner, boolean useDriftDetector, ClassOption driftOption, ClassOption warningOption, boolean isBackgroundLearner) {
+                          long instancesSeen, boolean useBkgLearner, boolean useDriftDetector, ClassOption driftOption, ClassOption warningOption, boolean isBackgroundLearner) throws Exception {
             this.indexOriginal = indexOriginal;
             this.createdOn = instancesSeen;
             this.lastDriftOn = 0;
@@ -278,11 +278,11 @@ public class AdaptiveRandomForestRegressor extends AbstractClassifier implements
         }
 
         public ARFFIMTDDBaseLearner(int indexOriginal, ARFFIMTDD instantiatedClassifier, BasicRegressionPerformanceEvaluator evaluatorInstantiated,
-                                    long instancesSeen, boolean useBkgLearner, boolean useDriftDetector, ClassOption driftOption, ClassOption warningOption, boolean isBackgroundLearner) {
+                                    long instancesSeen, boolean useBkgLearner, boolean useDriftDetector, ClassOption driftOption, ClassOption warningOption, boolean isBackgroundLearner) throws Exception {
             init(indexOriginal, instantiatedClassifier, evaluatorInstantiated, instancesSeen, useBkgLearner, useDriftDetector, driftOption, warningOption, isBackgroundLearner);
         }
 
-        public void reset() {
+        public void reset() throws Exception {
             if(this.useBkgLearner && this.bkgLearner != null) {
                 this.classifier = this.bkgLearner.classifier;
 
@@ -301,7 +301,7 @@ public class AdaptiveRandomForestRegressor extends AbstractClassifier implements
             this.evaluator.reset();
         }
 
-        public void trainOnInstance(Instance instance, double weight, long instancesSeen) {
+        public void trainOnInstance(Instance instance, double weight, long instancesSeen) throws Exception {
             Instance weightedInstance = (Instance) instance.copy();
             weightedInstance.setWeight(instance.weight() * weight);
             this.classifier.trainOnInstance(weightedInstance);

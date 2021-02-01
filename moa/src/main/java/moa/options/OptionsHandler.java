@@ -64,11 +64,11 @@ public class OptionsHandler extends JavaCLIParser {
         return this.options;
     }*/
 
-    public void prepareForUse() {
+    public void prepareForUse() throws Exception {
         prepareForUse(new NullMonitor(), null);
     }
 
-    public void prepareForUse(TaskMonitor monitor, ObjectRepository repository) {
+    public void prepareForUse(TaskMonitor monitor, ObjectRepository repository) throws Exception {
         prepareClassOptions(monitor, repository);
         //prepareForUseImpl(monitor, repository);
     }
@@ -130,7 +130,7 @@ public class OptionsHandler extends JavaCLIParser {
      * @param repository  the ObjectRepository to use
      */
     public void prepareClassOptions(TaskMonitor monitor,
-            ObjectRepository repository) {
+            ObjectRepository repository) throws Exception {
         this.classOptionNamesToPreparedObjects = null;
         Option[] optionArray = getOptions().getOptionArray();
         for (Option option : optionArray) {
@@ -167,7 +167,7 @@ public class OptionsHandler extends JavaCLIParser {
      * @param opt the class option to get
      * @return an option stored in the dictionary
      */
-    public Object getPreparedClassOption(ClassOption opt) {
+    public Object getPreparedClassOption(ClassOption opt) throws Exception {
         if (this.classOptionNamesToPreparedObjects == null) {
                     this.prepareForUse();
                 }

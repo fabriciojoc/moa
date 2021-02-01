@@ -61,13 +61,13 @@ public class MultilabelHoeffdingTree extends HoeffdingTreeClassifLeaves implemen
 	}*/
 
 	@Override
-	protected LearningNode newLearningNode(double[] initialClassObservations) {
+	protected LearningNode newLearningNode(double[] initialClassObservations) throws Exception {
 		// Create new Learning Node with a null classifier
 		return new MultilabelLearningNodeClassifier(initialClassObservations,null,this);
 	}
 
 	//@Override
-	protected LearningNode newLearningNode(double[] initialClassObservations, Classifier cl) {
+	protected LearningNode newLearningNode(double[] initialClassObservations, Classifier cl) throws Exception {
 		// Create new Learning Node
 		return new MultilabelLearningNodeClassifier(initialClassObservations,cl,this);
 	}
@@ -94,7 +94,7 @@ public class MultilabelHoeffdingTree extends HoeffdingTreeClassifLeaves implemen
 
 		private static final long serialVersionUID = 1L;
 
-		public MultilabelLearningNodeClassifier(double[] initialClassObservations, Classifier cl, MultilabelHoeffdingTree ht ) {
+		public MultilabelLearningNodeClassifier(double[] initialClassObservations, Classifier cl, MultilabelHoeffdingTree ht ) throws Exception {
 			super(initialClassObservations);
 		
 			if (cl== null) {
@@ -110,12 +110,12 @@ public class MultilabelHoeffdingTree extends HoeffdingTreeClassifLeaves implemen
 		}
 
 		@Override
-		public double[] getClassVotes(Instance inst, HoeffdingTree ht) {
+		public double[] getClassVotes(Instance inst, HoeffdingTree ht) throws Exception {
 
 			return this.classifier.getVotesForInstance(inst); 			
 		}
 
-		public Prediction getPredictionForInstance(Instance inst, HoeffdingTree ht) {
+		public Prediction getPredictionForInstance(Instance inst, HoeffdingTree ht) throws Exception {
 
 			return this.classifier.getPredictionForInstance(inst);
 		}
@@ -130,7 +130,7 @@ public class MultilabelHoeffdingTree extends HoeffdingTreeClassifLeaves implemen
 		}
 
 	    @Override
-		public void learnFromInstance(Instance inst, HoeffdingTree ht) {
+		public void learnFromInstance(Instance inst, HoeffdingTree ht) throws Exception {
 
 			//It uses different class values, not only one
 			this.classifier.trainOnInstance(inst);
@@ -181,12 +181,12 @@ public class MultilabelHoeffdingTree extends HoeffdingTreeClassifLeaves implemen
 
 
 	@Override
-	public Prediction getPredictionForInstance(Example<Instance> example) {
+	public Prediction getPredictionForInstance(Example<Instance> example) throws Exception {
 		return getPredictionForInstance((MultiLabelInstance)example.getData());
 	}
 
 	@Override
-	public Prediction getPredictionForInstance(MultiLabelInstance inst){
+	public Prediction getPredictionForInstance(MultiLabelInstance inst) throws Exception {
 
 		if (this.treeRoot != null) {
 			FoundNode foundNode = this.treeRoot.filterInstanceToLeaf(inst, null, -1);
@@ -206,7 +206,7 @@ public class MultilabelHoeffdingTree extends HoeffdingTreeClassifLeaves implemen
 	}
 
 	@Override
-	public void trainOnInstance(Instance inst) {
+	public void trainOnInstance(Instance inst) throws Exception {
 		boolean isTraining = (inst.weight() > 0.0);
 		if (isTraining) {
 			this.trainingWeightSeenByModel += inst.weight();
@@ -215,7 +215,7 @@ public class MultilabelHoeffdingTree extends HoeffdingTreeClassifLeaves implemen
 	}
 
 	@Override
-	public void trainOnInstanceImpl(MultiLabelInstance instance) {
+	public void trainOnInstanceImpl(MultiLabelInstance instance) throws Exception {
 		trainOnInstanceImpl((Instance) instance);
 	}
         

@@ -65,7 +65,7 @@ public class BatchCmd implements ClusterEventListener{
 	public boolean useMicroGT = false;
 
 
-	public BatchCmd(AbstractClusterer clusterer, ClusteringStream stream, MeasureCollection[] measures, int totalInstances){
+	public BatchCmd(AbstractClusterer clusterer, ClusteringStream stream, MeasureCollection[] measures, int totalInstances) throws Exception {
 		this.clusterer = clusterer;
 		this.stream = stream;
 		if(totalInstances == -1)
@@ -115,7 +115,7 @@ public class BatchCmd implements ClusterEventListener{
 
 
 	/* TODO read args from command line */
-	public static void main(String[] args){
+	public static void main(String[] args) throws Exception {
 		RandomRBFGeneratorEvents stream = new RandomRBFGeneratorEvents();
 		AbstractClusterer clusterer = new WithKmeans();
 		boolean[] measureCollection = {true,true,true,true,true,true,true,true};
@@ -127,7 +127,7 @@ public class BatchCmd implements ClusterEventListener{
 
 
 	public static void runBatch(ClusteringStream stream, AbstractClusterer clusterer,
-			boolean[] measureCollection, int amountInstances, String outputFile){
+			boolean[] measureCollection, int amountInstances, String outputFile) throws Exception {
 		// create the measure collection 
 		MeasureCollection[] measures = getMeasures(getMeasureSelection(measureCollection));
 		
@@ -144,7 +144,7 @@ public class BatchCmd implements ClusterEventListener{
 	}
 
 
-	public void run(){
+	public void run() throws Exception {
 		ArrayList<DataPoint> pointBuffer0 = new ArrayList<DataPoint>();
 		int m_timestamp = 0;
 		int decayHorizon = stream.getDecayHorizon();

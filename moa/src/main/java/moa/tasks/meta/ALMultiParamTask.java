@@ -145,8 +145,7 @@ public class ALMultiParamTask extends ALMainTask {
 	
 	@Override
 	protected void prepareForUseImpl(
-			TaskMonitor monitor, ObjectRepository repository) 
-	{
+			TaskMonitor monitor, ObjectRepository repository) throws Exception {
 		super.prepareForUseImpl(monitor, repository);
 		
 		// get varied parameter name

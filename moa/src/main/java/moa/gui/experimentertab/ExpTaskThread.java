@@ -80,7 +80,11 @@ public class ExpTaskThread extends Thread {
             this.runningTask = this.tasks.getTask();
             this.currentStatus = ExpTaskThread.Status.RUNNING;
             this.taskMonitor.setCurrentActivityDescription("Running task " + this.runningTask);
-            this.finalResult = this.runningTask.doTask(this.taskMonitor, this.repository);
+            try {
+                this.finalResult = this.runningTask.doTask(this.taskMonitor, this.repository);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             this.currentStatus = this.taskMonitor.isCancelled() ? ExpTaskThread.Status.CANCELLED
                     : ExpTaskThread.Status.COMPLETED;
             //System.out.println(this.taskMonitor.getCurrentActivityFractionComplete()*100); 

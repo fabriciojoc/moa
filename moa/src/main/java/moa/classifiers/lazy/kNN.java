@@ -90,7 +90,7 @@ public class kNN extends AbstractClassifier implements MultiClassClassifier, Reg
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
 		if (inst.classValue() > C)
 			C = (int)inst.classValue();
 		if (this.window == null) {

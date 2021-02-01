@@ -110,7 +110,7 @@ public class ClassifierWithFeatureImportance extends AbstractClassifier
     }
 
     @Override
-    public void resetLearningImpl() {
+    public void resetLearningImpl() throws Exception {
         this.instancesSeen = 0;
         this.featureImportanceClassifierLearner = null;
         this.featureImportanceClassifierLearner = (FeatureImportanceClassifier) getPreparedClassOption(this.featureImportanceLearnerOption);
@@ -119,7 +119,7 @@ public class ClassifierWithFeatureImportance extends AbstractClassifier
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance instance) {
+    public void trainOnInstanceImpl(Instance instance) throws Exception {
         if (this.instancesSeen == 0 && this.debugStream != null) {
             // Debug info
             this.debugStream.println(this.describe());
@@ -174,7 +174,7 @@ public class ClassifierWithFeatureImportance extends AbstractClassifier
     }
 
     @Override
-    public double[] getVotesForInstance(Instance instance) {
+    public double[] getVotesForInstance(Instance instance) throws Exception {
         return this.featureImportanceClassifierLearner.getVotesForInstance(instance);
     }
 

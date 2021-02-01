@@ -33,7 +33,7 @@ public class OutlierTabPanel extends AbstractTabPanel{
         outlierSetupTab.setOutlierTab(this);
     }
 
-    void toggle() {
+    void toggle() throws Exception {
         outlierVisualTab.toggleVisualizer(false);
     }
 

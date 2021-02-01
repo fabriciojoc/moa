@@ -43,17 +43,17 @@ public class OzaBagML extends OzaBag implements MultiLabelLearner, MultiTargetRe
 
 	//Training
 	@Override
-	public void trainOnInstanceImpl(MultiLabelInstance inst) {
+	public void trainOnInstanceImpl(MultiLabelInstance inst) throws Exception {
 		trainOnInstanceImpl((Instance) inst);
 	}
 
 	// Predictions
 	@Override
-	public Prediction getPredictionForInstance(Example<Instance> example) {
+	public Prediction getPredictionForInstance(Example<Instance> example) throws Exception {
 		return compilePredictions(this.ensemble, example);
 	}
 
-	public static Prediction compilePredictions(Classifier h[], Example example) {
+	public static Prediction compilePredictions(Classifier h[], Example example) throws Exception {
 		Prediction[] predictions = new Prediction[h.length];
 		for (int i = 0; i < h.length; i++) {
 			predictions[i] = h[i].getPredictionForInstance(example);
@@ -90,11 +90,11 @@ public class OzaBagML extends OzaBag implements MultiLabelLearner, MultiTargetRe
 
 	//Legacy code: not used now, only Predictions are used
 	@Override
-    public double[] getVotesForInstance(Instance inst) {
+    public double[] getVotesForInstance(Instance inst) throws Exception {
 		return compileVotes(this.ensemble, inst);
 	}
 
-	public static double[] compileVotes(Classifier h[], Instance inst) {
+	public static double[] compileVotes(Classifier h[], Instance inst) throws Exception {
 		double votes[] = h[0].getVotesForInstance(inst);
 		for (int i = 1; i < h.length; i++) {
 			try {
@@ -119,7 +119,7 @@ public class OzaBagML extends OzaBag implements MultiLabelLearner, MultiTargetRe
 	}
 
 	 @Override
-    public Prediction getPredictionForInstance(MultiLabelInstance instance) {
+    public Prediction getPredictionForInstance(MultiLabelInstance instance) throws Exception {
         return getPredictionForInstance((new InstanceExample(instance)));
     }
 

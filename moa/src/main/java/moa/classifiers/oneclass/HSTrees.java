@@ -259,8 +259,7 @@ public class HSTrees extends AbstractClassifier implements Classifier, OneClassC
 	 * @param trainingPoints the Collection of instance with which to initialize the Streaming Hs-Trees classifier.
 	 */
 	@Override
-	public void initialize(Collection<Instance> trainingPoints)
-	{
+	public void initialize(Collection<Instance> trainingPoints) throws Exception {
 		Iterator<Instance> trgPtsIterator = trainingPoints.iterator();
 		
 		if(trgPtsIterator.hasNext() && this.numInstances == 0)

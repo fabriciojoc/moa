@@ -94,7 +94,7 @@ public class EvaluateModelMultiLabel extends MultiLabelMainTask {
     }
 
     @Override
-    public Object doMainTask(TaskMonitor monitor, ObjectRepository repository) {
+    public Object doMainTask(TaskMonitor monitor, ObjectRepository repository) throws Exception {
         Learner model = (Learner) getPreparedClassOption(this.modelOption);
         ExampleStream stream = (ExampleStream) getPreparedClassOption(this.streamOption);
         LearningPerformanceEvaluator evaluator = (LearningPerformanceEvaluator) getPreparedClassOption(this.evaluatorOption);

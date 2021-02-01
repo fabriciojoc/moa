@@ -102,7 +102,7 @@ public class OnlineUnderOverBagging extends AbstractClassifier implements MultiC
     protected ArrayList<ADWIN> adwinEnsemble = new ArrayList<ADWIN>();      
     
     @Override
-    public void resetLearningImpl() {
+    public void resetLearningImpl() throws Exception {
         // Reset attributes
     	this.baseLearner = (Classifier) getPreparedClassOption(this.baseLearnerOption);
     	this.baseLearner.resetLearning();
@@ -119,7 +119,7 @@ public class OnlineUnderOverBagging extends AbstractClassifier implements MultiC
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance instance) {        
+    public void trainOnInstanceImpl(Instance instance) throws Exception {
         if(this.ensemble.isEmpty()) {
         	resetLearningImpl();
         }  
@@ -172,7 +172,7 @@ public class OnlineUnderOverBagging extends AbstractClassifier implements MultiC
     }
 
     @Override
-    public double[] getVotesForInstance(Instance instance) {
+    public double[] getVotesForInstance(Instance instance) throws Exception {
         Instance testInstance = instance.copy();        
         DoubleVector combinedVote = new DoubleVector();
 

@@ -104,7 +104,7 @@ public class LearningLiteralClassification extends LearningLiteral {
 	}
 
 	@Override
-	public boolean tryToExpand(double splitConfidence, double tieThreshold) {
+	public boolean tryToExpand(double splitConfidence, double tieThreshold) throws Exception {
 
 		boolean shouldSplit=false;
 		
@@ -274,7 +274,7 @@ public class LearningLiteralClassification extends LearningLiteral {
 	}
 
 	@Override
-	public void trainOnInstance(MultiLabelInstance instance)  {
+	public void trainOnInstance(MultiLabelInstance instance) throws Exception {
 		int numInputs=0;
 		if (attributesMask==null)
 			numInputs=initializeAttibutesMask(instance);

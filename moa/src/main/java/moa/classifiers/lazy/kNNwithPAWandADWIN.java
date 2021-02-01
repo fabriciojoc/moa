@@ -63,7 +63,7 @@ public class kNNwithPAWandADWIN extends kNN implements MultiClassClassifier {
     protected int time;
 
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
         if (inst.classValue() > C) {
             C = (int) inst.classValue();
         }

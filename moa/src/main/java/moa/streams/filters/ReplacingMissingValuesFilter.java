@@ -106,7 +106,7 @@ public class ReplacingMissingValuesFilter extends AbstractStreamFilter {
 	}
 
     @Override
-    public InstanceExample nextInstance() {
+    public InstanceExample nextInstance() throws Exception {
         Instance inst = (Instance) ((Instance) this.inputStream.nextInstance().getData()).copy();
  		
 		// Initialization

@@ -45,7 +45,7 @@ public interface Task extends MOAObject {
      *
      * @return an object with the result of this task
      */
-    public Object doTask();
+    public Object doTask() throws Exception;
 
     /**
      * This method performs this task.
@@ -56,5 +56,5 @@ public interface Task extends MOAObject {
      * @param repository  the ObjectRepository to use
      * @return an object with the result of this task
      */
-    public Object doTask(TaskMonitor monitor, ObjectRepository repository);
+    public Object doTask(TaskMonitor monitor, ObjectRepository repository) throws Exception;
 }

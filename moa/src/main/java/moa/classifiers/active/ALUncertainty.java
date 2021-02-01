@@ -151,7 +151,7 @@ public class ALUncertainty extends AbstractClassifier implements ALClassifier {
         return outPosterior;
     }
 
-    private void labelFixed(double incomingPosterior, Instance inst) {
+    private void labelFixed(double incomingPosterior, Instance inst) throws Exception {
         if (incomingPosterior < this.fixedThresholdOption.getValue()) {
             this.classifier.trainOnInstance(inst);
             this.costLabeling++;
@@ -159,7 +159,7 @@ public class ALUncertainty extends AbstractClassifier implements ALClassifier {
         }
     }
 
-    private void labelVar(double incomingPosterior, Instance inst) {
+    private void labelVar(double incomingPosterior, Instance inst) throws Exception {
         if (incomingPosterior < this.newThreshold) {
             this.classifier.trainOnInstance(inst);
             this.costLabeling++;
@@ -170,7 +170,7 @@ public class ALUncertainty extends AbstractClassifier implements ALClassifier {
         }
     }
 
-    private void labelSelSampling(double incomingPosterior, Instance inst) {
+    private void labelSelSampling(double incomingPosterior, Instance inst) throws Exception {
         double p = Math.abs(incomingPosterior - 1.0 / (inst.numClasses()));
         double budget = this.budgetOption.getValue() / (this.budgetOption.getValue() + p);
         if (this.classifierRandom.nextDouble() < budget) {
@@ -181,7 +181,7 @@ public class ALUncertainty extends AbstractClassifier implements ALClassifier {
     }
 
     @Override
-    public void resetLearningImpl() {
+    public void resetLearningImpl() throws Exception {
         this.classifier = ((Classifier) getPreparedClassOption(this.baseLearnerOption)).copy();
         this.classifier.resetLearning();
         this.costLabeling = 0;
@@ -192,7 +192,7 @@ public class ALUncertainty extends AbstractClassifier implements ALClassifier {
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
 
         this.iterationControl++;
 
@@ -232,7 +232,7 @@ public class ALUncertainty extends AbstractClassifier implements ALClassifier {
     }
 
     @Override
-    public double[] getVotesForInstance(Instance inst) {
+    public double[] getVotesForInstance(Instance inst) throws Exception {
         return this.classifier.getVotesForInstance(inst);
     }
 
@@ -247,7 +247,7 @@ public class ALUncertainty extends AbstractClassifier implements ALClassifier {
     }
 
     @Override
-    protected Measurement[] getModelMeasurementsImpl() {
+    protected Measurement[] getModelMeasurementsImpl() throws Exception {
         List<Measurement> measurementList = new LinkedList<Measurement>();
         measurementList.add(new Measurement("labeling cost", this.costLabeling));
         measurementList.add(new Measurement("newThreshold", this.newThreshold));

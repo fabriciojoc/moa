@@ -187,7 +187,7 @@ public class ORTO extends FIMTDD implements Regressor {
 				new Measurement("number of option nodes", this.optionNodeCount),};
 	}
 
-	public void processInstance(Instance inst, Node node, double prediction, double normalError, boolean growthAllowed, boolean inAlternate) {
+	public void processInstance(Instance inst, Node node, double prediction, double normalError, boolean growthAllowed, boolean inAlternate) throws Exception {
 		if (node instanceof OptionNode) {
 			processInstanceOptionNode(inst, (OptionNode) node, prediction, normalError, growthAllowed, inAlternate);
 		} else {
@@ -275,7 +275,7 @@ public class ORTO extends FIMTDD implements Regressor {
 		
 	}
 	
-	public void processInstanceOptionNode(Instance inst, OptionNode node, double prediction, double normalError, boolean growthAllowed, boolean inAlternate) {
+	public void processInstanceOptionNode(Instance inst, OptionNode node, double prediction, double normalError, boolean growthAllowed, boolean inAlternate) throws Exception {
 		if (node.changeDetection) {
 			double error = Math.abs(prediction - inst.classValue());
 			node.sumOfAbsErrors += error;
@@ -313,7 +313,7 @@ public class ORTO extends FIMTDD implements Regressor {
 
 	// region --- Processing methods
 
-	protected void attemptToSplit(LeafNode node, Node parent, int parentIndex) {
+	protected void attemptToSplit(LeafNode node, Node parent, int parentIndex) throws Exception {
 		// Initialize the split criterion 
 		SplitCriterion splitCriterion = (SplitCriterion) getPreparedClassOption(splitCriterionOption);
 

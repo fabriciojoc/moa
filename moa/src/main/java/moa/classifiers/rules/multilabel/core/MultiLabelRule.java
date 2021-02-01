@@ -101,15 +101,15 @@ public class MultiLabelRule extends ObservableMOAObject {
 		return "";
 	}
 
-	public boolean updateChangeDetection(MultiLabelInstance instance) {
+	public boolean updateChangeDetection(MultiLabelInstance instance) throws Exception {
 		return this.learningLiteral.updateAndCheckChange(instance);
 	}
 
-	public boolean updateAnomalyDetection(MultiLabelInstance instance) {
+	public boolean updateAnomalyDetection(MultiLabelInstance instance) throws Exception {
 		return this.learningLiteral.updateAndCheckAnomalyDetection(instance);
 	}
 
-	public void trainOnInstance(MultiLabelInstance instance) {
+	public void trainOnInstance(MultiLabelInstance instance) throws Exception {
 		if(this.instanceInformation==null)
 			this.instanceInformation=((InstancesHeader)instance.dataset()).getInstanceInformation();
 		learningLiteral.trainOnInstance(instance);
@@ -127,7 +127,7 @@ public class MultiLabelRule extends ObservableMOAObject {
 		return learningLiteral.getErrors();
 	}
 
-	public  Prediction getPredictionForInstance(MultiLabelInstance instance) {
+	public  Prediction getPredictionForInstance(MultiLabelInstance instance) throws Exception {
 		return learningLiteral.getPredictionForInstance(instance);
 	}
 
@@ -137,7 +137,7 @@ public class MultiLabelRule extends ObservableMOAObject {
             //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
             return  this.learningLiteral.anomalyDetector.getAnomalyScore();
         }
-	public boolean tryToExpand(double splitConfidence, double tieThresholdOption) {
+	public boolean tryToExpand(double splitConfidence, double tieThresholdOption) throws Exception {
 		boolean hasExpanded=learningLiteral.tryToExpand(splitConfidence,tieThresholdOption);
 		
 		//Merit check event

@@ -123,7 +123,7 @@ public class AccuracyWeightedEnsemble extends AbstractClassifier implements Mult
     protected Instances currentChunk;
 
     @Override
-    public void prepareForUseImpl(TaskMonitor monitor, ObjectRepository repository) {
+    public void prepareForUseImpl(TaskMonitor monitor, ObjectRepository repository) throws Exception {
         this.maxMemberCount = (int) memberCountOption.getValue();
         this.maxStoredCount = (int) storedCountOption.getValue();
 
@@ -140,7 +140,7 @@ public class AccuracyWeightedEnsemble extends AbstractClassifier implements Mult
     }
 
     @Override
-    public void resetLearningImpl() {
+    public void resetLearningImpl() throws Exception {
         this.currentChunk = null;
         this.classDistributions = null;
         this.processedInstances = 0;
@@ -152,7 +152,7 @@ public class AccuracyWeightedEnsemble extends AbstractClassifier implements Mult
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
         this.initVariables();
 
         this.classDistributions[(int) inst.classValue()]++;
@@ -184,7 +184,7 @@ public class AccuracyWeightedEnsemble extends AbstractClassifier implements Mult
     /**
      * Processes a chunk.
      */
-    protected void processChunk() {
+    protected void processChunk() throws Exception {
         // Compute weights
         double candidateClassifierWeight = this.computeCandidateWeight(this.candidateClassifier, this.currentChunk, this.numFolds);
 
@@ -241,7 +241,7 @@ public class AccuracyWeightedEnsemble extends AbstractClassifier implements Mult
      * @param numFolds Number of folds in candidate classifier cross-validation.
      * @return Candidate classifier weight.
      */
-    protected double computeCandidateWeight(Classifier candidate, Instances chunk, int numFolds) {
+    protected double computeCandidateWeight(Classifier candidate, Instances chunk, int numFolds) throws Exception {
         double candidateWeight = 0.0;
         Random random = new Random(1);
         Instances randData = new Instances(chunk);
@@ -330,7 +330,7 @@ public class AccuracyWeightedEnsemble extends AbstractClassifier implements Mult
     /**
      * Predicts a class for an example.
      */
-    public double[] getVotesForInstance(Instance inst) {
+    public double[] getVotesForInstance(Instance inst) throws Exception {
         DoubleVector combinedVote = new DoubleVector();
 
         if (this.trainingWeightSeenByModel > 0.0) {

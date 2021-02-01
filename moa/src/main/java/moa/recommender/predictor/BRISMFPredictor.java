@@ -82,7 +82,7 @@ public class BRISMFPredictor extends AbstractOptionHandler implements RatingPred
      
     
     @Override
-    protected void prepareForUseImpl(TaskMonitor monitor, ObjectRepository repository) {
+    protected void prepareForUseImpl(TaskMonitor monitor, ObjectRepository repository) throws Exception {
         RecommenderData data = (RecommenderData) getPreparedClassOption(this.dataOption);
         rp = new moa.recommender.rc.predictor.impl.BRISMFPredictor(featuresOption.getValue(), data.getData(), lRateOption.getValue(), rFactorOption.getValue(), false);
         rp.setNIterations(iterationsOption.getValue());

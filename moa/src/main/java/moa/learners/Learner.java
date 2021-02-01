@@ -75,14 +75,14 @@ public interface Learner<E extends Example> extends MOAObject, OptionHandler, AW
      * starting a new learner from scratch.
      *
      */
-    public void resetLearning();
+    public void resetLearning() throws Exception;
 
     /**
      * Trains this learner incrementally using the given example.
      *
      * @param example the instance to be used for training
      */
-    public void trainOnInstance(E example);
+    public void trainOnInstance(E example) throws Exception;
 
     /**
      * Predicts the class memberships for a given instance. If
@@ -93,14 +93,14 @@ public interface Learner<E extends Example> extends MOAObject, OptionHandler, AW
      * @return an array containing the estimated membership
      * probabilities of the test instance in each class
      */
-    public double[] getVotesForInstance(E example);
+    public double[] getVotesForInstance(E example) throws Exception;
 
     /**
      * Gets the current measurements of this learner.
      *
      * @return an array of measurements to be used in evaluation tasks
      */
-    public Measurement[] getModelMeasurements();
+    public Measurement[] getModelMeasurements() throws Exception;
 
     /**
      * Gets the learners of this ensemble.
@@ -135,7 +135,7 @@ public interface Learner<E extends Example> extends MOAObject, OptionHandler, AW
      */
     public InstancesHeader getModelContext();
 
-	public Prediction getPredictionForInstance(E testInst);
+	public Prediction getPredictionForInstance(E testInst) throws Exception;
     
 }
 

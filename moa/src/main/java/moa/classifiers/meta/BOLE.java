@@ -94,7 +94,7 @@ public class BOLE extends AbstractClassifier implements MultiClassClassifier {
     }
 
     @Override
-    public void resetLearningImpl() {
+    public void resetLearningImpl() throws Exception {
         this.ensemble = new Classifier[this.ensembleSizeOption.getValue()];
         this.orderPosition = new int[this.ensemble.length];
         Classifier baseLearner = (Classifier) getPreparedClassOption(this.baseLearnerOption);
@@ -108,7 +108,7 @@ public class BOLE extends AbstractClassifier implements MultiClassClassifier {
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
 	// Calculates current accuracy of experts
         double[] acc = new double[this.ensemble.length];
         for (i = 0; i < this.ensemble.length; i++) {
@@ -183,7 +183,7 @@ public class BOLE extends AbstractClassifier implements MultiClassClassifier {
         return 0.0;
     }
 
-    public double[] getVotesForInstance(Instance inst) {
+    public double[] getVotesForInstance(Instance inst) throws Exception {
         DoubleVector combinedVote = new DoubleVector(); 
         for (i = 0; i < this.ensemble.length; i++) {
             memberWeight = getEnsembleMemberWeight(i) + this.weightShiftOption.getValue(); 

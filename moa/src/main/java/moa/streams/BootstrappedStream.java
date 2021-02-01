@@ -90,7 +90,7 @@ public class BootstrappedStream extends AbstractOptionHandler implements
 	}
 
 	@Override
-	public Example<Instance> nextInstance() {
+	public Example<Instance> nextInstance() throws Exception {
 
 		if(waitingToSend==0){
 			do {
@@ -111,7 +111,7 @@ public class BootstrappedStream extends AbstractOptionHandler implements
 	}
 
 	@Override
-	public void restart() {
+	public void restart() throws Exception {
 		originalStream=((MultiTargetInstanceStream)getPreparedClassOption(streamOption));
 		waitingToSend=0;
 		randomGenerator.setSeed(randomSeedOption.getValue());
@@ -125,7 +125,7 @@ public class BootstrappedStream extends AbstractOptionHandler implements
 
 	@Override
 	protected void prepareForUseImpl(TaskMonitor monitor,
-			ObjectRepository repository) {
+			ObjectRepository repository) throws Exception {
 		restart();
 	}
 

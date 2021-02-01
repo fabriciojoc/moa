@@ -100,7 +100,7 @@ public class EvaluateInterleavedTestThenTrain extends ClassificationMainTask {
     }
 
     @Override
-    protected Object doMainTask(TaskMonitor monitor, ObjectRepository repository) {
+    protected Object doMainTask(TaskMonitor monitor, ObjectRepository repository) throws Exception {
 
         String learnerString = this.learnerOption.getValueAsCLIString();
         String streamString = this.streamOption.getValueAsCLIString();

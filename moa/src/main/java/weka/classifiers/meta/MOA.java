@@ -312,9 +312,13 @@ public class MOA
   	StringBuilder		result;
 
   	result = new StringBuilder();
-  	m_ActualClassifier.getDescription(result, 0);
+      try {
+          m_ActualClassifier.getDescription(result, 0);
+      } catch (Exception e) {
+          e.printStackTrace();
+      }
 
-  	return result.toString();
+      return result.toString();
   }
 
   /**

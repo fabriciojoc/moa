@@ -63,7 +63,7 @@ public class WriteStreamToARFFFile extends AuxiliarMainTask {
             'h', "Suppress header from output.");
 
     @Override
-    protected Object doMainTask(TaskMonitor monitor, ObjectRepository repository) {
+    protected Object doMainTask(TaskMonitor monitor, ObjectRepository repository) throws Exception {
         InstanceStream stream = (InstanceStream) getPreparedClassOption(this.streamOption);
         File destFile = this.arffFileOption.getFile();
         if (destFile != null) {

@@ -143,7 +143,7 @@ public abstract class AbstractClassOption extends AbstractOption {
      * @return the materialized object
      */
     public Object materializeObject(TaskMonitor monitor,
-            ObjectRepository repository) {
+            ObjectRepository repository) throws Exception {
         if ((this.currentValue == null)
                 || this.requiredType.isInstance(this.currentValue)) {
             return this.currentValue;

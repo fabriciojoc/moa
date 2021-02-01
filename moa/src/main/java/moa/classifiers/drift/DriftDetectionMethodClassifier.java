@@ -90,7 +90,7 @@ public class DriftDetectionMethodClassifier extends AbstractClassifier implement
     public static final int DDM_OUTCONTROL_LEVEL = 2;
     
     @Override
-    public void resetLearningImpl() {
+    public void resetLearningImpl() throws Exception {
         this.classifier = ((Classifier) getPreparedClassOption(this.baseLearnerOption)).copy();
         this.newclassifier = this.classifier.copy();
         this.classifier.resetLearning();
@@ -104,7 +104,7 @@ public class DriftDetectionMethodClassifier extends AbstractClassifier implement
     protected int warningDetected = 0;
 
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
         //this.numberInstances++;
         int trueClass = (int) inst.classValue();
         boolean prediction;
@@ -160,7 +160,7 @@ public class DriftDetectionMethodClassifier extends AbstractClassifier implement
         this.classifier.trainOnInstance(inst);
     }
 
-    public double[] getVotesForInstance(Instance inst) {
+    public double[] getVotesForInstance(Instance inst) throws Exception {
         return this.classifier.getVotesForInstance(inst);
     }
 
@@ -175,7 +175,7 @@ public class DriftDetectionMethodClassifier extends AbstractClassifier implement
     }
 
     @Override
-    protected Measurement[] getModelMeasurementsImpl() {
+    protected Measurement[] getModelMeasurementsImpl() throws Exception {
         List<Measurement> measurementList = new LinkedList<Measurement>();
         measurementList.add(new Measurement("Change detected", this.changeDetected));
         measurementList.add(new Measurement("Warning detected", this.warningDetected));

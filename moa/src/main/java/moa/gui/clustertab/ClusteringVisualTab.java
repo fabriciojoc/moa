@@ -62,7 +62,7 @@ public class ClusteringVisualTab extends javax.swing.JPanel implements ActionLis
     }
 
 
-    private void createVisualiterThread(){
+    private void createVisualiterThread() throws Exception {
         visualizer = new RunVisualizer(this, clusteringSetupTab);
         visualizerThread = new Thread(visualizer);
     }
@@ -128,7 +128,7 @@ public class ClusteringVisualTab extends javax.swing.JPanel implements ActionLis
         super.repaint();
     }
 
-    public void toggleVisualizer(boolean internal){
+    public void toggleVisualizer(boolean internal) throws Exception {
         if(visualizer == null)
             createVisualiterThread();
 
@@ -286,7 +286,11 @@ public class ClusteringVisualTab extends javax.swing.JPanel implements ActionLis
         buttonRun.setPreferredSize(new java.awt.Dimension(70, 33));
         buttonRun.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                buttonRunMouseClicked(evt);
+                try {
+                    buttonRunMouseClicked(evt);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         buttonRun.addActionListener(new java.awt.event.ActionListener() {
@@ -621,7 +625,7 @@ public class ClusteringVisualTab extends javax.swing.JPanel implements ActionLis
 
     }//GEN-LAST:event_buttonScreenshotMouseClicked
 
-    private void buttonRunMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonRunMouseClicked
+    private void buttonRunMouseClicked(java.awt.event.MouseEvent evt) throws Exception {//GEN-FIRST:event_buttonRunMouseClicked
         toggleVisualizer(true);
     }//GEN-LAST:event_buttonRunMouseClicked
 

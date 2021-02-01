@@ -77,7 +77,7 @@ public class OzaBoost extends AbstractClassifier implements MultiClassClassifier
     protected double[] swms;
 
     @Override
-    public void resetLearningImpl() {
+    public void resetLearningImpl() throws Exception {
         this.ensemble = new Classifier[this.ensembleSizeOption.getValue()];
         Classifier baseLearner = (Classifier) getPreparedClassOption(this.baseLearnerOption);
         baseLearner.resetLearning();
@@ -89,7 +89,7 @@ public class OzaBoost extends AbstractClassifier implements MultiClassClassifier
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
         double lambda_d = 1.0;
         for (int i = 0; i < this.ensemble.length; i++) {
             double k = this.pureBoostOption.isSet() ? lambda_d : MiscUtils.poisson(lambda_d, this.classifierRandom);
@@ -117,7 +117,7 @@ public class OzaBoost extends AbstractClassifier implements MultiClassClassifier
         return Math.log(1.0 / Bm);
     }
 
-    public double[] getVotesForInstance(Instance inst) {
+    public double[] getVotesForInstance(Instance inst) throws Exception {
         DoubleVector combinedVote = new DoubleVector();
         for (int i = 0; i < this.ensemble.length; i++) {
             double memberWeight = getEnsembleMemberWeight(i);

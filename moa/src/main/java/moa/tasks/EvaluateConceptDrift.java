@@ -100,7 +100,7 @@ public class EvaluateConceptDrift extends ConceptDriftMainTask{
 
     
     @Override
-    protected Object doMainTask(TaskMonitor monitor, ObjectRepository repository) {
+    protected Object doMainTask(TaskMonitor monitor, ObjectRepository repository) throws Exception {
         ChangeDetectorLearner learner = (ChangeDetectorLearner) getPreparedClassOption(this.learnerOption);
         ConceptDriftGenerator stream = (ConceptDriftGenerator) getPreparedClassOption(this.streamOption);
         this.setEventsList(stream.getEventsList());

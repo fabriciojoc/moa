@@ -507,7 +507,7 @@ public class HoeffdingOptionTree extends AbstractClassifier implements MultiClas
         }
 
         public abstract void learnFromInstance(Instance inst,
-                HoeffdingOptionTree ht);
+                HoeffdingOptionTree ht) throws Exception;
     }
 
     public static class InactiveLearningNode extends LearningNode {
@@ -545,7 +545,7 @@ public class HoeffdingOptionTree extends AbstractClassifier implements MultiClas
         }
 
         @Override
-        public void learnFromInstance(Instance inst, HoeffdingOptionTree ht) {
+        public void learnFromInstance(Instance inst, HoeffdingOptionTree ht) throws Exception {
             this.observedClassDistribution.addToValue((int) inst.classValue(),
                     inst.weight());
             for (int i = 0; i < inst.numAttributes() - 1; i++) {
@@ -646,7 +646,7 @@ public class HoeffdingOptionTree extends AbstractClassifier implements MultiClas
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
         if (this.treeRoot == null) {
             this.treeRoot = newLearningNode();
             this.activeLeafNodeCount = 1;
@@ -757,18 +757,18 @@ public class HoeffdingOptionTree extends AbstractClassifier implements MultiClas
                 / (2.0 * n));
     }
 
-    protected AttributeClassObserver newNominalClassObserver() {
+    protected AttributeClassObserver newNominalClassObserver() throws Exception {
         AttributeClassObserver nominalClassObserver = (AttributeClassObserver) getPreparedClassOption(this.nominalEstimatorOption);
         return (AttributeClassObserver) nominalClassObserver.copy();
     }
 
-    protected AttributeClassObserver newNumericClassObserver() {
+    protected AttributeClassObserver newNumericClassObserver() throws Exception {
         AttributeClassObserver numericClassObserver = (AttributeClassObserver) getPreparedClassOption(this.numericEstimatorOption);
         return (AttributeClassObserver) numericClassObserver.copy();
     }
 
     protected void attemptToSplit(ActiveLearningNode node, SplitNode parent,
-            int parentIndex) {
+            int parentIndex) throws Exception {
         if (!node.observedClassDistributionIsPure()) {
             SplitCriterion splitCriterion = (SplitCriterion) getPreparedClassOption(this.splitCriterionOption);
             AttributeSplitSuggestion[] bestSplitSuggestions = node.getBestSplitSuggestions(splitCriterion, this);
@@ -1167,7 +1167,7 @@ public class HoeffdingOptionTree extends AbstractClassifier implements MultiClas
         }
 
         @Override
-        public void learnFromInstance(Instance inst, HoeffdingOptionTree hot) {
+        public void learnFromInstance(Instance inst, HoeffdingOptionTree hot) throws Exception {
             int trueClass = (int) inst.classValue();
             if (this.observedClassDistribution.maxIndex() == trueClass) {
                 this.mcCorrectWeight += inst.weight();

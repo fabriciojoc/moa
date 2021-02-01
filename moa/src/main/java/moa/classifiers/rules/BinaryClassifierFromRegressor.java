@@ -50,7 +50,7 @@ public class BinaryClassifierFromRegressor extends AbstractClassifier {
 	}
 
 	@Override
-	public double[] getVotesForInstance(Instance inst) {
+	public double[] getVotesForInstance(Instance inst) throws Exception {
 		//TODO: use a parameter determining the function to use to return the output.
 		//Current function is the step function. By default should return regressor values
 		double vote=this.regressor.getVotesForInstance(inst)[0]; //Maybe pass the value through a sigmoid function
@@ -67,19 +67,19 @@ public class BinaryClassifierFromRegressor extends AbstractClassifier {
 	}
 
 	@Override
-	public void resetLearningImpl() {
+	public void resetLearningImpl() throws Exception {
         this.regressor = (Classifier) getPreparedClassOption(this.baseLearnerOption);
         this.regressor.resetLearning();
 	}
 
 	@Override
-	public void trainOnInstanceImpl(Instance inst) {
+	public void trainOnInstanceImpl(Instance inst) throws Exception {
 		this.regressor.trainOnInstance(inst);
 
 	}
 
 	@Override
-	protected Measurement[] getModelMeasurementsImpl() {
+	protected Measurement[] getModelMeasurementsImpl() throws Exception {
 		return this.regressor.getModelMeasurements();
 	}
 

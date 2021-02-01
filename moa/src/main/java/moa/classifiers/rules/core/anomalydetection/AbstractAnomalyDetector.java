@@ -33,7 +33,7 @@ public abstract class AbstractAnomalyDetector extends AbstractOptionHandler impl
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public abstract boolean updateAndCheckAnomalyDetection(MultiLabelInstance instance);
+	public abstract boolean updateAndCheckAnomalyDetection(MultiLabelInstance instance) throws Exception;
 
 	@Override
 	public AnomalyDetector copy() {

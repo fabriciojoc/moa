@@ -32,7 +32,7 @@ public class ClusteringTabPanel extends AbstractTabPanel{
         clusteringSetupTab.setClusteringTab(this);
     }
 
-    void toggle() {
+    void toggle() throws Exception {
         clusteringVisualTab.toggleVisualizer(false);
     }
 

@@ -75,7 +75,7 @@ public class ALPartitionEvaluationTask extends ALMainTask {
 	
 	
 	@Override
-	protected void prepareForUseImpl(TaskMonitor monitor, ObjectRepository repository) {
+	protected void prepareForUseImpl(TaskMonitor monitor, ObjectRepository repository) throws Exception {
 		super.prepareForUseImpl(monitor, repository);
 		
 		colorCoding = Color.WHITE;

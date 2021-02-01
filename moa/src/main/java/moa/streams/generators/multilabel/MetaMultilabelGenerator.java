@@ -88,12 +88,12 @@ public class MetaMultilabelGenerator extends AbstractOptionHandler implements In
     protected HashSet m_TopCombinations[] = null;
 
     @Override
-    public void prepareForUseImpl(TaskMonitor monitor, ObjectRepository repository) {
+    public void prepareForUseImpl(TaskMonitor monitor, ObjectRepository repository) throws Exception {
         this.restart();
     }
 
     @Override
-    public void restart() {
+    public void restart() throws Exception {
 
         // The number of class labels L
         this.m_L = numLabelsOption.getValue();
@@ -200,7 +200,7 @@ public class MetaMultilabelGenerator extends AbstractOptionHandler implements In
      *
      * @param	i	the class to generate (0,1)
      */
-    private Instance getNextWithBinary(int i) {
+    private Instance getNextWithBinary(int i) throws Exception {
         int lim = 1000;
         if (queue[i].size() <= 0) {
             int c = -1;
@@ -225,7 +225,7 @@ public class MetaMultilabelGenerator extends AbstractOptionHandler implements In
      * GenerateML. Generates a multi-label example.
      */
     @Override
-    public InstanceExample nextInstance() {
+    public InstanceExample nextInstance() throws Exception {
         return new InstanceExample(generateMLInstance(generateSet()));
     }
 
@@ -264,7 +264,7 @@ public class MetaMultilabelGenerator extends AbstractOptionHandler implements In
      * @param	Y	a set of label [indices]
      * @return a multit-labelled example
      */
-    private Instance generateMLInstance(HashSet<Integer> Y) {
+    private Instance generateMLInstance(HashSet<Integer> Y) throws Exception {
 
         // create a multi-label instance:
         Instance x_ml = new SparseInstance(this.multilabelStreamTemplate.numAttributes());

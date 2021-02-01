@@ -70,7 +70,7 @@ public class TemporallyAugmentedClassifier extends AbstractClassifier implements
         "Labels arrive with Delay. Use predictions instead of true Labels.");
     
     @Override
-    public void resetLearningImpl() {
+    public void resetLearningImpl() throws Exception {
         this.baseLearner = (Classifier) getPreparedClassOption(this.baseLearnerOption);
         this.oldLabels = new double[this.numOldLabelsOption.getValue()];
         this.header = null;
@@ -78,7 +78,7 @@ public class TemporallyAugmentedClassifier extends AbstractClassifier implements
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance instance) {
+    public void trainOnInstanceImpl(Instance instance) throws Exception {
         this.baseLearner.trainOnInstance(extendWithOldLabels(instance));
         if (this.labelDelayOption.isSet() == false) {
             // Use true old Labels to add attributes to instances
@@ -146,7 +146,7 @@ public class TemporallyAugmentedClassifier extends AbstractClassifier implements
     }
 
     @Override
-    public double[] getVotesForInstance(Instance instance) {
+    public double[] getVotesForInstance(Instance instance) throws Exception {
         double[] prediction = this.baseLearner.getVotesForInstance(extendWithOldLabels(instance));
         if (this.labelDelayOption.isSet() == true) {
             // Use predicted Labels to add attributes to instances
@@ -161,7 +161,7 @@ public class TemporallyAugmentedClassifier extends AbstractClassifier implements
     }
 
     @Override
-    protected Measurement[] getModelMeasurementsImpl() {
+    protected Measurement[] getModelMeasurementsImpl() throws Exception {
         List<Measurement> measurementList = new LinkedList<Measurement>();
         Measurement[] modelMeasurements = ((AbstractClassifier) this.baseLearner).getModelMeasurements();
         if (modelMeasurements != null) {

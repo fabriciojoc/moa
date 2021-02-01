@@ -168,7 +168,7 @@ extends MoaTestCase {
 	 * @param scheme		the scheme to process the data with
 	 * @return			the processed data
 	 */
-	protected InspectionData[] inspect(Instances data, int[] inspectionPoints, LearningPerformanceEvaluator<Example<Instance>>  evaluator, Classifier scheme) {
+	protected InspectionData[] inspect(Instances data, int[] inspectionPoints, LearningPerformanceEvaluator<Example<Instance>>  evaluator, Classifier scheme) throws Exception {
 		InspectionData[]	result;
 		int			i;
 		int			point;
@@ -295,7 +295,7 @@ extends MoaTestCase {
 	/**
 	 * Compares the processed data against previously saved output data.
 	 */
-	public void testRegression() {
+	public void testRegression() throws Exception {
 		Instances					data;
 		InspectionData[]				processed;
 		boolean					ok;

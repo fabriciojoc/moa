@@ -77,7 +77,7 @@ public class PairedLearners extends AbstractClassifier implements MultiClassClas
     protected int i;
 
     @Override
-    public void resetLearningImpl() {
+    public void resetLearningImpl() throws Exception {
         this.t = 0;
         this.w = this.windowSizeOption.getValue();
         this.c = new int[this.w];
@@ -91,7 +91,7 @@ public class PairedLearners extends AbstractClassifier implements MultiClassClas
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
         this.instances[this.t] = inst;
         int trueClass = (int) inst.classValue();
         boolean stablePrediction = MiscUtils.maxIndex(this.stableLearner.getVotesForInstance(inst)) == trueClass;
@@ -119,7 +119,7 @@ public class PairedLearners extends AbstractClassifier implements MultiClassClas
     }
 
     @Override
-    public double[] getVotesForInstance(Instance inst) {
+    public double[] getVotesForInstance(Instance inst) throws Exception {
         return this.stableLearner.getVotesForInstance(inst);
     }
     @Override
@@ -128,7 +128,7 @@ public class PairedLearners extends AbstractClassifier implements MultiClassClas
     }
 
     @Override
-    protected Measurement[] getModelMeasurementsImpl() {
+    protected Measurement[] getModelMeasurementsImpl() throws Exception {
         List<Measurement> measurementList = new LinkedList();
         measurementList.add(new Measurement("Change detected", this.changeDetected));
         Measurement[] modelMeasurements = ((AbstractClassifier) this.stableLearner).getModelMeasurements();

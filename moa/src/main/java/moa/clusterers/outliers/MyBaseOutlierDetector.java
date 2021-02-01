@@ -147,11 +147,11 @@ public abstract class MyBaseOutlierDetector extends AbstractClusterer {
     }
     
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
         processNewInstanceImpl(inst);
     }
     
-    public void processNewInstanceImpl(Instance inst) {        
+    public void processNewInstanceImpl(Instance inst) throws Exception {
         Long nsNow = System.nanoTime(); 
         
         ProcessNewStreamObj(inst);
@@ -175,7 +175,7 @@ public abstract class MyBaseOutlierDetector extends AbstractClusterer {
         Println("Process time per object (ms): " + String.format("%.3f", ms));
     }
     
-    protected void ProcessNewStreamObj(Instance inst) {
+    protected void ProcessNewStreamObj(Instance inst) throws Exception {
         throw new UnsupportedOperationException("Not yet implemented");
     }
     

@@ -66,7 +66,7 @@ public class OutlierVisualTab extends javax.swing.JPanel implements ActionListen
     }
 
 
-    private void createVisualiterThread(){
+    private void createVisualiterThread() throws Exception {
         visualizer = new RunOutlierVisualizer(this, outlierSetupTab);
         visualizerThread = new Thread(visualizer);
     }
@@ -145,7 +145,7 @@ public class OutlierVisualTab extends javax.swing.JPanel implements ActionListen
     public void componentHidden(ComponentEvent ce) {
     }
 
-    public void toggleVisualizer(boolean internal){
+    public void toggleVisualizer(boolean internal) throws Exception {
         if(visualizer == null)
             createVisualiterThread();
         
@@ -336,7 +336,11 @@ public class OutlierVisualTab extends javax.swing.JPanel implements ActionListen
         buttonRun.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                buttonRunMouseClicked(evt);
+                try {
+                    buttonRunMouseClicked(evt);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         buttonRun.addActionListener(new java.awt.event.ActionListener() {
@@ -703,7 +707,7 @@ public class OutlierVisualTab extends javax.swing.JPanel implements ActionListen
         }
     }//GEN-LAST:event_buttonScreenshotMouseClicked
 
-    private void buttonRunMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonRunMouseClicked
+    private void buttonRunMouseClicked(java.awt.event.MouseEvent evt) throws Exception {//GEN-FIRST:event_buttonRunMouseClicked
         toggleVisualizer(true);
     }//GEN-LAST:event_buttonRunMouseClicked
 

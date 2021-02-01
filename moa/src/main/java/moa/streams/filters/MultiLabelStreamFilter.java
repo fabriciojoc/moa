@@ -13,5 +13,5 @@ public interface MultiLabelStreamFilter extends MultiTargetInstanceStream {
      *
      * @param stream the input stream to the filter
      */
-    public void setInputStream(ExampleStream<Example<Instance>> stream);
+    public void setInputStream(ExampleStream<Example<Instance>> stream) throws Exception;
 }

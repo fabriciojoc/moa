@@ -83,7 +83,7 @@ public class IrrelevantFeatureAppenderStream extends AbstractOptionHandler imple
     protected Random random = null;
 
     @Override
-    protected void prepareForUseImpl(TaskMonitor monitor, ObjectRepository repository) {
+    protected void prepareForUseImpl(TaskMonitor monitor, ObjectRepository repository) throws Exception {
         this.originalStream = (ExampleStream) getPreparedClassOption(streamOption);
         this.random = new Random(instanceRandomSeedOption.getValue());
         buildHeader();
@@ -105,7 +105,7 @@ public class IrrelevantFeatureAppenderStream extends AbstractOptionHandler imple
     }
 
     @Override
-    public Example<Instance> nextInstance() {
+    public Example<Instance> nextInstance() throws Exception {
         Example<Instance> original = originalStream.nextInstance();
 
         // copies the original values
@@ -144,7 +144,7 @@ public class IrrelevantFeatureAppenderStream extends AbstractOptionHandler imple
     }
 
     @Override
-    public void restart() {
+    public void restart() throws Exception {
         originalStream.restart();
         this.random = new Random(instanceRandomSeedOption.getValue());
         this.buildHeader();

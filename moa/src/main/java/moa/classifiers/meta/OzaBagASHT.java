@@ -116,7 +116,7 @@ public class OzaBagASHT extends AbstractClassifier implements MultiClassClassifi
     protected double alpha = 0.01;
 
     @Override
-    public void resetLearningImpl() {
+    public void resetLearningImpl() throws Exception {
         this.ensemble = new ASHoeffdingTree[this.ensembleSizeOption.getValue()];
         this.error = new double[this.ensembleSizeOption.getValue()];
         Classifier baseLearner = (Classifier) getPreparedClassOption(this.baseLearnerOption);
@@ -135,7 +135,7 @@ public class OzaBagASHT extends AbstractClassifier implements MultiClassClassifi
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
         int trueClass = (int) inst.classValue();
         for (int i = 0; i < this.ensemble.length; i++) {
             int k = MiscUtils.poisson(1.0, this.classifierRandom);
@@ -152,7 +152,7 @@ public class OzaBagASHT extends AbstractClassifier implements MultiClassClassifi
         }
     }
 
-    public double[] getVotesForInstance(Instance inst) {
+    public double[] getVotesForInstance(Instance inst) throws Exception {
         DoubleVector combinedVote = new DoubleVector();
         for (int i = 0; i < this.ensemble.length; i++) {
             DoubleVector vote = new DoubleVector(this.ensemble[i].getVotesForInstance(inst));

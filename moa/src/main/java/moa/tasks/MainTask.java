@@ -46,7 +46,7 @@ public abstract class MainTask extends AbstractTask {
             "File to save the final result of the task to.", null, "moa", true);
 
     @Override
-    protected Object doTaskImpl(TaskMonitor monitor, ObjectRepository repository) {
+    protected Object doTaskImpl(TaskMonitor monitor, ObjectRepository repository) throws Exception {
         Object result = doMainTask(monitor, repository);
         if (monitor.taskShouldAbort()) {
             return null;
@@ -86,5 +86,5 @@ public abstract class MainTask extends AbstractTask {
      * @return an object with the result of this task
      */
     protected abstract Object doMainTask(TaskMonitor monitor,
-            ObjectRepository repository);
+            ObjectRepository repository) throws Exception;
 }

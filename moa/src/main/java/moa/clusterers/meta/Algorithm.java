@@ -28,7 +28,7 @@ public class Algorithm {
 	public boolean isDefault;
 
 	// copy constructor
-	public Algorithm(Algorithm x, double lambda, double reset, boolean keepCurrentModel, boolean reinitialiseWithClusters, int verbose) {
+	public Algorithm(Algorithm x, double lambda, double reset, boolean keepCurrentModel, boolean reinitialiseWithClusters, int verbose) throws Exception {
 
 		// make a (mostly) deep copy of the algorithm
 		this.algorithm = x.algorithm;
@@ -60,7 +60,7 @@ public class Algorithm {
 	}
 
 	// init constructor
-	public Algorithm(AlgorithmConfiguration x) {
+	public Algorithm(AlgorithmConfiguration x) throws Exception {
 
 		this.algorithm = x.algorithm;
 		this.parameters = new IParameter[x.parameters.length];
@@ -99,7 +99,7 @@ public class Algorithm {
 	}
 
 	// initialise a new algorithm using the Command Line Interface (CLI)
-	public void init() {
+	public void init() throws Exception {
 		// construct CLI string from settings, e.g. denstream.WithDBSCAN -e 0.08 -b 0.3
 		StringBuilder commandLine = new StringBuilder();
 		commandLine.append(this.algorithm); // first the algorithm class
@@ -115,7 +115,7 @@ public class Algorithm {
 	}
 
 	// sample a new confguration based on the current one
-	public void adjustAlgorithm(boolean keepCurrentModel, boolean reinitialiseWithClusters, int verbose) {
+	public void adjustAlgorithm(boolean keepCurrentModel, boolean reinitialiseWithClusters, int verbose) throws Exception {
 
 		if (keepCurrentModel) {
 			// Option 1: keep the old state and just change parameter

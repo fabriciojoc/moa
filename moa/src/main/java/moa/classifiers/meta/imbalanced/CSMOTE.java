@@ -126,7 +126,7 @@ public class CSMOTE extends AbstractClassifier implements MultiClassClassifier {
 	protected int[] indexValues;
     
     @Override
-    public void resetLearningImpl() {     	    	
+    public void resetLearningImpl() throws Exception {
         this.learner = (Classifier) getPreparedClassOption(this.baseLearnerOption);                               
         this.neighbors = this.neighborsOption.getValue();
         this.threshold = this.thresholdOption.getValue();
@@ -149,13 +149,13 @@ public class CSMOTE extends AbstractClassifier implements MultiClassClassifier {
     }
 
     @Override
-    public double[] getVotesForInstance(Instance instance) {
+    public double[] getVotesForInstance(Instance instance) throws Exception {
     	double[] prediction = this.learner.getVotesForInstance(instance);    	
         return prediction;
     }
     
     @Override
-    public void trainOnInstanceImpl(Instance instance) { 
+    public void trainOnInstanceImpl(Instance instance) throws Exception {
     	this.learner.trainOnInstance(instance);
     	fillBatches(instance);    	
     	//update adwin change detector

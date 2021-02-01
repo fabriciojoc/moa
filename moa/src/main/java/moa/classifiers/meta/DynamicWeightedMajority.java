@@ -77,7 +77,7 @@ public class DynamicWeightedMajority extends AbstractClassifier implements Multi
     protected long epochs;
 
     @Override
-    public void resetLearningImpl() {
+    public void resetLearningImpl() throws Exception {
         this.experts = new ArrayList<>(50);
         Classifier classifier = ((Classifier) getPreparedClassOption(this.baseLearnerOption)).copy();
         classifier.resetLearning();
@@ -109,7 +109,7 @@ public class DynamicWeightedMajority extends AbstractClassifier implements Multi
     } // DWM::removeWeakestExpert
 
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
         this.epochs++;
         double[] Pr = new double[inst.numClasses()];
         double maxWeight = 0.0;
@@ -157,7 +157,7 @@ public class DynamicWeightedMajority extends AbstractClassifier implements Multi
     }
 
     @Override
-    public double[] getVotesForInstance(Instance inst) {
+    public double[] getVotesForInstance(Instance inst) throws Exception {
         double[] Pr = new double[inst.numClasses()];
         for (int i = 0; i < this.experts.size(); i++) {
             double[] pr = this.experts.get(i).getVotesForInstance(inst);

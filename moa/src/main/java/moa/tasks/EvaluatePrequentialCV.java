@@ -115,7 +115,7 @@ public class EvaluatePrequentialCV extends ClassificationMainTask {
     }
 
     @Override
-    protected Object doMainTask(TaskMonitor monitor, ObjectRepository repository) {
+    protected Object doMainTask(TaskMonitor monitor, ObjectRepository repository) throws Exception {
 
         Random random = new Random(this.randomSeedOption.getValue());
         ExampleStream stream = (ExampleStream) getPreparedClassOption(this.streamOption);

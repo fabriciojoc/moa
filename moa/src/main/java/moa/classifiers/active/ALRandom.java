@@ -65,12 +65,12 @@ public class ALRandom extends AbstractClassifier implements ALClassifier {
 	}
 
 	@Override
-	public double[] getVotesForInstance(Instance inst) {
+	public double[] getVotesForInstance(Instance inst) throws Exception {
 		return this.classifier.getVotesForInstance(inst);
 	}
 
 	@Override
-	public void resetLearningImpl() {
+	public void resetLearningImpl() throws Exception {
         this.classifier = ((Classifier) getPreparedClassOption(this.baseLearnerOption)).copy();
         this.classifier.resetLearning();
         this.budgetManager = ((BudgetManager) getPreparedClassOption(this.budgetManagerOption));
@@ -78,7 +78,7 @@ public class ALRandom extends AbstractClassifier implements ALClassifier {
 	}
 
 	@Override
-	public void trainOnInstanceImpl(Instance inst) {
+	public void trainOnInstanceImpl(Instance inst) throws Exception {
 		double value = this.classifierRandom.nextDouble();
 		if (this.budgetManager.isAbove(value)){
             this.classifier.trainOnInstance(inst);

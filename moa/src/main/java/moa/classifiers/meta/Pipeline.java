@@ -45,7 +45,7 @@ public class Pipeline extends AbstractClassifier implements MultiClassClassifier
 
     @Override
     public void prepareForUseImpl(TaskMonitor monitor,
-                                  ObjectRepository repository) {
+                                  ObjectRepository repository) throws Exception {
         Option[] filterOptions = this.basefiltersOption.getList();
         this.filters = new StreamFilter[filterOptions.length];
         for (int i = 0; i < filterOptions.length; i++) {
@@ -63,13 +63,13 @@ public class Pipeline extends AbstractClassifier implements MultiClassClassifier
     }
 
     @Override
-    public void resetLearningImpl() {
+    public void resetLearningImpl() throws Exception {
         this.classifier = ((Classifier) getPreparedClassOption(this.baseLearnerOption)).copy();
         this.classifier.resetLearning();
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
         for (int i = 0; i < this.filters.length; i++) {
             inst = this.filters[i].filterInstance(inst);
         }
@@ -77,7 +77,7 @@ public class Pipeline extends AbstractClassifier implements MultiClassClassifier
     }
 
     @Override
-    public double[] getVotesForInstance(Instance instance) {
+    public double[] getVotesForInstance(Instance instance) throws Exception {
         return(this.classifier.getVotesForInstance(instance));
     }
 

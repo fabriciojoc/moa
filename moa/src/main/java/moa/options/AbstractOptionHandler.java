@@ -70,14 +70,14 @@ public abstract class AbstractOptionHandler extends AbstractMOAObject implements
     }
 
     @Override
-    public void prepareForUse() {
+    public void prepareForUse() throws Exception {
         prepareForUse(new NullMonitor(), null);
     }
 
     protected OptionsHandler config; 
     
     @Override
-    public void prepareForUse(TaskMonitor monitor, ObjectRepository repository) {
+    public void prepareForUse(TaskMonitor monitor, ObjectRepository repository) throws Exception {
         //prepareClassOptions(monitor, repository);
         if ( this.config == null){
             this.config = new OptionsHandler(this, "");
@@ -96,7 +96,7 @@ public abstract class AbstractOptionHandler extends AbstractMOAObject implements
      * @param repository  the ObjectRepository to use
      */
     protected abstract void prepareForUseImpl(TaskMonitor monitor,
-            ObjectRepository repository);
+            ObjectRepository repository) throws Exception;
 
     @Override
     public String getCLICreationString(Class<?> expectedType) {
@@ -147,7 +147,7 @@ public abstract class AbstractOptionHandler extends AbstractMOAObject implements
      * @param repository  the ObjectRepository to use
      */
     protected void prepareClassOptions(TaskMonitor monitor,
-            ObjectRepository repository) {
+            ObjectRepository repository) throws Exception {
        this.config.prepareClassOptions(monitor, repository); 
     }/*
         this.classOptionNamesToPreparedObjects = null;
@@ -186,7 +186,7 @@ public abstract class AbstractOptionHandler extends AbstractMOAObject implements
      * @param opt the class option to get
      * @return an option stored in the dictionary
      */
-    protected Object getPreparedClassOption(ClassOption opt) {
+    protected Object getPreparedClassOption(ClassOption opt) throws Exception {
         return this.config.getPreparedClassOption(opt);
     }
 }

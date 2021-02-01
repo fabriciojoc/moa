@@ -28,7 +28,7 @@ public class SelectAttributesFilterTest {
 
 	}
 	@Test
-	public void testNextInstance(){
+	public void testNextInstance() throws Exception {
 		Instance inst=filter.nextInstance().getData();
 		assertEquals("F2", inst.inputAttribute(0).name());
 		assertEquals("N1", inst.inputAttribute(1).name());

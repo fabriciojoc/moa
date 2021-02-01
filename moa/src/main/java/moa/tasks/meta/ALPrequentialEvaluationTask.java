@@ -115,7 +115,7 @@ public class ALPrequentialEvaluationTask extends ALMainTask {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	protected Object doMainTask(TaskMonitor monitor, ObjectRepository repository) {
+	protected Object doMainTask(TaskMonitor monitor, ObjectRepository repository) throws Exception {
 		// get stream
 		ExampleStream<Example<Instance>> stream = 
 				(ExampleStream<Example<Instance>>) 

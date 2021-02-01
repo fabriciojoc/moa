@@ -84,7 +84,7 @@ public class RandomAMRulesOld extends AbstractClassifier implements Regressor {
 	protected boolean isRegression;
 
 	@Override
-	public void resetLearningImpl() {
+	public void resetLearningImpl() throws Exception {
 		this.classifierRandom.setSeed(this.randomSeedOption.getValue());
 		int n=this.ensembleSizeOption.getValue();
 		this.ensemble= new AbstractAMRules[n];
@@ -103,7 +103,7 @@ public class RandomAMRulesOld extends AbstractClassifier implements Regressor {
 	}
 
 	@Override
-	public void trainOnInstanceImpl(Instance instance) {
+	public void trainOnInstanceImpl(Instance instance) throws Exception {
 		double factor=this.fadingErrorFactorOption.getValue();
 		for (int i = 0; i < this.ensemble.length; i++) {
 			Instance inst=instance.copy();
@@ -126,7 +126,7 @@ public class RandomAMRulesOld extends AbstractClassifier implements Regressor {
 	}
 
 	@Override
-	public double[] getVotesForInstance(Instance inst) {
+	public double[] getVotesForInstance(Instance inst) throws Exception {
 		double [] votes=null;
 		//ErrorWeightedVote combinedVote = (ErrorWeightedVote)((ErrorWeightedVote) votingTypeOption.getPreMaterializedObject()).copy();
 		ErrorWeightedVote combinedVote = (ErrorWeightedVote)((ErrorWeightedVote) getPreparedClassOption(this.votingFunctionOption)).copy();
@@ -166,7 +166,7 @@ public class RandomAMRulesOld extends AbstractClassifier implements Regressor {
 	}
 
 	@Override
-	protected Measurement[] getModelMeasurementsImpl() {
+	protected Measurement[] getModelMeasurementsImpl() throws Exception {
 		Measurement [] baseLearnerMeasurements=((AbstractAMRules) getPreparedClassOption(this.baseLearnerOption)).getModelMeasurements();
 		int nMeasurements=baseLearnerMeasurements.length;
 		Measurement [] m=new Measurement[nMeasurements+1];

@@ -61,7 +61,7 @@ public class MultiFilteredStream extends AbstractOptionHandler implements
 
     @Override
     public void prepareForUseImpl(TaskMonitor monitor,
-            ObjectRepository repository) {
+            ObjectRepository repository) throws Exception {
         Option[] filterOptions = this.filtersOption.getList();
         StreamFilter[] filters = new StreamFilter[filterOptions.length];
         for (int i = 0; i < filters.length; i++) {
@@ -109,12 +109,12 @@ public class MultiFilteredStream extends AbstractOptionHandler implements
     }
 
     @Override
-    public Example nextInstance() {
+    public Example nextInstance() throws Exception {
         return this.filterChain.nextInstance();
     }
 
     @Override
-    public void restart() {
+    public void restart() throws Exception {
         this.filterChain.restart();
     }
 

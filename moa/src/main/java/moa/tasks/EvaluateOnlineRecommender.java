@@ -73,7 +73,7 @@ public class EvaluateOnlineRecommender extends AuxiliarMainTask {
     }
     
     @Override
-    public Object doMainTask(TaskMonitor monitor, ObjectRepository repository) {
+    public Object doMainTask(TaskMonitor monitor, ObjectRepository repository) throws Exception {
         
         Dataset d = (Dataset) getPreparedClassOption(this.datasetOption);
         RatingPredictor rp = (RatingPredictor)getPreparedClassOption(this.ratingPredictorOption);

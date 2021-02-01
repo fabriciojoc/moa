@@ -31,7 +31,7 @@ public interface MultiTargetLearnerSemiSupervised extends MultiLabelLearner {
     
     public Prediction getTrainingPrediction();
     
-    public void trainOnInstanceImpl(MultiLabelInstance instance);
+    public void trainOnInstanceImpl(MultiLabelInstance instance) throws Exception;
 	
-    public Prediction getPredictionForInstance(MultiLabelInstance instance);
+    public Prediction getPredictionForInstance(MultiLabelInstance instance) throws Exception;
 }

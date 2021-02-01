@@ -69,7 +69,7 @@ public class RandomRules extends AbstractClassifier implements Regressor {
 	protected boolean isRegression;
 
 	@Override
-	public void resetLearningImpl() {
+	public void resetLearningImpl() throws Exception {
 		this.ensemble = new Classifier[this.ensembleSizeOption.getValue()];
 		Classifier baseLearner = (Classifier) getPreparedClassOption(this.baseLearnerOption);
 		baseLearner.resetLearning();
@@ -80,7 +80,7 @@ public class RandomRules extends AbstractClassifier implements Regressor {
 	}
 
 	@Override
-	public void trainOnInstanceImpl(Instance inst) {
+	public void trainOnInstanceImpl(Instance inst) throws Exception {
 		for (int i = 0; i < this.ensemble.length; i++) {
 			int k = 1;
 			if ( this.useBaggingOption.isSet()) {
@@ -95,7 +95,7 @@ public class RandomRules extends AbstractClassifier implements Regressor {
 	}
 
 	@Override
-	public double[] getVotesForInstance(Instance inst) {
+	public double[] getVotesForInstance(Instance inst) throws Exception {
 		DoubleVector combinedVote = new DoubleVector();
 		StringBuilder sb = null;
 		if (VerbosityOption.getValue()>1)

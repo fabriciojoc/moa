@@ -124,7 +124,7 @@ public class RCD extends SingleClassifierDrift {
     protected int index;
 
     @Override
-    public void resetLearningImpl() {
+    public void resetLearningImpl() throws Exception {
         super.resetLearningImpl();
         this.classifiers = new ArrayList();
         this.bufferSize = bufferSizeOption.getValue();
@@ -136,7 +136,7 @@ public class RCD extends SingleClassifierDrift {
     }
 
     @Override
-    public void trainOnInstanceImpl(Instance inst) {
+    public void trainOnInstanceImpl(Instance inst) throws Exception {
         int trueClass = (int) inst.classValue();
         boolean prediction = MiscUtils.maxIndex(this.classifier
                 .getVotesForInstance(inst)) == trueClass;
@@ -217,7 +217,7 @@ public class RCD extends SingleClassifierDrift {
     }
 
     @Override
-    public double[] getVotesForInstance(Instance inst) {
+    public double[] getVotesForInstance(Instance inst) throws Exception {
         if (this.testChunk == null) {
             this.testChunk = new ArrayList();
         }
@@ -242,7 +242,7 @@ public class RCD extends SingleClassifierDrift {
      * @return
      */
     private ClassifierKS getPreviousClassifier(Classifier classifier,
-            List<Instance> instances) {
+            List<Instance> instances) throws Exception {
         ExecutorService threadPool = Executors.newFixedThreadPool(this.threadSizeOption.getValue());
         int SIZE = this.classifiers.size();
         Map<Integer, Future<Double>> futures = new HashMap<>();

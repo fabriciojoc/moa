@@ -106,7 +106,7 @@ implements MultiTargetRegressor {
 	
 	
 	@Override
-	public void resetLearningImpl() {
+	public void resetLearningImpl() throws Exception {
 		this.classifierRandom.setSeed(this.randomSeedOption.getValue());
 		int n=this.ensembleSizeOption.getValue();
 		this.ensemble= new AMRulesMultiLabelLearner[n];
@@ -126,7 +126,7 @@ implements MultiTargetRegressor {
                 featureRanking=  (FeatureRanking) getPreparedClassOption(this.featureRankingOption);
 	}
 
-	public void trainOnInstanceImpl(MultiLabelInstance instance) {
+	public void trainOnInstanceImpl(MultiLabelInstance instance) throws Exception {
 		if(featureRanking==null){
 			featureRanking=  (FeatureRanking) getPreparedClassOption(this.featureRankingOption);
 			for (int i = 0; i < this.ensemble.length; i++) {
@@ -154,7 +154,7 @@ implements MultiTargetRegressor {
 	}
 
 	@Override
-	public Prediction getPredictionForInstance(MultiLabelInstance inst) {
+	public Prediction getPredictionForInstance(MultiLabelInstance inst) throws Exception {
 		Prediction vote=null;
 		//ErrorWeightedVote combinedVote = (ErrorWeightedVote)((ErrorWeightedVote) votingTypeOption.getPreMaterializedObject()).copy();
 		ErrorWeightedVoteMultiLabel combinedVote = (ErrorWeightedVoteMultiLabel)((ErrorWeightedVoteMultiLabel) getPreparedClassOption(this.votingFunctionOption)).copy();
@@ -189,7 +189,7 @@ implements MultiTargetRegressor {
 
 
 	@Override
-	protected Measurement[] getModelMeasurementsImpl() {
+	protected Measurement[] getModelMeasurementsImpl() throws Exception {
 		//Measurement [] baseLearnerMeasurements=((AMRulesMultiLabelLearner) getPreparedClassOption(this.baseLearnerOption)).getModelMeasurements();
 		Measurement [] baseLearnerMeasurements=ensemble[0].getModelMeasurements();
 		int nMeasurements=baseLearnerMeasurements.length;

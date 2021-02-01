@@ -49,7 +49,11 @@ public abstract class AbstractMOAObject implements MOAObject {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        getDescription(sb, 0);
+        try {
+            getDescription(sb, 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return sb.toString();
     }
 
