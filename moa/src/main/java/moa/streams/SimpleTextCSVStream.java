@@ -119,49 +119,33 @@ public class SimpleTextCSVStream extends AbstractOptionHandler implements
         this.hasHeader = this.hasHeaderOption.isSet();
 
         // get csv header
-        if (this.firstRow && this.hasHeader) {
+        if (this.hasHeader) {
             System.out.println("FIRST ROW & HAS HEADER");
             ArrayList<weka.core.Attribute> atts = this.readAttributes();
             this.instances = new weka.core.Instances("data", atts, 1);
             this.header = instanceFromAttributes(atts, this.instances);
-            this.firstRow = false;
-        }
-        if (this.instances == null) {
-            System.out.println("INSTANCES NULL");
-            ArrayList<weka.core.Attribute> atts = this.readAttributes();
-            this.instances = new weka.core.Instances("data", atts, 1);
-            this.lastInstance = instanceFromAttributes(atts, this.instances);
-        }
-        else {
             // get last instance
             this.lastInstance = this.readInstance(this.instances);
         }
+        else {
+            // create first instance from attributes to create a dataset
+            ArrayList<weka.core.Attribute> atts = this.readAttributes();
+            // create dataset with attributes
+            this.instances = new weka.core.Instances("data", atts, 1);
+            // transform attributes into an instance
+            this.lastInstance = instanceFromAttributes(atts, this.instances);
+            System.out.println("VALUE 1 " + this.lastInstance.stringValue(1));
+        }
+
         if (classIndex < 0) {
             this.instances.setClassIndex(this.instances.numAttributes() - 1);
         } else if (classIndex > 0) {
             this.instances.setClassIndex(this.classIndexOption.getValue() - 1);
         }
-
-        this.lastInstance.setDataset(this.instances);
         this.numInstancesRead = 1;
+        // TODO: this.hitEndOfFile = !readNextInstanceFromFile();
+        this.clusterEvents = new ArrayList<ClusterEvent>();
 
-
-
-
-
-            /*this.instances = new Instances(this.fileReader, 1, classIndex);
-            if (classIndex < 0) {
-                this.instances.setClassIndex(this.instances.numAttributes() - 1);
-            } else if (this.classIndexOption.getValue() > 0) {
-                this.instances.setClassIndex(this.classIndexOption.getValue() - 1);
-            }
-            this.numInstancesRead = 0;
-            this.lastInstanceRead = null;
-            this.hitEndOfFile = !readNextInstanceFromFile();
-        } catch (IOException ioe) {
-            throw new RuntimeException("SimpleTextCSVStream restart failed.", ioe);
-        }
-        this.clusterEvents = new ArrayList<ClusterEvent>();*/
     }
 
 
