@@ -30,9 +30,9 @@ public class StringToWordVectorFilter extends AbstractStreamFilter {
         this.stw = new StringToWordVector();
     }
 
-    public Instance filterInstance(Instance inst) {
-        SamoaToWekaInstanceConverter samoaToWeka = new SamoaToWekaInstanceConverter();
-        weka.core.Instance i = samoaToWeka.wekaInstance(inst);
+    public Instance filterInstance(weka.core.Instance i) {
+        //SamoaToWekaInstanceConverter samoaToWeka = new SamoaToWekaInstanceConverter();
+        //weka.core.Instance i = samoaToWeka.wekaInstance(inst);
         try {
             this.stw.setInputFormat(i.dataset());
             this.stw.input(i);

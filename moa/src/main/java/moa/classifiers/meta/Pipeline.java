@@ -78,6 +78,9 @@ public class Pipeline extends AbstractClassifier implements MultiClassClassifier
 
     @Override
     public double[] getVotesForInstance(Instance instance) throws Exception {
+        for (int i = 0; i < this.filters.length; i++) {
+            instance = this.filters[i].filterInstance(instance);
+        }
         return(this.classifier.getVotesForInstance(instance));
     }
 

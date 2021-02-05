@@ -8,8 +8,8 @@ import com.yahoo.labs.samoa.instances.*;
 import moa.capabilities.CapabilitiesHandler;
 import moa.core.Example;
 import moa.core.InputStreamProgressMonitor;
-import moa.core.InstanceExample;
 import moa.core.ObjectRepository;
+import moa.core.TextInstanceExample;
 import moa.options.AbstractOptionHandler;
 import moa.streams.clustering.ClusterEvent;
 import moa.streams.generators.cd.ConceptDriftGenerator;
@@ -17,8 +17,6 @@ import moa.tasks.TaskMonitor;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Stream reader of CSV text files.
@@ -27,8 +25,7 @@ import java.util.logging.Logger;
  * @version $Revision: $
  */
 
-public class SimpleTextCSVStream extends AbstractOptionHandler implements
-        InstanceStream, ConceptDriftGenerator, CapabilitiesHandler {
+public class SimpleTextCSVStream extends AbstractOptionHandler implements TextInstanceStream, CapabilitiesHandler {
 
     public FileOption csvFileOption = new FileOption("csvFile", 'f',
             "CSV file to load.", null, "csv", false);
@@ -43,9 +40,9 @@ public class SimpleTextCSVStream extends AbstractOptionHandler implements
 
     protected weka.core.Instances instances = null;
 
-    protected weka.core.Instance lastInstance;
+    protected TextInstanceExample lastInstanceRead;
 
-    protected weka.core.Instance header;
+    protected TextInstanceExample header;
 
     protected CSVReader fileReader;
 
@@ -54,8 +51,6 @@ public class SimpleTextCSVStream extends AbstractOptionHandler implements
     protected boolean firstRow = true;
 
     protected boolean hitEndOfFile;
-
-    protected InstanceExample lastInstanceRead;
 
     protected int numInstancesRead;
 
@@ -74,42 +69,44 @@ public class SimpleTextCSVStream extends AbstractOptionHandler implements
         restart();
     }*/
 
-    @Override
+    //@Override
     public void getDescription(StringBuilder sb, int indent) throws Exception {
 
     }
 
-    @Override
+    //@Override
     protected void prepareForUseImpl(TaskMonitor monitor, ObjectRepository repository) throws Exception {
         restart();
     }
 
-    @Override
+    //@Override
     public InstancesHeader getHeader() {
         return null;
     }
 
-    @Override
+    //@Override
     public long estimatedRemainingInstances() {
         return 0;
     }
 
-    @Override
+    //@Override
     public boolean hasMoreInstances() {
-        return false;
+        return true;
     }
 
-    @Override
-    public Example<Instance> nextInstance() throws Exception {
-        return null;
+    //@Override
+    public Example<weka.core.Instance> nextInstance() throws Exception {
+        TextInstanceExample prevInstance = this.lastInstanceRead;
+        this.lastInstanceRead = this.readInstance(this.instances);
+        return (Example<weka.core.Instance>) prevInstance;
     }
 
-    @Override
+    //@Override
     public boolean isRestartable() {
         return false;
     }
 
-    @Override
+    //@Override
     public void restart() throws Exception {
         if (this.fileReader != null) {
             this.fileReader.close();
@@ -125,7 +122,7 @@ public class SimpleTextCSVStream extends AbstractOptionHandler implements
             this.instances = new weka.core.Instances("data", atts, 1);
             this.header = instanceFromAttributes(atts, this.instances);
             // get last instance
-            this.lastInstance = this.readInstance(this.instances);
+            this.lastInstanceRead = this.readInstance(this.instances);
         }
         else {
             // create first instance from attributes to create a dataset
@@ -133,8 +130,7 @@ public class SimpleTextCSVStream extends AbstractOptionHandler implements
             // create dataset with attributes
             this.instances = new weka.core.Instances("data", atts, 1);
             // transform attributes into an instance
-            this.lastInstance = instanceFromAttributes(atts, this.instances);
-            System.out.println("VALUE 1 " + this.lastInstance.stringValue(1));
+            this.lastInstanceRead = instanceFromAttributes(atts, this.instances);
         }
 
         if (classIndex < 0) {
@@ -143,26 +139,30 @@ public class SimpleTextCSVStream extends AbstractOptionHandler implements
             this.instances.setClassIndex(this.classIndexOption.getValue() - 1);
         }
         this.numInstancesRead = 1;
-        // TODO: this.hitEndOfFile = !readNextInstanceFromFile();
+        this.hitEndOfFile = false; //!readNextInstanceFromFile();
         this.clusterEvents = new ArrayList<ClusterEvent>();
 
     }
 
 
-    public ArrayList<weka.core.Attribute> readAttributes() throws IOException {
-        String[] line = this.fileReader.readNext();
-        // initialize atts
-        ArrayList<weka.core.Attribute> atts = new ArrayList<weka.core.Attribute>();
-        // add to instance each att
-        for (int i = 0; i < line.length; i++) {
-            weka.core.Attribute att = new weka.core.Attribute(line[i], true);
-            atts.add(att);
+    public ArrayList<weka.core.Attribute> readAttributes() {
+        try {
+            String[] line = this.fileReader.readNext();
+            // initialize atts
+            ArrayList<weka.core.Attribute> atts = new ArrayList<weka.core.Attribute>();
+            // add to instance each att
+            for (int i = 0; i < line.length; i++) {
+                weka.core.Attribute att = new weka.core.Attribute(line[i], true);
+                atts.add(att);
+            }
+            System.out.println(atts);
+            return atts;
+        } catch (IOException e) {
+            return null;
         }
-        System.out.println(atts);
-        return atts;
     }
 
-    public weka.core.Instance instanceFromAttributes(ArrayList<weka.core.Attribute> atts, weka.core.Instances dataset) throws IOException {
+    public TextInstanceExample instanceFromAttributes(ArrayList<weka.core.Attribute> atts, weka.core.Instances dataset) {
         weka.core.DenseInstance inst = new weka.core.DenseInstance(atts.size());
         inst.setDataset(dataset);
         for (int i = 0; i < atts.size(); i++) {
@@ -170,20 +170,26 @@ public class SimpleTextCSVStream extends AbstractOptionHandler implements
             weka.core.Attribute att = atts.get(i);
             inst.setValue(i, att.name());
         }
-        return inst;
+        TextInstanceExample in = new TextInstanceExample(inst);
+        return in;
     }
 
-    public weka.core.Instance readInstance(weka.core.Instances dataset) throws IOException {
-        String[] line = this.fileReader.readNext();
-        // initialize instance
-        weka.core.DenseInstance inst = new weka.core.DenseInstance(line.length);
-        inst.setDataset(dataset);
-        // add to instance each value
-        for (int i = 0; i < line.length; i++) {
-            inst.setValue(i, line[i].replace("[", "").replace("]", "").replace("'", "").replace("'", "")
-                    .replace(",", ""));
+    public TextInstanceExample readInstance(weka.core.Instances dataset) {
+        try {
+            String[] line = this.fileReader.readNext();
+            // initialize instance
+            weka.core.DenseInstance inst = new weka.core.DenseInstance(line.length);
+            inst.setDataset(dataset);
+            // add to instance each value
+            for (int i = 0; i < line.length; i++) {
+                inst.setValue(i, line[i].replace("[", "").replace("]", "").replace("'", "").replace("'", "")
+                        .replace(",", ""));
+            }
+            TextInstanceExample in = new TextInstanceExample(inst);
+            return in;
+        } catch (IOException e) {
+            return null;
         }
-        return inst;
     }
 
     /*protected boolean readNextInstanceFromFile() {
@@ -205,8 +211,9 @@ public class SimpleTextCSVStream extends AbstractOptionHandler implements
         }
     }*/
 
-    @Override
+    //@Override
     public ArrayList<ClusterEvent> getEventsList() {
-        return null;
+        //This is used only in the CD Tab
+        return this.clusterEvents;
     }
 }
